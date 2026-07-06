@@ -1,6 +1,26 @@
 # Websitebuilding
 
-A repository for building websites, set up with a Claude Code skill for design guidance.
+A repository for building websites, set up with Claude Code skills for design guidance.
+
+## Sites
+
+### Terra Verity Ledger — [`index.html`](index.html)
+
+A single-page, self-contained institutional marketing site for **Terra Verity Ledger**
+("Verity") — *Planetary Boundary Truth Infrastructure*. One file, no build step, no
+dependencies (all CSS + JS inline; fonts from Google Fonts). Open `index.html` in any
+browser, or host the file anywhere static.
+
+- **Identity:** bold Red / White / Black, dark canvas with bone-white "clarity" breaks.
+- **Type:** Inter Tight (display) · Inter (body) · IBM Plex Mono (data / ledger).
+- **Sections:** sticky nav → hero → problem → is/is-not → Identify·Quantify·Rectify →
+  planetary debt → audiences → flagship report → evidence grades (A–E) → deliverables →
+  pricing → intake form → about → final CTA → footer.
+- **Interactions:** condensing sticky nav, mobile menu, smooth-scroll, scroll reveals,
+  animated count-up, and a client-side-validated intake form with a success state.
+  The form's submit handler has a clear hook for wiring a real backend later.
+- **Quality:** mobile-first responsive (verified 375px → 1440px, no horizontal scroll),
+  semantic HTML, visible focus states, and `prefers-reduced-motion` respected.
 
 ## Installed skills
 
