@@ -22,6 +22,43 @@ browser, or host the file anywhere static.
 - **Quality:** mobile-first responsive (verified 375px → 1440px, no horizontal scroll),
   semantic HTML, visible focus states, and `prefers-reduced-motion` respected.
 
+### The Verity Console — [`console.html`](console.html)
+
+The working **product** for Terra Verity Ledger — a functional, single-file React
+intelligence application (not a marketing page). A user opens a *case* on a real U.S.
+environmental problem and the console walks it through three stages —
+**Identify → Quantify → Rectify** — using an AI model to generate structured,
+evidence-graded analysis at each stage, ending in an exportable *Jurisdiction Planetary
+Damage Report*.
+
+- **Self-contained:** React + ReactDOM are inlined and the JSX is pre-transpiled, so the
+  file runs with **no CDN and no build step** — open it in any browser or host it static.
+- **AI integration:** on entering each stage the app calls a model (default
+  `claude-opus-4-8`), browser-direct, with a **strict-JSON** system prompt and a
+  bulletproof client-side parser. Your API key is held in React state only (never stored)
+  — the no-storage rule is honored throughout.
+- **Demo Mode (default):** realistic, clearly-labeled *modeled* analysis so the console
+  works with no key; a banner and Settings let you switch to Live AI (Anthropic default,
+  OpenAI selectable) and change the model.
+- **Stages:** Identify (actor map · nine-boundary pressure profile · evidence ledger),
+  Quantify (Planetary Debt ledger with low/expected/high ranges · animated total ·
+  cost-of-inaction 5/10/25 · reported-vs-truth), Rectify (ranked restoration pathways ·
+  multiple qualified providers · funding routes · next steps · seven deliverable
+  generators), then the 11-section Report on a bone-white surface with **Print / Export
+  to PDF** and Copy.
+- **Guardrails (mandatory):** every estimate carries an A–E evidence grade and uncertainty
+  range; unknown actors are shown as open nodes to validate, never asserted; a persistent
+  disclaimer and a TerraReFlow conflict disclosure appear where relevant. *This is not
+  opinion — it is planetary accounting.*
+- **State:** in-memory `useReducer`, multiple cases per session, no `localStorage`.
+- **Roadmap:** live regulatory feeds (EPA ECHO/FRS, SEC EDGAR, state databases, permit /
+  emissions / court records, satellite imagery) are identified in-app for wiring in;
+  until connected, estimates are graded D (modeled) or E (flag).
+
+> To iterate on the Console source, edit the JSX and re-run the inline build (React +
+> ReactDOM from npm, transpiled with `@babel/preset-react`) — the published `console.html`
+> is the built, dependency-free output.
+
 ## Installed skills
 
 ### frontend-design
