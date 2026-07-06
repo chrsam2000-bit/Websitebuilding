@@ -59,6 +59,35 @@ Damage Report*.
 > ReactDOM from npm, transpiled with `@babel/preset-react`) — the published `console.html`
 > is the built, dependency-free output.
 
+### The Verity Site Dossier — [`verity-dossier/`](verity-dossier/)
+
+The **full-stack product** (Next.js 14 + TypeScript). Enter one site and it
+assembles a cited, evidence-graded dossier from **live U.S. public records** —
+EPA ECHO, Envirofacts (TRI / Superfund / RCRA), and SEC EDGAR — with the
+responsible-party chain, documented damage, a clearly-separated modeled
+liability, and an exportable deliverable (Litigation Intake Memo or Remediation
+& Redevelopment Pathway).
+
+- **Server-side data layer:** all EPA/SEC calls run in Next.js route handlers
+  (SEC `User-Agent`, CORS, per-URL caching, rate-limit backoff, retries). The
+  browser never calls `.gov` directly.
+- **Grounded, not generative:** the AI never invents facts — it only resolves
+  messy entity names (confidence-scored), summarizes retrieved records, and
+  drafts the memo. Every fact is graded A–E and cited to its source record; if a
+  source returns nothing, the dossier says so — never a fabricated value.
+- **Streaming Evidence Log:** each real API call streams into the console as it
+  fires, so you watch the record-pull happen.
+- **Sample mode** (default on) serves clearly-labeled sample records so the full
+  pipeline runs anywhere; **live mode** calls the real APIs. See
+  [`verity-dossier/README.md`](verity-dossier/README.md) for setup, the env vars,
+  and the live acceptance test.
+
+> Verified here: clean `next build`, boots, full sample pipeline (evidence log →
+> actor chain → quantify → both memos → print), and live mode firing real
+> server-side `.gov` requests that degrade to honest gaps. The **live-data
+> acceptance test** (every number traces to a live record) must run where `.gov`
+> egress is open — this build environment blocks those hosts by network policy.
+
 ## Installed skills
 
 ### frontend-design

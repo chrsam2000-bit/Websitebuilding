@@ -1,0 +1,25 @@
+{
+  "name": "verity-site-dossier",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Verity Site Dossier — evidence-graded environmental dossiers assembled from live U.S. public records (EPA + SEC EDGAR).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "probe": "node --loader tsx scripts/probe.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.110.0",
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "typescript": "5.5.3"
+  }
+}

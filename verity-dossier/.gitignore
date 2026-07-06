@@ -1,0 +1,31 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files — NEVER commit real keys or the SEC User-Agent email
+.env
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts.bak
+
+# verity record cache (fetched government records, per-URL)
+/.cache
