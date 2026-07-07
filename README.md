@@ -4,23 +4,41 @@ A repository for building websites, set up with Claude Code skills for design gu
 
 ## Sites
 
-### Terra Verity Ledger — [`index.html`](index.html)
+### Terra Verity Ledger — multi-page marketing site ([`index.html`](index.html))
 
-A single-page, self-contained institutional marketing site for **Terra Verity Ledger**
-("Verity") — *Planetary Boundary Truth Infrastructure*. One file, no build step, no
-dependencies (all CSS + JS inline; fonts from Google Fonts). Open `index.html` in any
-browser, or host the file anywhere static.
+A complete, static multi-page institutional marketing site for **Terra Verity Ledger**
+("Verity") — *Planetary Boundary Truth Infrastructure*. Eight hand-authored HTML pages
+sharing one stylesheet and one script — no framework, no build step, no bundler (fonts
+from Google Fonts). Open `index.html` in any browser, or host the folder anywhere static.
 
+**Pages** (static nav + footer on every page, `aria-current` active states):
+
+| Page | File | What it does |
+|------|------|--------------|
+| Home | [`index.html`](index.html) | Hero, live planetary-boundary status terminal (6 of 9 transgressed), positioning stats, explore teasers |
+| The Problem | [`problem.html`](problem.html) | Reported-vs-truth profit compare with animated count-up to $1B, unpriced planetary-debt grid |
+| How It Works | [`how-it-works.html`](how-it-works.html) | The Identify → Quantify → Rectify framework, three discipline cards, the A–E evidence-grade scale |
+| Product | [`product.html`](product.html) | The flagship Jurisdiction Planetary Damage Report (11-section table of contents, is/is-not), links to both working products, deliverables grid |
+| Who It's For | [`audiences.html`](audiences.html) | B2G / B2B / B2C audiences (government named as first serious buyer) |
+| Pricing | [`pricing.html`](pricing.html) | Four engagement tiers; each "Request this" carries its tier into the intake form |
+| About | [`about.html`](about.html) | Mission and the disclosed TerraReFlow PBC relationship / independence |
+| Request a Report | [`contact.html`](contact.html) | Full intake form with client-side validation, tier prefill, and a success state |
+
+- **Shared assets:** one [`assets/styles.css`](assets/styles.css) (the full design system —
+  palette tokens, type scale, components) and one [`assets/main.js`](assets/main.js)
+  (all interactions). Every page links the same two files, so the look and behavior stay
+  identical and edits propagate everywhere.
 - **Identity:** bold Red / White / Black, dark canvas with bone-white "clarity" breaks.
 - **Type:** Inter Tight (display) · Inter (body) · IBM Plex Mono (data / ledger).
-- **Sections:** sticky nav → hero → problem → is/is-not → Identify·Quantify·Rectify →
-  planetary debt → audiences → flagship report → evidence grades (A–E) → deliverables →
-  pricing → intake form → about → final CTA → footer.
-- **Interactions:** condensing sticky nav, mobile menu, smooth-scroll, scroll reveals,
-  animated count-up, and a client-side-validated intake form with a success state.
-  The form's submit handler has a clear hook for wiring a real backend later.
-- **Quality:** mobile-first responsive (verified 375px → 1440px, no horizontal scroll),
-  semantic HTML, visible focus states, and `prefers-reduced-motion` respected.
+- **Interactions:** condensing sticky nav, full-screen scroll-locked mobile menu, scroll
+  reveals, animated count-up, pricing→contact tier prefill (`?tier=` query param), and a
+  client-side-validated intake form with a `VRT-` reference success state. The form's
+  submit handler has a clear hook for wiring a real backend later.
+- **Quality:** mobile-first responsive (verified 375px → 1440px, no horizontal scroll on
+  any page), semantic HTML, visible focus states, `prefers-reduced-motion` respected, and
+  zero console errors. Verified in a headless browser across all eight pages: loads, active
+  nav, count-up, form validation (empty blocked, bad email rejected, valid submit succeeds),
+  tier prefill, and the mobile menu.
 
 ### The Verity Console — [`console.html`](console.html)
 

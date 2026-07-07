@@ -5,542 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0A0A">
-<meta name="description" content="Terra Verity Ledger is Planetary Boundary Truth Infrastructure. We identify who is transgressing the planetary boundaries, quantify the real planetary debt behind their profit, and turn that truth into restoration, correction, and accountability.">
+<meta name="description" content="Terra Verity Ledger is Planetary Boundary Truth Infrastructure — we identify who is transgressing the planetary boundaries, quantify the real planetary debt behind their profit, and turn that truth into restoration, correction, and accountability.">
 <title>Terra Verity Ledger — Planetary Boundary Truth Infrastructure</title>
-
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23E10600'/%3E%3Crect x='7' y='9' width='18' height='2.2' rx='1' fill='%23fff'/%3E%3Crect x='7' y='15' width='12' height='2.2' rx='1' fill='%230A0A0A'/%3E%3Crect x='7' y='21' width='15' height='2.2' rx='1' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================================
-   TERRA VERITY LEDGER — Planetary Boundary Truth Infrastructure
-   Single-file build. Red / White / Black institutional identity.
-   ============================================================ */
-
-:root{
-  /* Palette (exact brief tokens) */
-  --void-black:#0A0A0A;
-  --true-black:#000000;
-  --signal-red:#E10600;
-  --deep-crimson:#8B0000;
-  --pure-white:#FFFFFF;
-  --bone-white:#F5F4F2;
-  --ash-gray:#B0B0B0;
-  --slate-gray:#6B6B6B;
-
-  /* Derived surfaces & lines */
-  --surface:#101010;
-  --surface-2:#141414;
-  --surface-raised:#171717;
-  --line:rgba(255,255,255,.10);
-  --line-strong:rgba(255,255,255,.18);
-  --red-tint:rgba(225,6,0,.10);
-  --red-line:rgba(225,6,0,.40);
-  --red-glow:rgba(225,6,0,.22);
-
-  /* Light-section tokens */
-  --ink:#0A0A0A;
-  --ink-soft:#3a3a3a;
-  --line-dark:rgba(10,10,10,.14);
-  --line-dark-strong:rgba(10,10,10,.24);
-
-  /* Type */
-  --font-display:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  --font-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
-
-  /* Spacing */
-  --gutter:clamp(1.25rem,5vw,3rem);
-  --section-y:clamp(4.5rem,10vw,8.5rem);
-  --maxw:1200px;
-
-  /* Radii / motion */
-  --r-sm:4px;
-  --r-md:8px;
-  --r-lg:14px;
-  --ease:cubic-bezier(.2,.7,.2,1);
-  --nav-h:76px;
-}
-
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-
-body{
-  font-family:var(--font-body);
-  background:var(--void-black);
-  color:var(--pure-white);
-  font-size:clamp(1rem,.97rem + .3vw,1.075rem);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-  overflow-x:hidden;
-}
-
-/* faint global ledger grid texture on the dark canvas */
-body::before{
-  content:"";
-  position:fixed;inset:0;
-  pointer-events:none;z-index:0;
-  background-image:
-    linear-gradient(var(--line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:88px 88px;
-  opacity:.28;
-  -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 40%,transparent 100%);
-          mask-image:radial-gradient(120% 90% at 50% 0%,#000 40%,transparent 100%);
-}
-
-img,svg{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer}
-::selection{background:var(--signal-red);color:#fff}
-
-:focus-visible{outline:2px solid var(--signal-red);outline-offset:3px;border-radius:2px}
-.section--light :focus-visible{outline-color:var(--signal-red)}
-
-/* Skip link */
-.skip{
-  position:absolute;left:-9999px;top:0;z-index:200;
-  background:var(--signal-red);color:#fff;padding:.75rem 1.25rem;
-  font-family:var(--font-mono);font-size:.8rem;letter-spacing:.05em;border-radius:0 0 var(--r-sm) 0;
-}
-.skip:focus{left:0}
-
-/* ---------- Layout primitives ---------- */
-.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter);position:relative;z-index:1}
-.section{padding-block:var(--section-y);position:relative;z-index:1;scroll-margin-top:var(--nav-h)}
-.section--tight{padding-block:clamp(3rem,7vw,5rem)}
-
-.section--light{background:var(--bone-white);color:var(--ink)}
-.section--light .eyebrow{color:var(--deep-crimson)}
-.section--light .lead,.section--light .muted{color:var(--ink-soft)}
-
-/* thin red rule used as a section signature */
-.rule-red{width:44px;height:3px;background:var(--signal-red);border:0;margin-bottom:1.5rem}
-
-/* ---------- Typography ---------- */
-.eyebrow{
-  font-family:var(--font-mono);font-weight:500;
-  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--signal-red);display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.25rem;
-}
-.eyebrow::before{content:"";width:8px;height:8px;background:var(--signal-red);display:inline-block;box-shadow:0 0 12px var(--red-glow)}
-
-.h1{
-  font-family:var(--font-display);font-weight:700;
-  font-size:clamp(2.6rem,1.6rem + 5.2vw,5.75rem);
-  line-height:.98;letter-spacing:-.035em;
-}
-.h2{
-  font-family:var(--font-display);font-weight:700;
-  font-size:clamp(1.9rem,1.3rem + 2.6vw,3.35rem);
-  line-height:1.04;letter-spacing:-.025em;
-}
-.h3{
-  font-family:var(--font-display);font-weight:600;
-  font-size:clamp(1.25rem,1.05rem + .8vw,1.6rem);
-  line-height:1.12;letter-spacing:-.015em;
-}
-.lead{color:var(--ash-gray);font-size:clamp(1.05rem,1rem + .35vw,1.28rem);line-height:1.55;max-width:60ch}
-.muted{color:var(--ash-gray)}
-.mono{font-family:var(--font-mono)}
-.red{color:var(--signal-red)}
-.section-head{max-width:56ch;margin-bottom:clamp(2.5rem,5vw,4rem)}
-
-/* ---------- Buttons ---------- */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
-  font-family:var(--font-display);font-weight:600;font-size:1rem;
-  padding:.95rem 1.6rem;border-radius:var(--r-sm);border:1px solid transparent;
-  min-height:48px;transition:transform .18s var(--ease),background .18s var(--ease),border-color .18s var(--ease),box-shadow .18s var(--ease),color .18s var(--ease);
-  letter-spacing:-.01em;line-height:1;text-align:center;
-}
-.btn:active{transform:translateY(1px)}
-.btn--red{background:var(--signal-red);color:#fff;box-shadow:0 0 0 0 var(--red-glow)}
-.btn--red:hover{background:#f5140d;box-shadow:0 10px 34px -10px var(--red-glow)}
-.btn--ghost{background:transparent;color:var(--pure-white);border-color:var(--line-strong)}
-.btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.05)}
-.btn--dark{background:var(--true-black);color:#fff}
-.btn--dark:hover{background:#1a1a1a}
-.btn--block{width:100%}
-.btn__arrow{transition:transform .2s var(--ease)}
-.btn:hover .btn__arrow{transform:translateX(3px)}
-
-/* ---------- Nav ---------- */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  height:var(--nav-h);display:flex;align-items:center;
-  transition:height .25s var(--ease),background .25s var(--ease),border-color .25s var(--ease),backdrop-filter .25s var(--ease);
-  border-bottom:1px solid transparent;
-}
-.nav.is-stuck{
-  height:60px;background:rgba(10,10,10,.82);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid var(--line);
-}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;width:100%}
-.brand{display:inline-flex;align-items:center;gap:.7rem;flex-shrink:0}
-.brand__mark{width:26px;height:26px;flex-shrink:0}
-.brand__text{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em;font-size:.95rem;line-height:1;white-space:nowrap}
-.brand__text small{display:block;font-family:var(--font-mono);font-weight:400;font-size:.56rem;letter-spacing:.18em;color:var(--slate-gray);margin-top:3px}
-
-.nav__links{display:flex;align-items:center;gap:2rem;list-style:none}
-.nav__links a{
-  font-size:.9rem;color:var(--ash-gray);transition:color .16s var(--ease);position:relative;padding:.35rem 0;
-}
-.nav__links a:hover{color:#fff}
-.nav__right{display:flex;align-items:center;gap:1.25rem}
-.nav__cta{padding:.62rem 1.15rem;min-height:42px;font-size:.9rem}
-
-.nav__toggle{display:none;width:44px;height:44px;background:transparent;border:1px solid var(--line-strong);border-radius:var(--r-sm);flex-direction:column;justify-content:center;align-items:center;gap:5px}
-.nav__toggle span{width:18px;height:2px;background:#fff;transition:transform .25s var(--ease),opacity .2s var(--ease)}
-.nav__toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav__toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
-.nav__toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-.mobile-menu{
-  position:fixed;inset:0 0 0 0;z-index:99;background:rgba(10,10,10,.97);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  padding:calc(var(--nav-h) + 1rem) var(--gutter) 2rem;
-  display:flex;flex-direction:column;gap:.25rem;
-  transform:translateY(-100%);opacity:0;visibility:hidden;
-  transition:transform .32s var(--ease),opacity .32s var(--ease),visibility .32s;
-}
-.mobile-menu.is-open{transform:translateY(0);opacity:1;visibility:visible}
-.mobile-menu a{font-family:var(--font-display);font-size:1.6rem;font-weight:600;padding:.85rem 0;border-bottom:1px solid var(--line);letter-spacing:-.02em}
-.mobile-menu a:last-of-type{border-bottom:0}
-.mobile-menu .btn{margin-top:1.5rem}
-
-/* ---------- Hero ---------- */
-.hero{position:relative;padding-top:calc(var(--nav-h) + clamp(2rem,7vw,5rem));padding-bottom:clamp(3rem,7vw,6rem);overflow:hidden}
-.hero__glow{position:absolute;top:-10%;right:-10%;width:60vw;height:60vw;max-width:760px;max-height:760px;border-radius:50%;
-  background:radial-gradient(circle,var(--red-glow),transparent 62%);pointer-events:none;z-index:0;filter:blur(6px)}
-.hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(2rem,4vw,4rem);align-items:center;position:relative;z-index:1}
-.hero h1{margin:.2rem 0 1.5rem}
-.hero h1 .dot{color:var(--signal-red)}
-.hero__sub{max-width:52ch;margin-bottom:2.25rem}
-.hero__ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:2.5rem}
-
-/* three-word spine strip */
-.spine{display:flex;align-items:center;gap:clamp(.6rem,2vw,1.5rem);flex-wrap:wrap;
-  border-top:1px solid var(--line);padding-top:1.4rem;font-family:var(--font-mono);
-  font-size:clamp(.85rem,.8rem + .4vw,1.15rem);font-weight:500;letter-spacing:.12em}
-.spine__word{opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
-.spine.is-in .spine__word{opacity:1;transform:none}
-.spine.is-in .spine__word:nth-child(3){transition-delay:.18s}
-.spine.is-in .spine__word:nth-child(5){transition-delay:.36s}
-.spine__word--rectify{color:var(--signal-red)}
-.spine__sep{color:var(--signal-red);opacity:.7}
-
-/* hero terminal / boundary ledger panel */
-.panel{
-  background:linear-gradient(180deg,var(--surface-raised),var(--surface));
-  border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
-  box-shadow:0 40px 80px -40px #000, 0 0 0 1px rgba(255,255,255,.02) inset;
-}
-.panel__bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.8rem 1rem;border-bottom:1px solid var(--line);background:var(--true-black)}
-.panel__bar .dot-row{display:flex;gap:6px}
-.panel__bar .dot-row i{width:8px;height:8px;border-radius:50%;background:#2a2a2a}
-.panel__bar .dot-row i:first-child{background:var(--signal-red)}
-.panel__title{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;color:var(--slate-gray)}
-.ledger{font-family:var(--font-mono);font-size:.78rem}
-.ledger__row{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;
-  padding:.6rem 1rem;border-bottom:1px solid var(--line)}
-.ledger__row:last-child{border-bottom:0}
-.ledger__name{color:var(--ash-gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chip{font-family:var(--font-mono);font-size:.6rem;font-weight:500;letter-spacing:.1em;
-  padding:.28rem .5rem;border-radius:3px;white-space:nowrap;border:1px solid transparent}
-.chip--alert{color:var(--signal-red);background:var(--red-tint);border-color:var(--red-line)}
-.chip--ok{color:var(--ash-gray);background:rgba(255,255,255,.05);border-color:var(--line)}
-.panel__foot{padding:.7rem 1rem;font-family:var(--font-mono);font-size:.6rem;color:var(--slate-gray);
-  letter-spacing:.06em;background:var(--true-black);border-top:1px solid var(--line)}
-
-/* ---------- The Problem ---------- */
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:clamp(2rem,4vw,3.5rem)}
-.compare__card{border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.5rem,3vw,2.5rem);position:relative;overflow:hidden;background:var(--surface)}
-.compare__card--truth{border-color:var(--red-line);background:linear-gradient(180deg,rgba(139,0,0,.14),var(--surface))}
-.compare__label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.18em;color:var(--slate-gray);text-transform:uppercase;margin-bottom:1.2rem}
-.compare__card--truth .compare__label{color:var(--signal-red)}
-.stat{font-family:var(--font-mono);font-weight:600;font-size:clamp(2rem,1.2rem + 4vw,3.6rem);line-height:1;letter-spacing:-.02em}
-.compare__note{margin-top:1.1rem;color:var(--ash-gray);font-size:1.02rem;max-width:34ch}
-.debit-list{margin-top:1.4rem;font-family:var(--font-mono);font-size:.82rem;border-top:1px solid var(--red-line);padding-top:1rem}
-.debit-list li{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;color:var(--ash-gray);list-style:none}
-.debit-list li span:last-child{color:var(--slate-gray)}
-.debit-total{display:flex;justify-content:space-between;gap:1rem;margin-top:.6rem;padding-top:.9rem;border-top:1px solid var(--red-line);
-  font-family:var(--font-mono);color:#fff;font-weight:600}
-.debit-total .q{color:var(--signal-red);font-size:1.4rem}
-
-/* ---------- Is / Is Not ---------- */
-.twocol{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,3vw,3rem)}
-.deflist{list-style:none;display:flex;flex-direction:column;gap:.15rem}
-.deflist li{display:flex;gap:.85rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--line-dark);font-size:1.05rem}
-.deflist li:last-child{border-bottom:0}
-.mark{flex-shrink:0;width:22px;height:22px;border-radius:3px;display:grid;place-items:center;margin-top:1px;font-family:var(--font-mono);font-size:.7rem;font-weight:600}
-.mark--is{background:var(--signal-red);color:#fff}
-.mark--isnot{background:transparent;border:1px solid var(--line-dark-strong);color:var(--slate-gray)}
-.col-title{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.3rem;color:var(--deep-crimson)}
-.col--isnot .col-title{color:var(--slate-gray)}
-.col--isnot .deflist li{color:var(--ink-soft)}
-.pullquote{margin-top:clamp(2.5rem,5vw,4rem);border-left:3px solid var(--signal-red);padding:.2rem 0 .2rem 1.6rem;
-  font-family:var(--font-display);font-weight:600;font-size:clamp(1.3rem,1rem + 1.6vw,2rem);line-height:1.25;letter-spacing:-.02em;max-width:40ch}
-
-/* ---------- How It Works ---------- */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.step{border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.5rem,2.5vw,2.2rem);background:var(--surface);display:flex;flex-direction:column;transition:border-color .2s var(--ease),transform .2s var(--ease),background .2s var(--ease)}
-.step:hover{transform:translateY(-4px);border-color:var(--line-strong)}
-.step--rectify{border-color:var(--red-line);background:linear-gradient(180deg,rgba(139,0,0,.16),var(--surface))}
-.step--rectify:hover{border-color:var(--signal-red)}
-.step__num{font-family:var(--font-mono);font-size:.85rem;color:var(--slate-gray);letter-spacing:.1em;margin-bottom:1.1rem;display:flex;align-items:center;gap:.6rem}
-.step__num b{color:var(--signal-red);font-weight:600}
-.step h3{margin-bottom:.9rem}
-.step--rectify h3{color:var(--signal-red)}
-.step p{color:var(--ash-gray);font-size:1rem;margin-bottom:1.3rem}
-.flow{margin-top:auto;font-family:var(--font-mono);font-size:.72rem;color:var(--ash-gray);
-  background:var(--true-black);border:1px solid var(--line);border-radius:var(--r-sm);padding:.8rem .9rem;line-height:1.9;letter-spacing:.02em}
-.flow .a{color:#fff}
-.flow .r{color:var(--signal-red)}
-.step--rectify .flow{border-color:var(--red-line)}
-
-/* ---------- Planetary Debt ---------- */
-.debt-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
-.debt-cell{background:var(--void-black);padding:1.4rem 1.25rem;min-height:128px;display:flex;flex-direction:column;justify-content:space-between;transition:background .2s var(--ease)}
-.debt-cell:hover{background:var(--surface-2)}
-.debt-cell__id{font-family:var(--font-mono);font-size:.62rem;color:var(--slate-gray);letter-spacing:.1em}
-.debt-cell__name{font-family:var(--font-display);font-weight:600;font-size:1.02rem;letter-spacing:-.01em;margin-top:.6rem}
-.debt-cell__bar{height:2px;background:var(--red-line);margin-top:.9rem;width:34px}
-.debt-foot{margin-top:1.5rem;font-family:var(--font-mono);font-size:.8rem;color:var(--slate-gray);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
-  border-top:1px solid var(--line);padding-top:1.1rem}
-.debt-foot b{color:var(--signal-red);font-weight:600}
-
-/* ---------- Who It's For ---------- */
-.audience{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.aud{border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.5rem,2.5vw,2rem);background:var(--surface);display:flex;flex-direction:column;gap:.9rem;transition:border-color .2s var(--ease),transform .2s var(--ease)}
-.aud:hover{transform:translateY(-4px);border-color:var(--line-strong)}
-.aud__tag{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
-.aud__seg{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;color:var(--slate-gray)}
-.aud__primary{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;color:var(--signal-red);border:1px solid var(--red-line);background:var(--red-tint);padding:.24rem .45rem;border-radius:3px}
-.aud h3{letter-spacing:-.02em}
-.aud p{color:var(--ash-gray);font-size:1rem}
-
-/* ---------- Flagship product (report artifact) ---------- */
-.report{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(1.5rem,3vw,3rem);align-items:start}
-.report__doc{background:var(--bone-white);color:var(--ink);border-radius:var(--r-md);overflow:hidden;box-shadow:0 50px 90px -50px #000;position:relative}
-.report__doc-top{background:var(--true-black);color:#fff;padding:1.4rem 1.5rem;border-bottom:3px solid var(--signal-red)}
-.report__doc-top .k{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.16em;color:var(--ash-gray)}
-.report__doc-top h4{font-family:var(--font-display);font-weight:700;font-size:1.35rem;letter-spacing:-.02em;margin:.35rem 0 1rem;line-height:1.1}
-.report__meta{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1rem;font-family:var(--font-mono);font-size:.64rem}
-.report__meta div span{color:var(--slate-gray);display:block;letter-spacing:.1em}
-.report__meta div b{color:#fff;font-weight:500}
-.report__doc-body{padding:1.4rem 1.5rem}
-.toc{list-style:none;counter-reset:toc;font-family:var(--font-mono);font-size:.82rem}
-.toc li{counter-increment:toc;display:flex;gap:.8rem;padding:.5rem 0;border-bottom:1px dashed rgba(10,10,10,.16);color:#2a2a2a}
-.toc li:last-child{border-bottom:0}
-.toc li::before{content:counter(toc,decimal-leading-zero);color:var(--signal-red);font-weight:600;flex-shrink:0}
-.report__side .h2{margin-bottom:1.2rem}
-
-/* ---------- Evidence grades (ledger table) ---------- */
-.grades{border:1px solid var(--line-dark);border-radius:var(--r-md);overflow:hidden;font-family:var(--font-mono)}
-.grades__row{display:grid;grid-template-columns:auto 1fr auto;gap:1.25rem;align-items:center;padding:1.1rem 1.4rem;border-bottom:1px solid var(--line-dark);background:#fff}
-.grades__row:last-child{border-bottom:0}
-.grades__row:nth-child(even){background:#faf9f7}
-.grade-chip{width:40px;height:40px;border-radius:var(--r-sm);display:grid;place-items:center;font-weight:600;font-size:1.15rem;flex-shrink:0;font-family:var(--font-display)}
-.g-a{background:var(--signal-red);color:#fff}
-.g-b{background:#b3140f;color:#fff}
-.g-c{background:#2a2a2a;color:#fff}
-.g-d{background:#fff;color:#2a2a2a;border:1px solid var(--line-dark-strong)}
-.g-e{background:#fff;color:var(--signal-red);border:1px dashed var(--signal-red)}
-.grades__desc{font-size:.9rem;color:#2a2a2a;font-family:var(--font-body);line-height:1.4}
-.grades__conf{font-size:.62rem;letter-spacing:.12em;color:var(--slate-gray);text-align:right;white-space:nowrap}
-
-/* ---------- Deliverables ---------- */
-.deliverables{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
-.deliverable{background:var(--void-black);padding:1.3rem 1.25rem;display:flex;flex-direction:column;gap:.7rem;min-height:118px;transition:background .18s var(--ease)}
-.deliverable:hover{background:var(--surface-2)}
-.deliverable__ic{width:22px;height:22px;color:var(--signal-red)}
-.deliverable__name{font-family:var(--font-display);font-weight:500;font-size:.98rem;letter-spacing:-.01em;line-height:1.2}
-
-/* ---------- Pricing ---------- */
-.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.tier{border:1px solid var(--line);border-radius:var(--r-lg);padding:1.6rem 1.4rem;background:var(--surface);display:flex;flex-direction:column;gap:1rem;transition:border-color .2s var(--ease),transform .2s var(--ease)}
-.tier:hover{transform:translateY(-4px);border-color:var(--line-strong)}
-.tier--feature{border-color:var(--red-line);background:linear-gradient(180deg,rgba(139,0,0,.14),var(--surface))}
-.tier__badge{align-self:flex-start;font-family:var(--font-mono);font-size:.56rem;letter-spacing:.14em;color:var(--signal-red);border:1px solid var(--red-line);padding:.24rem .5rem;border-radius:3px}
-.tier__name{font-family:var(--font-display);font-weight:600;font-size:1.1rem;letter-spacing:-.01em;min-height:2.6em;display:flex;align-items:flex-start}
-.tier__price{font-family:var(--font-mono);font-weight:600;font-size:1.6rem;color:var(--signal-red);letter-spacing:-.01em;line-height:1}
-.tier__desc{color:var(--ash-gray);font-size:.95rem;flex:1}
-.tier .btn{margin-top:.4rem}
-
-/* ---------- Form ---------- */
-.form-shell{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,4vw,4rem);align-items:start}
-.form-aside__stat{font-family:var(--font-mono);border-top:1px solid var(--line);padding:1.1rem 0;display:flex;gap:1rem;align-items:baseline}
-.form-aside__stat b{color:var(--signal-red);font-size:1.3rem;font-weight:600;min-width:2.4rem}
-.form-aside__stat span{color:var(--ash-gray);font-size:.85rem}
-form{position:relative}
-.field{margin-bottom:1.15rem}
-.field--row{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem}
-.field label{display:block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ash-gray);margin-bottom:.5rem}
-.field label .req{color:var(--signal-red)}
-.field input,.field select,.field textarea{
-  width:100%;background:var(--true-black);border:1px solid var(--line);border-radius:var(--r-sm);
-  color:#fff;font-family:var(--font-body);font-size:1rem;padding:.85rem .95rem;min-height:48px;
-  transition:border-color .16s var(--ease),box-shadow .16s var(--ease);
-}
-.field textarea{min-height:120px;resize:vertical;line-height:1.5}
-.field select{cursor:pointer;appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B0B0B0' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right .95rem center;padding-right:2.4rem}
-.field input::placeholder,.field textarea::placeholder{color:var(--slate-gray)}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--signal-red);box-shadow:0 0 0 3px var(--red-tint)}
-.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--signal-red)}
-.field__err{display:none;color:var(--signal-red);font-family:var(--font-mono);font-size:.72rem;margin-top:.45rem;letter-spacing:.02em}
-.field.invalid .field__err{display:block}
-.form-note{font-family:var(--font-mono);font-size:.68rem;color:var(--slate-gray);margin-top:-.5rem;margin-bottom:1.15rem;letter-spacing:.02em}
-
-.form-success{
-  display:none;border:1px solid var(--red-line);background:linear-gradient(180deg,rgba(139,0,0,.14),var(--surface));
-  border-radius:var(--r-lg);padding:clamp(2rem,4vw,3rem);text-align:left;
-}
-.form-success.is-shown{display:block;animation:fadeUp .5s var(--ease) both}
-.form-success__ic{width:52px;height:52px;border-radius:50%;background:var(--signal-red);display:grid;place-items:center;margin-bottom:1.4rem}
-.form-success h3{margin-bottom:.8rem}
-.form-success p{color:var(--ash-gray);max-width:46ch;margin-bottom:1.4rem}
-.form-success .ref{font-family:var(--font-mono);font-size:.85rem;color:#fff;background:var(--true-black);border:1px solid var(--line);border-radius:var(--r-sm);padding:.8rem 1rem;display:inline-flex;gap:.7rem;align-items:center;letter-spacing:.05em}
-.form-success .ref span{color:var(--slate-gray)}
-
-/* ---------- About ---------- */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
-.mission{font-family:var(--font-display);font-weight:600;font-size:clamp(1.4rem,1.1rem + 1.4vw,2.1rem);line-height:1.22;letter-spacing:-.02em}
-.mission .red{color:var(--signal-red)}
-.disclosure{border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(1.5rem,3vw,2.2rem);background:var(--surface)}
-.disclosure .col-title{color:var(--slate-gray)}
-.disclosure p{color:var(--ash-gray);font-size:1rem;margin-bottom:1rem}
-.disclosure p:last-child{margin-bottom:0}
-.disclosure strong{color:#fff;font-weight:600}
-
-/* ---------- Final CTA ---------- */
-.final{background:var(--signal-red);background-image:linear-gradient(135deg,var(--deep-crimson),var(--signal-red) 55%,#f5140d);color:#fff;text-align:center;position:relative;overflow:hidden}
-.final::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.14) 1px,transparent 1px);background-size:60px 60px;opacity:.5;pointer-events:none}
-.final .wrap{text-align:center}
-.final h2{max-width:20ch;margin:0 auto 2rem;font-size:clamp(2rem,1.3rem + 3.4vw,4rem);letter-spacing:-.03em;line-height:1.02}
-.final .btn{background:var(--true-black);color:#fff;font-size:1.05rem;padding:1.05rem 2rem}
-.final .btn:hover{background:#111}
-.final__eyebrow{color:#fff;opacity:.85}
-.final__eyebrow::before{background:#fff}
-
-/* ---------- Footer ---------- */
-.footer{background:var(--true-black);padding-block:clamp(3rem,6vw,4.5rem) 2rem;border-top:1px solid var(--line)}
-.footer__top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;padding-bottom:2.5rem;border-bottom:1px solid var(--line)}
-.footer__nav{display:flex;flex-wrap:wrap;gap:1.5rem 2rem;list-style:none;align-items:center}
-.footer__nav a{color:var(--ash-gray);font-size:.9rem;transition:color .16s var(--ease)}
-.footer__nav a:hover{color:#fff}
-.footer__contact{font-family:var(--font-mono);font-size:.82rem;color:var(--ash-gray)}
-.footer__contact a{color:var(--signal-red)}
-.fineprint{margin-top:2rem;font-family:var(--font-mono);font-size:.72rem;line-height:1.7;color:var(--slate-gray);max-width:90ch;letter-spacing:.01em}
-.fineprint .copy{display:block;margin-top:1rem;color:var(--ash-gray)}
-
-/* ---------- Reveal animation ---------- */
-[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-[data-reveal].is-in{opacity:1;transform:none}
-[data-reveal-stagger]>*{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-[data-reveal-stagger].is-in>*{opacity:1;transform:none}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
-  [data-reveal],[data-reveal-stagger]>*,.spine__word{opacity:1 !important;transform:none !important}
-  .btn:hover,.step:hover,.aud:hover,.tier:hover{transform:none}
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width:1080px){
-  .debt-grid{grid-template-columns:repeat(3,1fr)}
-  .deliverables{grid-template-columns:repeat(3,1fr)}
-}
-@media (max-width:960px){
-  :root{--nav-h:64px}
-  .nav__links,.nav__right .nav__cta{display:none}
-  .nav__toggle{display:flex}
-  .hero__grid{grid-template-columns:1fr;gap:2.5rem}
-  .hero__panel{order:2}
-  .report{grid-template-columns:1fr;gap:2rem}
-  .report__side{order:-1}
-  .form-shell{grid-template-columns:1fr;gap:2rem}
-  .tiers{grid-template-columns:repeat(2,1fr)}
-  .steps{grid-template-columns:1fr}
-  .about-grid{grid-template-columns:1fr}
-}
-@media (max-width:760px){
-  .compare{grid-template-columns:1fr}
-  .twocol{grid-template-columns:1fr;gap:2.5rem}
-  .audience{grid-template-columns:1fr}
-  .debt-grid{grid-template-columns:repeat(2,1fr)}
-  .deliverables{grid-template-columns:repeat(2,1fr)}
-  .report__meta{grid-template-columns:1fr 1fr}
-}
-@media (max-width:520px){
-  .tiers{grid-template-columns:1fr}
-  .field--row{grid-template-columns:1fr;gap:0}
-  .footer__top{flex-direction:column;gap:1.5rem}
-  .grades__row{grid-template-columns:auto 1fr;gap:.9rem}
-  .grades__conf{display:none}
-  .brand__text small{display:none}
-  .debt-grid{grid-template-columns:1fr 1fr}
-}
-</style>
+<link rel="stylesheet" href="assets/styles.css">
 </head>
-<body>
+<body data-page="home">
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- ================= NAV ================= -->
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Terra Verity Ledger — home">
-      <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <rect x="1" y="1" width="30" height="30" rx="4" fill="#E10600"/>
-        <rect x="7" y="9"  width="18" height="2.2" rx="1" fill="#fff"/>
-        <rect x="7" y="15" width="12" height="2.2" rx="1" fill="#0A0A0A"/>
-        <rect x="7" y="21" width="15" height="2.2" rx="1" fill="#fff"/>
-      </svg>
+    <a class="brand" href="index.html" aria-label="Terra Verity Ledger — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="4" fill="#E10600"/><rect x="7" y="9" width="18" height="2.2" rx="1" fill="#fff"/><rect x="7" y="15" width="12" height="2.2" rx="1" fill="#0A0A0A"/><rect x="7" y="21" width="15" height="2.2" rx="1" fill="#fff"/></svg>
       <span class="brand__text">TERRA VERITY LEDGER<small>PLANETARY BOUNDARY TRUTH INFRASTRUCTURE</small></span>
     </a>
-
     <nav aria-label="Primary">
       <ul class="nav__links">
-        <li><a href="#problem">The Problem</a></li>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#product">Product</a></li>
-        <li><a href="#audiences">Who It's For</a></li>
-        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="problem.html">The Problem</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="audiences.html">Who It's For</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
       </ul>
     </nav>
-
     <div class="nav__right">
-      <a href="#intake" class="btn btn--red nav__cta">Request a Report</a>
-      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="contact.html" class="btn btn--red nav__cta">Request a Report</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
-
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
-  <a href="#problem">The Problem</a>
-  <a href="#how">How It Works</a>
-  <a href="#product">Product</a>
-  <a href="#audiences">Who It's For</a>
-  <a href="#pricing">Pricing</a>
-  <a href="#intake" class="btn btn--red btn--block">Request a Report</a>
+  <a href="problem.html">The Problem</a>
+  <a href="how-it-works.html">How It Works</a>
+  <a href="product.html">Product</a>
+  <a href="audiences.html">Who It's For</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="about.html">About</a>
+  <a href="contact.html" class="btn btn--red btn--block">Request a Report</a>
 </nav>
 
-<span id="top"></span>
 <main id="main">
 
-<!-- ================= HERO ================= -->
 <section class="hero" aria-labelledby="hero-h">
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="wrap">
@@ -550,24 +59,18 @@ form{position:relative}
         <h1 class="h1" id="hero-h" data-reveal>The truth behind the profit<span class="dot">.</span></h1>
         <p class="lead hero__sub" data-reveal>Terra Verity Ledger identifies who is transgressing the planetary boundaries, quantifies the real planetary debt behind their profit, and turns that truth into restoration, correction, and accountability.</p>
         <div class="hero__ctas" data-reveal>
-          <a href="#intake" class="btn btn--red">Request a Jurisdiction Report <span class="btn__arrow" aria-hidden="true">→</span></a>
-          <a href="#intake" class="btn btn--ghost">Book a Briefing</a>
+          <a href="contact.html" class="btn btn--red">Request a Jurisdiction Report <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a href="product.html" class="btn btn--ghost">See the product</a>
         </div>
         <div class="spine" id="spine" aria-label="Identify, Quantify, Rectify">
-          <span class="spine__word">IDENTIFY</span>
-          <span class="spine__sep" aria-hidden="true">—</span>
-          <span class="spine__word">QUANTIFY</span>
-          <span class="spine__sep" aria-hidden="true">—</span>
+          <span class="spine__word">IDENTIFY</span><span class="spine__sep" aria-hidden="true">—</span>
+          <span class="spine__word">QUANTIFY</span><span class="spine__sep" aria-hidden="true">—</span>
           <span class="spine__word spine__word--rectify">RECTIFY</span>
         </div>
       </div>
-
       <aside class="hero__panel" data-reveal aria-label="Planetary boundary status readout">
         <div class="panel">
-          <div class="panel__bar">
-            <div class="dot-row" aria-hidden="true"><i></i><i></i><i></i></div>
-            <span class="panel__title">PLANETARY BOUNDARY STATUS</span>
-          </div>
+          <div class="panel__bar"><div class="dot-row" aria-hidden="true"><i></i><i></i><i></i></div><span class="panel__title">PLANETARY BOUNDARY STATUS</span></div>
           <div class="ledger" role="table" aria-label="Planetary boundary status, illustrative">
             <div class="ledger__row" role="row"><span class="ledger__name" role="cell">Climate change</span><span class="chip chip--alert" role="cell">TRANSGRESSED</span></div>
             <div class="ledger__row" role="row"><span class="ledger__name" role="cell">Biosphere integrity</span><span class="chip chip--alert" role="cell">TRANSGRESSED</span></div>
@@ -586,650 +89,85 @@ form{position:relative}
   </div>
 </section>
 
-<!-- ================= THE PROBLEM ================= -->
-<section class="section" id="problem" aria-labelledby="problem-h">
+<section class="section section--tight" aria-labelledby="pos-h">
   <div class="wrap">
     <div class="section-head" data-reveal>
       <hr class="rule-red">
-      <p class="eyebrow">The Problem</p>
-      <h2 class="h2" id="problem-h">The economy records profit. It does not record the damage required to produce it.</h2>
+      <p class="eyebrow">Positioning</p>
+      <h2 class="h2" id="pos-h">This is not opinion. This is planetary accounting.</h2>
+      <p class="lead" style="margin-top:1.2rem">Verity is not a carbon calculator, a sustainability dashboard, or a reputation tool. It is a truth ledger grounded in reality — institutional-grade, evidence-based, legally careful — built for governments, courts, banks, insurers, and enterprises.</p>
     </div>
-    <p class="lead" data-reveal>A company can report billions while creating carbon debt, methane burden, toxic exposure, water depletion, landfill damage, PFAS contamination, degraded land, destroyed biodiversity, public health burden, and future cleanup costs — and because that damage isn't counted, it looks profitable.</p>
-
-    <div class="compare" data-reveal>
-      <div class="compare__card">
-        <p class="compare__label">Reported Profit</p>
-        <div class="stat" data-count="1000000000" data-prefix="$" aria-label="One billion dollars">$0</div>
-        <p class="compare__note">"We made $1 billion." Booked. Announced. Rewarded — with none of the damage on the balance sheet.</p>
-      </div>
-      <div class="compare__card compare__card--truth">
-        <p class="compare__label">Truth-Adjusted Profit</p>
-        <p class="compare__note" style="max-width:38ch;color:#fff;font-size:1.12rem;font-family:var(--font-display);font-weight:600;line-height:1.3;letter-spacing:-.01em">After counting planetary damage, public burden, and future liability — did you create value, or destruction called profit?</p>
-        <ul class="debit-list" aria-label="Unpriced liabilities behind the profit">
-          <li><span>− Carbon &amp; methane debt</span><span>unpriced</span></li>
-          <li><span>− Water &amp; land depletion</span><span>unpriced</span></li>
-          <li><span>− Public health burden</span><span>unpriced</span></li>
-          <li><span>− Future cleanup &amp; liability</span><span>unpriced</span></li>
-        </ul>
-        <div class="debit-total"><span>= Truth-Adjusted Profit</span><span class="q">?</span></div>
-      </div>
+    <div class="stat-strip" data-reveal-stagger>
+      <div class="stat-cell"><div class="stat-cell__v">6 / 9</div><div class="stat-cell__k">Planetary boundaries transgressed</div></div>
+      <div class="stat-cell"><div class="stat-cell__v">A–E</div><div class="stat-cell__k">Evidence grade on every claim</div></div>
+      <div class="stat-cell"><div class="stat-cell__v">3</div><div class="stat-cell__k">Steps — Identify · Quantify · Rectify</div></div>
+      <div class="stat-cell"><div class="stat-cell__v">B2G</div><div class="stat-cell__k">First serious buyer — governments</div></div>
     </div>
   </div>
 </section>
 
-<!-- ================= IS / IS NOT ================= -->
-<section class="section section--light" id="definition" aria-labelledby="def-h">
+<section class="section" aria-labelledby="explore-h">
   <div class="wrap">
     <div class="section-head" data-reveal>
       <hr class="rule-red">
-      <p class="eyebrow">Definition</p>
-      <h2 class="h2" id="def-h">What Verity is — and what it is not.</h2>
+      <p class="eyebrow">Explore</p>
+      <h2 class="h2" id="explore-h">One ledger of truth. Four ways in.</h2>
     </div>
-
-    <div class="twocol">
-      <div class="col--is" data-reveal>
-        <p class="col-title">Verity is</p>
-        <ul class="deflist">
-          <li><span class="mark mark--is" aria-hidden="true">✓</span><span>A truth ledger grounded in reality.</span></li>
-          <li><span class="mark mark--is" aria-hidden="true">✓</span><span>Institutional-grade planetary accounting.</span></li>
-          <li><span class="mark mark--is" aria-hidden="true">✓</span><span>Evidence-based, methodology-driven, legally careful.</span></li>
-        </ul>
-      </div>
-      <div class="col--isnot" data-reveal>
-        <p class="col-title">Verity is not</p>
-        <ul class="deflist">
-          <li><span class="mark mark--isnot" aria-hidden="true">✕</span><span>A carbon calculator.</span></li>
-          <li><span class="mark mark--isnot" aria-hidden="true">✕</span><span>A sustainability dashboard.</span></li>
-          <li><span class="mark mark--isnot" aria-hidden="true">✕</span><span>A greenwashing badge.</span></li>
-          <li><span class="mark mark--isnot" aria-hidden="true">✕</span><span>A reputation tool.</span></li>
-          <li><span class="mark mark--isnot" aria-hidden="true">✕</span><span>A voluntary reporting form.</span></li>
-          <li><span class="mark mark--isnot" aria-hidden="true">✕</span><span>An activism-only app.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <blockquote class="pullquote" data-reveal>Verity does not ask what a company reports. It asks what is actually happening — and what the business would look like if that damage were counted as debt.</blockquote>
-  </div>
-</section>
-
-<!-- ================= HOW IT WORKS ================= -->
-<section class="section" id="how" aria-labelledby="how-h">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <hr class="rule-red">
-      <p class="eyebrow">The Framework</p>
-      <h2 class="h2" id="how-h">Identify <span class="red">→</span> Quantify <span class="red">→</span> Rectify</h2>
-    </div>
-
-    <div class="steps" data-reveal-stagger>
-      <article class="step">
-        <p class="step__num"><b>01</b> / IDENTIFY</p>
-        <h3 class="h3">Reveal who is transgressing, and what activity creates the harm.</h3>
-        <p>Not "pollution exists," but "this actor, through this activity, in this location, is creating this specific boundary pressure."</p>
-        <div class="flow" aria-label="Identification chain">
-          <span class="a">Site</span> → Operator → Parent Company → Activity → <span class="r">Boundary Pressure</span> → Affected Communities &amp; Ecosystems
-        </div>
-      </article>
-
-      <article class="step">
-        <p class="step__num"><b>02</b> / QUANTIFY</p>
-        <h3 class="h3">Turn harm into numbers.</h3>
-        <p>Estimate how much damage, how severe, how long it lasts, what it costs to restore, and what it costs if ignored — converted into Planetary Debt.</p>
-        <div class="flow" aria-label="Quantification formula">
-          <span class="a">Severity</span> × Duration × Restoration Cost → <span class="r">Planetary Debt</span>
-        </div>
-      </article>
-
-      <article class="step step--rectify">
-        <p class="step__num"><b>03</b> / <span class="red">RECTIFY</span></p>
-        <h3 class="h3">The action layer.</h3>
-        <p>Verity doesn't fine companies — only governments, courts, contracts, insurers, lenders, and markets can. Verity builds the truth infrastructure that lets those consequences happen.</p>
-        <div class="flow" aria-label="Rectification pathway">
-          <span class="r">Truth</span> → <span class="r">Debt</span> → <span class="r">Action</span>
-        </div>
-      </article>
+    <div class="grid-3" data-reveal-stagger>
+      <a class="card" href="problem.html">
+        <p class="card__eyebrow">The Problem</p>
+        <h3 class="h3">Profit that hides its damage.</h3>
+        <p>The economy records profit. It does not record the carbon, water, land, and health debt required to produce it — so destruction looks profitable.</p>
+        <span class="link-arrow">Read the problem →</span>
+      </a>
+      <a class="card" href="how-it-works.html">
+        <p class="card__eyebrow">How It Works</p>
+        <h3 class="h3">Identify → Quantify → Rectify.</h3>
+        <p>Reveal who is transgressing, convert the harm into Planetary Debt, and build the truth infrastructure that lets consequences happen.</p>
+        <span class="link-arrow">See the framework →</span>
+      </a>
+      <a class="card" href="product.html">
+        <p class="card__eyebrow">The Product</p>
+        <h3 class="h3">The Jurisdiction Damage Report.</h3>
+        <p>An evidence-graded dossier for a city, county, or agency — plus a live console that assembles it from real public records.</p>
+        <span class="link-arrow">Explore the product →</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ================= PLANETARY DEBT ================= -->
-<section class="section" id="debt" aria-labelledby="debt-h">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <hr class="rule-red">
-      <p class="eyebrow">The Core Concept</p>
-      <h2 class="h2" id="debt-h">Planetary Debt — the unpaid balance behind the profit.</h2>
-    </div>
-
-    <div class="debt-grid" data-reveal-stagger>
-      <div class="debt-cell"><span class="debt-cell__id">L-01</span><span class="debt-cell__name">Carbon Debt</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-02</span><span class="debt-cell__name">Water Debt</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-03</span><span class="debt-cell__name">Land Debt</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-04</span><span class="debt-cell__name">Biodiversity Debt</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-05</span><span class="debt-cell__name">Chemical Debt</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-06</span><span class="debt-cell__name">Waste Debt</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-07</span><span class="debt-cell__name">Public Health Burden</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-08</span><span class="debt-cell__name">Cleanup Cost</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-09</span><span class="debt-cell__name">Restoration Cost</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-      <div class="debt-cell"><span class="debt-cell__id">L-10</span><span class="debt-cell__name">Future Liability</span><span class="debt-cell__bar" aria-hidden="true"></span></div>
-    </div>
-    <div class="debt-foot" data-reveal>
-      <span>Ten liability classes — one running balance.</span>
-      <span><b>= PLANETARY DEBT</b></span>
-    </div>
-  </div>
-</section>
-
-<!-- ================= WHO IT'S FOR ================= -->
-<section class="section" id="audiences" aria-labelledby="aud-h">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <hr class="rule-red">
-      <p class="eyebrow">Who It's For</p>
-      <h2 class="h2" id="aud-h">Three audiences. One ledger of truth.</h2>
-    </div>
-
-    <div class="audience" data-reveal-stagger>
-      <article class="aud">
-        <div class="aud__tag"><span class="aud__seg">B2G</span><span class="aud__primary">FIRST SERIOUS BUYER</span></div>
-        <h3 class="h3">Governments, Cities &amp; Agencies</h3>
-        <p>See what's happening in your jurisdiction, identify who may be responsible, estimate the cost of damage, and find practical pathways to restoration.</p>
-      </article>
-      <article class="aud">
-        <div class="aud__tag"><span class="aud__seg">B2B</span></div>
-        <h3 class="h3">Companies, Banks, Insurers &amp; Investors</h3>
-        <p>Avoid hidden planetary liability and make better decisions before damage becomes financial, legal, or public risk.</p>
-      </article>
-      <article class="aud">
-        <div class="aud__tag"><span class="aud__seg">B2C</span></div>
-        <h3 class="h3">Citizens, Communities &amp; Consumers</h3>
-        <p>Understand what's happening around you, who may be responsible, and what products, companies, or systems you may be supporting.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FLAGSHIP PRODUCT ================= -->
-<section class="section" id="product" aria-labelledby="prod-h">
-  <div class="wrap">
-    <div class="report">
-      <div class="report__doc" data-reveal aria-label="Sample report cover">
-        <div class="report__doc-top">
-          <p class="k">TERRA VERITY LEDGER · FLAGSHIP DELIVERABLE</p>
-          <h4>Jurisdiction Planetary Damage Report</h4>
-          <div class="report__meta">
-            <div><span>JURISDICTION</span><b>[ CITY / COUNTY ]</b></div>
-            <div><span>PREPARED FOR</span><b>[ AGENCY ]</b></div>
-            <div><span>CLASSIFICATION</span><b>DECISION-GRADE</b></div>
-            <div><span>EVIDENCE GRADE</span><b>A – E</b></div>
-          </div>
-        </div>
-        <div class="report__doc-body">
-          <ol class="toc">
-            <li>Local environmental damage overview</li>
-            <li>Key facilities or sites of concern</li>
-            <li>Boundary transgression summary</li>
-            <li>Estimated planetary debt</li>
-            <li>Public health &amp; government burden</li>
-            <li>Evidence sources</li>
-            <li>Evidence confidence score</li>
-            <li>Future cost of inaction</li>
-            <li>Restoration options</li>
-            <li>Possible funding pathways</li>
-            <li>Recommended next steps</li>
-          </ol>
-        </div>
-      </div>
-
-      <div class="report__side">
-        <div data-reveal>
-          <hr class="rule-red">
-          <p class="eyebrow">The Flagship Product</p>
-          <h2 class="h2" id="prod-h">The Jurisdiction Planetary Damage Report.</h2>
-          <p class="lead" style="margin-top:1.4rem">A personalized report for a city, county, or agency facing landfill, waste, water, or contamination problems — eleven sections that move a jurisdiction from concern to a defensible course of action.</p>
-          <div class="hero__ctas" style="margin-top:2rem">
-            <a href="#intake" class="btn btn--red">Request a Jurisdiction Report <span class="btn__arrow" aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= EVIDENCE GRADES ================= -->
-<section class="section section--light" id="evidence" aria-labelledby="ev-h">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <hr class="rule-red">
-      <p class="eyebrow">Defensibility</p>
-      <h2 class="h2" id="ev-h">This is not opinion. This is planetary accounting.</h2>
-    </div>
-    <p class="lead" data-reveal style="margin-bottom:clamp(2rem,4vw,3rem)">Every claim is evidence-graded. Verity never says "this company is evil." It says: based on available public data, this activity is estimated to create this planetary boundary pressure — with this evidence grade, this uncertainty range, and this restoration cost estimate.</p>
-
-    <div class="grades" data-reveal role="table" aria-label="Evidence grade scale A to E">
-      <div class="grades__row" role="row">
-        <div class="grade-chip g-a" role="cell" aria-label="Grade A">A</div>
-        <div class="grades__desc" role="cell">Verified facility-level or audited data.</div>
-        <div class="grades__conf" role="cell">HIGHEST CONFIDENCE</div>
-      </div>
-      <div class="grades__row" role="row">
-        <div class="grade-chip g-b" role="cell" aria-label="Grade B">B</div>
-        <div class="grades__desc" role="cell">Strong government, permit, satellite, or regulatory data.</div>
-        <div class="grades__conf" role="cell">HIGH CONFIDENCE</div>
-      </div>
-      <div class="grades__row" role="row">
-        <div class="grade-chip g-c" role="cell" aria-label="Grade C">C</div>
-        <div class="grades__desc" role="cell">Company-reported data with disclosed methodology.</div>
-        <div class="grades__conf" role="cell">MODERATE CONFIDENCE</div>
-      </div>
-      <div class="grades__row" role="row">
-        <div class="grade-chip g-d" role="cell" aria-label="Grade D">D</div>
-        <div class="grades__desc" role="cell">Modeled estimate based on industry factors.</div>
-        <div class="grades__conf" role="cell">INDICATIVE</div>
-      </div>
-      <div class="grades__row" role="row">
-        <div class="grade-chip g-e" role="cell" aria-label="Grade E">E</div>
-        <div class="grades__desc" role="cell">Risk flag requiring further validation.</div>
-        <div class="grades__conf" role="cell">FLAG · UNVERIFIED</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= DELIVERABLES ================= -->
-<section class="section" id="deliverables" aria-labelledby="del-h">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <hr class="rule-red">
-      <p class="eyebrow">Output</p>
-      <h2 class="h2" id="del-h">What Verity generates.</h2>
-    </div>
-
-    <div class="deliverables" data-reveal-stagger>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="1.6"/><path d="M14 3v4h4M9 13h6M9 16h6" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Planetary Debt Notices</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="1.6"/><path d="M14 3v4h4M9 13h6M9 16h6" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Corrective Action Reports</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="1.6"/><path d="M14 3v4h4M9 13h6M9 16h6" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Restoration Cost Reports</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="1.6"/><path d="M14 3v4h4M9 13h6M9 16h6" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Public Truth Reports</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Government Evidence Packs</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Legal Evidence Packs</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Investor &amp; Lender Alerts</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l9 4v6c0 5-4 8-9 10-5-2-9-5-9-10V6z" stroke="currentColor" stroke-width="1.6"/><path d="M12 9v4M12 16h.01" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Insurance Risk Flags</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l9 4v6c0 5-4 8-9 10-5-2-9-5-9-10V6z" stroke="currentColor" stroke-width="1.6"/><path d="M12 9v4M12 16h.01" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Procurement Risk Flags</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Consumer Transparency Scores</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21c5-4 8-8 8-12a8 8 0 10-16 0c0 4 3 8 8 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Restoration Recommendations</span></div>
-      <div class="deliverable"><svg class="deliverable__ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17l6-6 4 4 6-8" stroke="currentColor" stroke-width="1.6"/><path d="M20 7h-4M20 7v4" stroke="currentColor" stroke-width="1.6"/></svg><span class="deliverable__name">Transition Pathways</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PRICING ================= -->
-<section class="section" id="pricing" aria-labelledby="price-h">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <hr class="rule-red">
-      <p class="eyebrow">Engagement</p>
-      <h2 class="h2" id="price-h">Start with a snapshot. Scale to an evidence package.</h2>
-    </div>
-
-    <div class="tiers" data-reveal-stagger>
-      <article class="tier">
-        <p class="tier__name">Local Damage Snapshot</p>
-        <p class="tier__price">$500–$2,500</p>
-        <p class="tier__desc">An early local damage snapshot to establish what's happening and where to look next.</p>
-        <button class="btn btn--ghost btn--block" data-tier="Local Damage Snapshot ($500–$2,500)">Request this</button>
-      </article>
-      <article class="tier tier--feature">
-        <span class="tier__badge">MOST REQUESTED</span>
-        <p class="tier__name">Jurisdiction Burden Report</p>
-        <p class="tier__price">$5,000–$15,000</p>
-        <p class="tier__desc">A full jurisdiction environmental burden report across boundaries, burden, and cost.</p>
-        <button class="btn btn--red btn--block" data-tier="Jurisdiction Burden Report ($5,000–$15,000)">Request this</button>
-      </article>
-      <article class="tier">
-        <p class="tier__name">Waste &amp; Landfill Debt Assessment</p>
-        <p class="tier__price">$10,000–$25,000</p>
-        <p class="tier__desc">A focused landfill and waste planetary debt assessment with restoration costing.</p>
-        <button class="btn btn--ghost btn--block" data-tier="Waste & Landfill Debt Assessment ($10,000–$25,000)">Request this</button>
-      </article>
-      <article class="tier">
-        <p class="tier__name">Government / Legal Evidence Package</p>
-        <p class="tier__price">$25,000+</p>
-        <p class="tier__desc">A custom government or legal evidence package built to decision-grade defensibility.</p>
-        <button class="btn btn--ghost btn--block" data-tier="Government / Legal Evidence Package ($25,000+)">Request this</button>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= INTAKE FORM ================= -->
-<section class="section" id="intake" aria-labelledby="intake-h">
-  <div class="wrap">
-    <div class="form-shell">
-      <aside class="form-aside" data-reveal>
-        <hr class="rule-red">
-        <p class="eyebrow">Request a Report</p>
-        <h2 class="h2" id="intake-h">Tell us what you're facing.</h2>
-        <p class="lead" style="margin-top:1.2rem;margin-bottom:2rem">Every engagement begins with the facts on the ground. Share the concern; we return an evidence-graded path forward.</p>
-        <div class="form-aside__stat"><b>A–E</b><span>Every finding carries an evidence grade and disclosed uncertainty range.</span></div>
-        <div class="form-aside__stat"><b>11</b><span>Sections in the flagship Jurisdiction Planetary Damage Report.</span></div>
-        <div class="form-aside__stat" style="border-bottom:1px solid var(--line)"><b>1</b><span>Independent methodology — findings stand on their own.</span></div>
-      </aside>
-
-      <div class="form-main">
-        <form id="intakeForm" novalidate data-reveal aria-describedby="form-privacy">
-          <div class="field--row">
-            <div class="field">
-              <label for="f-name">Full name <span class="req" aria-hidden="true">*</span></label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required aria-required="true">
-              <p class="field__err" data-err>Please enter your full name.</p>
-            </div>
-            <div class="field">
-              <label for="f-org">Organization</label>
-              <input id="f-org" name="organization" type="text" autocomplete="organization">
-            </div>
-          </div>
-
-          <div class="field--row">
-            <div class="field">
-              <label for="f-role">Role</label>
-              <input id="f-role" name="role" type="text" autocomplete="organization-title">
-            </div>
-            <div class="field">
-              <label for="f-loc">Jurisdiction / location <span class="req" aria-hidden="true">*</span></label>
-              <input id="f-loc" name="location" type="text" autocomplete="address-level2" required aria-required="true" placeholder="City, county, or region">
-              <p class="field__err" data-err>Please enter a jurisdiction or location.</p>
-            </div>
-          </div>
-
-          <div class="field--row">
-            <div class="field">
-              <label for="f-problem">Problem type</label>
-              <select id="f-problem" name="problem_type">
-                <option value="">Select a problem type…</option>
-                <option>Landfill</option>
-                <option>Contaminated water</option>
-                <option>Illegal dumping</option>
-                <option>Air quality</option>
-                <option>Hazardous waste</option>
-                <option>Degraded land</option>
-                <option>PFAS</option>
-                <option>Methane</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="f-site">Known facility or site</label>
-              <input id="f-site" name="site" type="text" placeholder="Optional">
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="f-concern">Describe the concern <span class="req" aria-hidden="true">*</span></label>
-            <textarea id="f-concern" name="concern" required aria-required="true" placeholder="What is happening, and what have you observed?"></textarea>
-            <p class="field__err" data-err>Please describe the concern.</p>
-          </div>
-
-          <div class="field">
-            <label for="f-docs">Available documents</label>
-            <input id="f-docs" name="documents" type="url" inputmode="url" placeholder="Optional — paste a link to permits, filings, or data">
-            <p class="field__err" data-err>Please enter a valid link (including https://).</p>
-          </div>
-
-          <div class="field--row">
-            <div class="field">
-              <label for="f-budget">Budget range</label>
-              <select id="f-budget" name="budget">
-                <option value="">Select a budget range…</option>
-                <option>Local Damage Snapshot ($500–$2,500)</option>
-                <option>Jurisdiction Burden Report ($5,000–$15,000)</option>
-                <option>Waste &amp; Landfill Debt Assessment ($10,000–$25,000)</option>
-                <option>Government / Legal Evidence Package ($25,000+)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="f-phone">Phone</label>
-              <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="Optional">
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="f-need">What do you need to understand?</label>
-            <textarea id="f-need" name="need" placeholder="The decision or question this report should help you answer."></textarea>
-          </div>
-
-          <div class="field">
-            <label for="f-email">Contact email <span class="req" aria-hidden="true">*</span></label>
-            <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" required aria-required="true">
-            <p class="field__err" data-err>Please enter a valid email address.</p>
-          </div>
-
-          <p class="form-note" id="form-privacy">Submissions are reviewed under Verity's independent methodology. Evidence grades and uncertainty ranges are disclosed in every engagement.</p>
-          <button type="submit" class="btn btn--red btn--block" style="font-size:1.05rem;padding:1.05rem">Request My Report.</button>
-        </form>
-
-        <div class="form-success" id="formSuccess" role="status" aria-live="polite" tabindex="-1">
-          <div class="form-success__ic" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 class="h3">Request received.</h3>
-          <p>Your request has entered the ledger. A member of the Verity team will respond with next steps and an evidence-grade scope for your jurisdiction.</p>
-          <div class="ref"><span>REFERENCE</span><strong id="refId">VRT-000000</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= ABOUT ================= -->
-<section class="section" id="about" aria-labelledby="about-h">
-  <div class="wrap">
-    <div class="about-grid">
-      <div data-reveal>
-        <hr class="rule-red">
-        <p class="eyebrow">About</p>
-        <h2 class="h2" id="about-h" style="margin-bottom:1.6rem">Identify. Quantify. Rectify.</h2>
-        <p class="mission">No more hidden damage. <span class="red">No more fake profit.</span> No more unpaid planetary debt.</p>
-      </div>
-      <div class="disclosure" data-reveal>
-        <p class="col-title">Structure &amp; Independence</p>
-        <p>Verity Ledger LLC operates as a subsidiary of <strong>TerraReFlow PBC</strong>, a planetary-restoration parent company.</p>
-        <p>Verity reveals and quantifies planetary debt; TerraReFlow may help build restoration infrastructure to reduce it.</p>
-        <p>Verity's methodology, scoring, and findings remain <strong>independent</strong>, and Verity presents multiple qualified restoration providers — not only TerraReFlow.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FINAL CTA ================= -->
 <section class="section final" aria-labelledby="final-h">
   <div class="wrap">
     <p class="eyebrow final__eyebrow" data-reveal>The Mandate</p>
     <h2 class="h2" id="final-h" data-reveal>No more hidden damage. No more fake profit. No more unpaid planetary debt.</h2>
-    <a href="#intake" class="btn" data-reveal>Request a Jurisdiction Report <span class="btn__arrow" aria-hidden="true">→</span></a>
+    <a href="contact.html" class="btn" data-reveal>Request a Jurisdiction Report <span class="btn__arrow" aria-hidden="true">→</span></a>
   </div>
 </section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer__top">
-      <a class="brand" href="#top" aria-label="Terra Verity Ledger — home">
-        <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <rect x="1" y="1" width="30" height="30" rx="4" fill="#E10600"/>
-          <rect x="7" y="9"  width="18" height="2.2" rx="1" fill="#fff"/>
-          <rect x="7" y="15" width="12" height="2.2" rx="1" fill="#0A0A0A"/>
-          <rect x="7" y="21" width="15" height="2.2" rx="1" fill="#fff"/>
-        </svg>
+      <a class="brand" href="index.html" aria-label="Terra Verity Ledger — home">
+        <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="4" fill="#E10600"/><rect x="7" y="9" width="18" height="2.2" rx="1" fill="#fff"/><rect x="7" y="15" width="12" height="2.2" rx="1" fill="#0A0A0A"/><rect x="7" y="21" width="15" height="2.2" rx="1" fill="#fff"/></svg>
         <span class="brand__text">TERRA VERITY LEDGER<small>PLANETARY BOUNDARY TRUTH INFRASTRUCTURE</small></span>
       </a>
       <ul class="footer__nav">
-        <li><a href="#problem">The Problem</a></li>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#product">Product</a></li>
-        <li><a href="#audiences">Who It's For</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#intake">Request a Report</a></li>
+        <li><a href="problem.html">The Problem</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="audiences.html">Who It's For</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Request a Report</a></li>
       </ul>
-      <p class="footer__contact">Inquiries<br><a href="#intake">Request a Jurisdiction Report →</a></p>
+      <p class="footer__contact">Inquiries<br><a href="contact.html">Request a Jurisdiction Report →</a></p>
     </div>
-    <p class="fineprint">
-      Verity Ledger LLC is a subsidiary of TerraReFlow PBC. TerraReFlow or affiliated companies may provide restoration, infrastructure, or advisory services related to certain opportunities identified by Verity. Verity's methodology and findings are independent. All estimates are evidence-graded and include disclosed uncertainty ranges. Planetary boundary statuses shown are illustrative.
-      <span class="copy">© Terra Verity Ledger. Planetary Boundary Truth Infrastructure.</span>
-    </p>
+    <p class="fineprint">Verity Ledger LLC is a subsidiary of TerraReFlow PBC. TerraReFlow or affiliated companies may provide restoration, infrastructure, or advisory services related to certain opportunities identified by Verity. Verity's methodology and findings are independent. All estimates are evidence-graded and include disclosed uncertainty ranges. Planetary boundary statuses shown are illustrative.<span class="copy">© Terra Verity Ledger. Planetary Boundary Truth Infrastructure.</span></p>
   </div>
 </footer>
 
-<script>
-(function(){
-  "use strict";
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---- Sticky nav condense ---- */
-  var nav = document.getElementById("nav");
-  function onScroll(){
-    if(window.scrollY > 24){ nav.classList.add("is-stuck"); }
-    else{ nav.classList.remove("is-stuck"); }
-  }
-  window.addEventListener("scroll", onScroll, {passive:true});
-  onScroll();
-
-  /* ---- Mobile menu ---- */
-  var toggle = document.getElementById("navToggle");
-  var menu = document.getElementById("mobileMenu");
-  function setMenu(open){
-    menu.classList.toggle("is-open", open);
-    toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    document.body.style.overflow = open ? "hidden" : "";
-  }
-  toggle.addEventListener("click", function(){ setMenu(!menu.classList.contains("is-open")); });
-  menu.addEventListener("click", function(e){ if(e.target.closest("a")) setMenu(false); });
-  document.addEventListener("keydown", function(e){ if(e.key === "Escape") setMenu(false); });
-
-  /* ---- Reveal on scroll ---- */
-  var revealEls = document.querySelectorAll("[data-reveal],[data-reveal-stagger]");
-  if(reduceMotion || !("IntersectionObserver" in window)){
-    revealEls.forEach(function(el){ el.classList.add("is-in"); });
-  } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          var el = entry.target;
-          if(el.hasAttribute("data-reveal-stagger")){
-            Array.prototype.forEach.call(el.children, function(child, i){
-              child.style.transitionDelay = (i * 70) + "ms";
-            });
-          }
-          el.classList.add("is-in");
-          io.unobserve(el);
-        }
-      });
-    }, {threshold:0.14, rootMargin:"0px 0px -8% 0px"});
-    revealEls.forEach(function(el){ io.observe(el); });
-  }
-
-  /* ---- Hero spine reveal ---- */
-  var spine = document.getElementById("spine");
-  if(spine){
-    if(reduceMotion){ spine.classList.add("is-in"); }
-    else { setTimeout(function(){ spine.classList.add("is-in"); }, 350); }
-  }
-
-  /* ---- Count-up ---- */
-  function formatNum(n, prefix){
-    return (prefix || "") + Math.round(n).toLocaleString("en-US");
-  }
-  function countUp(el){
-    var target = parseFloat(el.getAttribute("data-count"));
-    var prefix = el.getAttribute("data-prefix") || "";
-    if(reduceMotion){ el.textContent = formatNum(target, prefix); return; }
-    var dur = 1600, start = null;
-    function tick(ts){
-      if(!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = formatNum(target * eased, prefix);
-      if(p < 1) requestAnimationFrame(tick);
-      else el.textContent = formatNum(target, prefix);
-    }
-    requestAnimationFrame(tick);
-  }
-  var counters = document.querySelectorAll("[data-count]");
-  if(!("IntersectionObserver" in window)){
-    counters.forEach(function(el){ el.textContent = formatNum(parseFloat(el.getAttribute("data-count")), el.getAttribute("data-prefix")||""); });
-  } else {
-    var cio = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){ countUp(entry.target); cio.unobserve(entry.target); }
-      });
-    }, {threshold:0.5});
-    counters.forEach(function(el){ cio.observe(el); });
-  }
-
-  /* ---- Pricing tier -> form prefill ---- */
-  var budget = document.getElementById("f-budget");
-  document.querySelectorAll("[data-tier]").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      var val = btn.getAttribute("data-tier");
-      if(budget){
-        for(var i=0;i<budget.options.length;i++){
-          if(budget.options[i].text.replace(/\s+/g," ").trim() === val.replace(/\s+/g," ").trim()){ budget.selectedIndex = i; break; }
-        }
-      }
-      var target = document.getElementById("intake");
-      target.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"});
-      setTimeout(function(){ var nm = document.getElementById("f-name"); if(nm) nm.focus({preventScroll:true}); }, reduceMotion ? 0 : 500);
-    });
-  });
-
-  /* ---- Form validation ---- */
-  var form = document.getElementById("intakeForm");
-  var success = document.getElementById("formSuccess");
-
-  function fieldOf(input){ return input.closest(".field"); }
-  function setInvalid(input, invalid){ var f = fieldOf(input); if(f) f.classList.toggle("invalid", invalid); }
-
-  function validateField(input){
-    var val = input.value.trim();
-    var ok = true;
-    if(input.hasAttribute("required") && !val) ok = false;
-    if(ok && input.type === "email" && val){ ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
-    if(ok && input.type === "url" && val){ ok = /^https?:\/\/.+\..+/.test(val); }
-    setInvalid(input, !ok);
-    return ok;
-  }
-
-  if(form){
-    form.querySelectorAll("input, textarea").forEach(function(input){
-      input.addEventListener("blur", function(){ if(input.hasAttribute("required") || input.value.trim()) validateField(input); });
-      input.addEventListener("input", function(){ if(fieldOf(input) && fieldOf(input).classList.contains("invalid")) validateField(input); });
-    });
-
-    form.addEventListener("submit", function(e){
-      e.preventDefault();
-      var firstInvalid = null, allOk = true;
-      form.querySelectorAll("input, textarea").forEach(function(input){
-        if(input.hasAttribute("required") || (input.type === "url" && input.value.trim())){
-          var ok = validateField(input);
-          if(!ok){ allOk = false; if(!firstInvalid) firstInvalid = input; }
-        }
-      });
-      if(!allOk){ if(firstInvalid) firstInvalid.focus(); return; }
-
-      /* Generate a client-side reference id (backend hook goes here) */
-      var ref = "VRT-" + Math.floor(100000 + Math.random() * 900000);
-      var refEl = document.getElementById("refId");
-      if(refEl) refEl.textContent = ref;
-
-      form.style.display = "none";
-      success.classList.add("is-shown");
-      success.focus();
-      success.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"center"});
-    });
-  }
-})();
-</script>
+<script src="assets/main.js"></script>
 </body>
 </html>
