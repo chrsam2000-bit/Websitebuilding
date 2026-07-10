@@ -4,43 +4,49 @@ A repository for building websites, set up with Claude Code skills for design gu
 
 ## Sites
 
-### Terra Verity Ledger — multi-page marketing site ([`index.html`](index.html))
+### ReVerity Ledger — 7-page prototype platform site ([`index.html`](index.html))
 
-A complete, static multi-page institutional marketing site for **Terra Verity Ledger**
-("Verity") — *Planetary Boundary Truth Infrastructure*. Eight hand-authored HTML pages
-sharing one stylesheet and one script — no framework, no build step, no bundler (fonts
-from Google Fonts). Open `index.html` in any browser, or host the folder anywhere static.
+A premium, static, multi-page prototype website for **ReVerity Ledger** — *Federal
+Environmental Debt Accounting and Rectification Infrastructure*. Black / Gold / White
+institutional identity (BlackRock terminal × IRS authority × Bloomberg data platform).
+Seven hand-authored HTML pages sharing one stylesheet and one script — no framework,
+no build step (fonts from Google Fonts). Open `index.html` in any browser, or host the
+folder anywhere static.
 
-**Pages** (static nav + footer on every page, `aria-current` active states):
+**Operating command:** Identify. Quantify. Rectify.
+**System model:** Identify → Quantify → Rectify → Fund → Deploy → Restore
 
 | Page | File | What it does |
 |------|------|--------------|
-| Home | [`index.html`](index.html) | Hero, live planetary-boundary status terminal (6 of 9 transgressed), positioning stats, explore teasers |
-| The Problem | [`problem.html`](problem.html) | Reported-vs-truth profit compare with animated count-up to $1B, unpriced planetary-debt grid |
-| How It Works | [`how-it-works.html`](how-it-works.html) | The Identify → Quantify → Rectify framework, three discipline cards, the A–E evidence-grade scale |
-| Product | [`product.html`](product.html) | The flagship Jurisdiction Planetary Damage Report (11-section table of contents, is/is-not), links to both working products, deliverables grid |
-| Who It's For | [`audiences.html`](audiences.html) | B2G / B2B / B2C audiences (government named as first serious buyer) |
-| Pricing | [`pricing.html`](pricing.html) | Four engagement tiers; each "Request this" carries its tier into the intake form |
-| About | [`about.html`](about.html) | Mission and the disclosed TerraReFlow PBC relationship / independence |
-| Request a Report | [`contact.html`](contact.html) | Full intake form with client-side validation, tier prefill, and a success state |
+| Home | [`index.html`](index.html) | Animated US dot-map liability network, Environmental Burden Monitor, the Broken Equation, six-discipline system, Primary Restoration & Transition Trust flow |
+| The Crisis | [`crisis.html`](crisis.html) | The Environmental Blind Spot — seven-chapter evidence framework, balance-sheet split, crisis dashboard with 9 category filters, evidence library |
+| Ledger Explorer | [`explorer.html`](explorer.html) | Searchable prototype database of fictional entities, 4 view modes, planetary-boundary debt wheel, Annual Environmental Debt Statement + waterfall, rankings, dispute process |
+| Methodology | [`methodology.html`](methodology.html) | Harm→liability chain, Environmental Debt Formula, three-layer methodology, four tax pillars, upstream/downstream toggle, marginal-damage graph, evidence confidence scale, debt calculator |
+| Products | [`products.html`](products.html) | Eight infrastructure modules — Federal Debt Ledger, Government Dashboard, Corporate Filing, Advisory, Legacy Register, Trust Administration, Restoration Marketplace, API |
+| Pricing | [`pricing.html`](pricing.html) | Access & Engagement Models — Public Explorer (free), Professional Intelligence, Enterprise Platform, Federal Custom Contract, advisory engagements, comparison table |
+| Contact | [`contact.html`](contact.html) | Seven institutional inquiry paths, full intake form with checkboxes and tier prefill, About / Mission / Vision |
 
-- **Shared assets:** one [`assets/styles.css`](assets/styles.css) (the full design system —
-  palette tokens, type scale, components) and one [`assets/main.js`](assets/main.js)
-  (all interactions). Every page links the same two files, so the look and behavior stay
-  identical and edits propagate everywhere.
-- **Identity:** bold Red / White / Black, dark canvas with bone-white "clarity" breaks.
-- **Type:** Inter Tight (display) · Inter (body) · IBM Plex Mono (data / ledger).
-- **Interactions:** condensing sticky nav, full-screen scroll-locked mobile menu, scroll
-  reveals, animated count-up, pricing→contact tier prefill (`?tier=` query param), and a
-  client-side-validated intake form with a `VRT-` reference success state. The form's
-  submit handler has a clear hook for wiring a real backend later.
-- **Quality:** mobile-first responsive (verified 375px → 1440px, no horizontal scroll on
-  any page), semantic HTML, visible focus states, `prefers-reduced-motion` respected, and
-  zero console errors. Verified in a headless browser across all eight pages: loads, active
-  nav, count-up, form validation (empty blocked, bad email rejected, valid submit succeeds),
-  tier prefill, and the mobile menu.
+- **Shared assets:** one [`assets/styles.css`](assets/styles.css) (full design system —
+  palette tokens, Playfair Display / Inter / IBM Plex Mono, components) and one
+  [`assets/main.js`](assets/main.js) (nav, reveals, counters, tabs, accordions, sortable
+  tables, form validation, `?tier=` prefill). Page-specific charts and logic live inline
+  per page — all visualizations are hand-built SVG, no chart libraries, no CDNs.
+- **Prototype data rules:** every demonstration figure is labeled as prototype data;
+  all companies in the ledger are fictional (Northstar Industrial Holdings, Meridian
+  Chemical Systems, Dominion Resource Processing, Atlas Materials Group, Crown River
+  Energy); a persistent footer disclaimer states ReVerity does not levy taxes, impose
+  penalties, issue legal determinations, or control public funds.
+- **Quality:** responsive 375px → 1440px with no horizontal scroll, semantic HTML,
+  visible focus states, `prefers-reduced-motion` respected, zero console errors —
+  verified per page in a headless browser (desktop + mobile screenshots, interaction
+  checks).
 
 ### The Verity Console — [`console.html`](console.html)
+
+> **Note:** the Console and the Site Dossier below were built under the previous
+> **Terra Verity Ledger** (red/white/black) brand iteration and are kept in the repo
+> as working product prototypes. The marketing site above has since been redesigned
+> as **ReVerity Ledger** (black/gold/white) and no longer links to them.
 
 The working **product** for Terra Verity Ledger — a functional, single-file React
 intelligence application (not a marketing page). A user opens a *case* on a real U.S.
