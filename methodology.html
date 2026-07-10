@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="ReVerity Ledger methodology — how environmental evidence becomes defensible financial accountability. Scientific measurement, financial assessment, legal authority, and restoration allocation are kept separate and independently reviewable.">
+<title>Methodology — ReVerity Ledger</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23050505'/%3E%3Crect x='1' y='1' width='30' height='30' rx='4.5' fill='none' stroke='%23D4AF37' stroke-width='1.4'/%3E%3Cpath d='M9 8 L16 25 L23 8' fill='none' stroke='%23D4AF37' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ===== Methodology page (mx-) ===== */
+
+/* Formula centerpiece */
+.mx-formula{text-align:center;padding:clamp(1.8rem,4vw,3.2rem) clamp(1rem,3vw,2.5rem)}
+.mx-formula__lhs{font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,3vw,2.35rem);color:var(--pure-white);line-height:1.2}
+.mx-formula__eq{font-family:var(--font-mono);font-weight:600;color:var(--rich-gold);font-size:clamp(1.4rem,2.4vw,2rem);margin:.7rem 0 1.1rem}
+.mx-formula__terms{display:flex;align-items:stretch;justify-content:center;gap:.9rem;flex-wrap:wrap}
+.mx-term{border:1px solid var(--line-strong);border-radius:8px;padding:1.1rem 1.3rem;background:rgba(212,175,55,.05);flex:0 1 15.5rem;min-width:0;display:flex;flex-direction:column;gap:.45rem;justify-content:center}
+.mx-term b{font-family:var(--font-mono);font-weight:600;font-size:clamp(.86rem,1.4vw,1rem);color:var(--light-gold);letter-spacing:.05em;text-transform:uppercase}
+.mx-term small{font-size:.74rem;color:var(--soft-gray);line-height:1.5}
+.mx-x{align-self:center;font-family:var(--font-mono);font-size:1.55rem;color:var(--rich-gold);flex:none}
+.mx-formula__note{margin:1.6rem auto 0;max-width:46rem;color:var(--ink-dim);font-size:.94rem;line-height:1.7}
+@media(max-width:760px){.mx-formula__terms{flex-direction:column;align-items:stretch}.mx-term{flex-basis:auto}.mx-x{align-self:center}}
+
+/* Dashed item lists inside columns / cards */
+.mx-plist{display:flex;flex-direction:column;gap:.4rem;margin-top:.9rem}
+.mx-plist li{display:flex;gap:.6rem;font-size:.86rem;color:var(--ink-dim);line-height:1.5}
+.mx-plist li::before{content:"—";color:var(--rich-gold);flex:none}
+
+/* Upstream / downstream */
+.mx-ud-head{display:flex;justify-content:center;margin-bottom:1.8rem}
+.mx-ud-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+@media(max-width:760px){.mx-ud-cols{grid-template-columns:1fr}}
+.mx-sim{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:1.5rem}
+@media(max-width:640px){.mx-sim{grid-template-columns:1fr}}
+.mx-sim>div{background:var(--panel);padding:1.1rem 1.3rem;transition:background .25s}
+.mx-sim>div.is-active{background:rgba(212,175,55,.09)}
+.mx-sim .k{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft-gray);display:block;margin-bottom:.5rem}
+.mx-sim b{font-family:var(--font-mono);font-weight:600;font-size:1.2rem;color:var(--rich-gold);display:block}
+.mx-sim p{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-dim);margin-top:.35rem}
+
+/* Evidence confidence ladder */
+.mx-ladder{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:linear-gradient(178deg,var(--surface),var(--panel))}
+.mx-rung{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:1.2rem;align-items:center;padding:1.25rem 1.4rem;border-bottom:1px solid var(--line)}
+.mx-rung:last-child{border-bottom:0}
+.mx-rung__lvl{font-family:var(--font-mono);font-weight:600;font-size:1.55rem;color:var(--rich-gold);line-height:1}
+.mx-rung__lvl small{display:block;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mid-gray);margin-top:.3rem}
+.mx-rung__name{font-family:var(--font-display);font-weight:700;color:var(--pure-white);font-size:1.12rem;margin-bottom:.2rem}
+.mx-rung__desc{font-size:.87rem;color:var(--ink-dim);line-height:1.55}
+@media(max-width:640px){.mx-rung{grid-template-columns:56px minmax(0,1fr)}.mx-rung .badge{grid-column:2;justify-self:start}}
+
+/* Calculator */
+.mx-calc{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(1.5rem,3vw,2.6rem);align-items:start}
+@media(max-width:900px){.mx-calc{grid-template-columns:1fr}}
+.mx-sl{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.mx-sl output{font-family:var(--font-mono);font-size:.85rem;font-weight:600;color:var(--rich-gold);white-space:nowrap}
+.mx-unit{font-family:var(--font-mono);font-size:.7rem;color:var(--rich-gold);letter-spacing:.06em;margin-left:.4rem}
+.mx-out{border:1px solid var(--line-strong);border-radius:10px;background:rgba(5,5,5,.55);padding:clamp(1.2rem,2.5vw,1.8rem);display:flex;flex-direction:column;gap:.9rem}
+.mx-out__label{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--soft-gray)}
+.mx-out__num{font-family:var(--font-mono);font-weight:600;font-size:clamp(1.9rem,4.2vw,2.8rem);color:var(--rich-gold);letter-spacing:-.01em;line-height:1.12;overflow-wrap:anywhere}
+.mx-out__rows{display:flex;flex-direction:column}
+.mx-out__row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.6rem 0;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-dim)}
+.mx-out__row b{font-family:var(--font-mono);font-weight:600;color:var(--warm-white);white-space:nowrap}
+.mx-method{font-family:var(--font-mono);font-size:.72rem;color:var(--soft-gray);line-height:1.65;border-top:1px solid var(--line);padding-top:.85rem}
+.mx-conf{font-size:.78rem;color:var(--ink-dim);line-height:1.55;padding:0 0 .55rem}
+.mx-placeholder{color:var(--mid-gray);font-size:.92rem;line-height:1.7;padding:.4rem 0 .8rem}
+.mx-err{display:none;color:#E8B05C;font-family:var(--font-mono);font-size:.78rem;margin-top:.5rem}
+.mx-err.is-shown{display:block}
+
+/* Safeguards */
+.mx-safe{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+@media(max-width:760px){.mx-safe{grid-template-columns:1fr}}
+.mx-safe li{display:flex;gap:.8rem;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem;background:linear-gradient(178deg,var(--surface),var(--panel))}
+.mx-safe li svg{flex:none;margin-top:.2rem}
+.mx-safe b{display:block;color:var(--warm-white);font-weight:600;font-size:.94rem}
+.mx-safe p{font-size:.84rem;color:var(--ink-dim);margin-top:.15rem;line-height:1.55}
+
+/* MD / MAC chart */
+.mx-mdac text{font-family:var(--font-mono)}
+</style>
+</head>
+<body data-page="methodology">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+        <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="crisis.html">The Crisis</a></li>
+        <li><a href="explorer.html">Ledger Explorer</a></li>
+        <li><a href="methodology.html" aria-current="page">Methodology</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__right">
+      <a href="explorer.html" class="btn btn--ghost nav__cta--ghost">Explore the Ledger</a>
+      <a href="contact.html" class="btn btn--gold nav__cta">Request Institutional Access</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="crisis.html">The Crisis</a>
+  <a href="explorer.html">Ledger Explorer</a>
+  <a href="methodology.html" aria-current="page">Methodology</a>
+  <a href="products.html">Products</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn--gold btn--block">Request Institutional Access</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero" aria-labelledby="hero-h">
+  <div class="page-hero__glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Methodology</p>
+    <h1 class="h1" id="hero-h" data-reveal>From physical harm to <span class="gold-text">financial liability.</span></h1>
+    <p class="lead" data-reveal>ReVerity separates scientific measurement, financial assessment, legal authority, and restoration allocation. Each discipline is independently reviewable — and no layer can silently substitute for another.</p>
+  </div>
+</section>
+
+<!-- ============ CORE METHODOLOGY CHAIN ============ -->
+<section class="section section--line" aria-labelledby="chain-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Core Methodology Chain</p>
+      <h2 class="h2" id="chain-h" data-reveal>Every liability traces an <span class="gold-text">unbroken chain</span> of evidence.</h2>
+      <p class="lead" data-reveal>Environmental debt accounting begins with an identified actor and ends with a restoration need. Between them, planetary boundary accounting connects each measured harm to the public burden it creates — and to the financial liability that burden represents.</p>
+    </div>
+    <div class="flow flow--gold" data-reveal aria-label="Core methodology chain: Actor to Facility to Activity to Environmental Harm to Boundary Impact to Public Burden to Financial Liability to Restoration Need">
+      <span class="node">Actor</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Facility</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Activity</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Environmental Harm</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Boundary Impact</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Public Burden</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Financial Liability</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="node">Restoration Need</span>
+    </div>
+    <p class="serif-note" data-reveal style="margin-top:1.8rem">A liability figure that cannot walk this chain, link by link, does not enter the ledger.</p>
+  </div>
+</section>
+
+<!-- ============ ENVIRONMENTAL DEBT FORMULA ============ -->
+<section class="section section--line" aria-labelledby="formula-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>The Environmental Debt Formula</p>
+      <h2 class="h2" id="formula-h" data-reveal>One structure. Category-specific application.</h2>
+    </div>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Assessment Formula — Methodology Prototype</span>
+      </div>
+      <div class="mx-formula">
+        <p class="mx-formula__lhs">Environmental Debt Assessment</p>
+        <p class="mx-formula__eq" aria-hidden="true">=</p>
+        <div class="mx-formula__terms">
+          <span class="mx-term"><b>Measured Harm Unit</b><small>Physical quantity — verified, recorded, or modeled with disclosed confidence.</small></span>
+          <span class="mx-x" aria-hidden="true">×</span>
+          <span class="mx-term"><b>Environmental Debt Factor</b><small>Severity weighting — toxicity, persistence, exposure, and reversibility.</small></span>
+          <span class="mx-x" aria-hidden="true">×</span>
+          <span class="mx-term"><b>Federal Base Rate</b><small>Dollars per unit — set by lawful public authority, not by ReVerity.</small></span>
+        </div>
+        <p class="mx-formula__note">The formula is category-specific and subject to legal authorization, scientific validation, and public rulemaking. No rate becomes operative until every layer survives independent review.</p>
+      </div>
+      <div class="panel__foot">Category-specific · Legal authorization required · Scientific validation · Public rulemaking</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THREE-LAYER METHODOLOGY ============ -->
+<section class="section section--line" aria-labelledby="layers-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Three-Layer Methodology</p>
+      <h2 class="h2" id="layers-h" data-reveal>Measurement, weighting, and rate are <span class="gold-text">kept separate.</span></h2>
+      <p class="lead" data-reveal>Environmental financial accountability fails when science, severity, and price collapse into one number. ReVerity holds the three layers apart so each can be challenged, corrected, and audited on its own terms.</p>
+    </div>
+    <div class="equation" data-reveal-stagger>
+      <div class="eq-col">
+        <span class="k">Layer 01 — Science</span>
+        <h3 class="h3">Physical Measurement</h3>
+        <p>What actually happened, in physical units.</p>
+        <ul class="mx-plist">
+          <li>Tons of CO₂e emitted</li>
+          <li>Pounds of PFAS released</li>
+          <li>Gallons of contaminated discharge</li>
+          <li>Tons of waste disposed</li>
+          <li>Acres of land degraded</li>
+          <li>Quantity of water extracted</li>
+          <li>Concentration above regulatory limits</li>
+        </ul>
+      </div>
+      <div class="eq-col">
+        <span class="k">Layer 02 — Severity</span>
+        <h3 class="h3">Environmental Debt Factor</h3>
+        <p>How much harm each unit represents.</p>
+        <ul class="mx-plist">
+          <li>Toxicity and persistence</li>
+          <li>Mobility and exposure pathways</li>
+          <li>Affected population</li>
+          <li>Ecological sensitivity</li>
+          <li>Duration and reversibility</li>
+          <li>Future-resource effects</li>
+          <li>Cleanup difficulty and public burden</li>
+          <li>Scientific confidence</li>
+        </ul>
+      </div>
+      <div class="eq-col eq-col--gold">
+        <span class="k">Layer 03 — Price</span>
+        <h3 class="h3">Federal Base Rate</h3>
+        <p>What each weighted unit costs the public.</p>
+        <ul class="mx-plist">
+          <li>Cleanup cost</li>
+          <li>Restoration cost</li>
+          <li>Market-transition cost</li>
+          <li>Public infrastructure cost</li>
+          <li>Public-health protection cost</li>
+          <li>Congressional policy rate</li>
+          <li>Established federal assessment</li>
+          <li>Responsible-party recovery cost</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUR ENVIRONMENTAL TAX PILLARS ============ -->
+<section class="section section--line" aria-labelledby="pillars-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Assessment Modules</p>
+      <h2 class="h2" id="pillars-h" data-reveal>Four environmental tax pillars.</h2>
+      <p class="lead" data-reveal>Every assessed activity in the ledger maps to one of four category modules, each with its own measured units, debt factors, and base-rate research supporting restoration funding and market transition.</p>
+    </div>
+    <div class="grid-4" data-reveal-stagger>
+      <article class="card">
+        <span class="card__num">Pillar 01 / Energy</span>
+        <h3 class="h3" style="font-size:1.25rem">Energy</h3>
+        <ul class="mx-plist">
+          <li>Carbon content of fuels</li>
+          <li>CO₂e emissions</li>
+          <li>Methane releases</li>
+          <li>Industrial energy use</li>
+          <li>Fossil fuel extraction</li>
+          <li>Electricity generation</li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="card__num">Pillar 02 / Transport</span>
+        <h3 class="h3" style="font-size:1.25rem">Transport</h3>
+        <ul class="mx-plist">
+          <li>Vehicle emissions</li>
+          <li>Fuel use</li>
+          <li>Aviation</li>
+          <li>Shipping</li>
+          <li>Fleet burden</li>
+          <li>Congestion</li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="card__num">Pillar 03 / Pollution</span>
+        <h3 class="h3" style="font-size:1.25rem">Pollution</h3>
+        <ul class="mx-plist">
+          <li>PFAS compounds</li>
+          <li>Toxic releases</li>
+          <li>Air pollution</li>
+          <li>Wastewater</li>
+          <li>Hazardous waste</li>
+          <li>Landfill methane</li>
+          <li>Ozone-depleting substances</li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="card__num">Pillar 04 / Resources</span>
+        <h3 class="h3" style="font-size:1.25rem">Resources</h3>
+        <ul class="mx-plist">
+          <li>Water abstraction</li>
+          <li>Mining</li>
+          <li>Forestry</li>
+          <li>Aggregates</li>
+          <li>Land conversion</li>
+          <li>Ecosystem-resource depletion</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UPSTREAM / DOWNSTREAM ============ -->
+<section class="section section--line" aria-labelledby="ud-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Placement of Assessment</p>
+      <h2 class="h2" id="ud-h" data-reveal>Upstream or downstream — <span class="gold-text">where the assessment applies.</span></h2>
+      <p class="lead" data-reveal>The same measured harm can be assessed where materials enter the economy or where harm leaves the facility. Placement changes administration and precision — not the underlying environmental debt.</p>
+    </div>
+    <div class="mx-ud-head" data-reveal>
+      <div class="toggle-pill" role="group" aria-label="Assessment placement">
+        <button type="button" id="udUp" aria-pressed="true">Upstream</button>
+        <button type="button" id="udDown" aria-pressed="false">Downstream</button>
+      </div>
+    </div>
+    <div data-reveal>
+      <div id="udPanelUp">
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Upstream Assessment — Point of Entry</span>
+          </div>
+          <div class="panel__body">
+            <div class="mx-ud-cols">
+              <div>
+                <p class="hero__label" style="margin-bottom:.8rem">Applied at</p>
+                <ul class="mx-plist" style="margin-top:0">
+                  <li>Extraction</li>
+                  <li>Import</li>
+                  <li>Production</li>
+                  <li>Primary manufacture</li>
+                </ul>
+              </div>
+              <div>
+                <p class="hero__label" style="margin-bottom:.8rem;color:var(--rich-gold)">Administrative advantages</p>
+                <ul class="mx-plist" style="margin-top:0">
+                  <li>Fewer entities to assess</li>
+                  <li>Easier administration</li>
+                  <li>Broad market influence from a small number of assessment points</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">Assessment enters the cost structure before the material disperses through the economy</div>
+        </div>
+      </div>
+      <div id="udPanelDown" hidden>
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Downstream Assessment — Point of Harm</span>
+          </div>
+          <div class="panel__body">
+            <div class="mx-ud-cols">
+              <div>
+                <p class="hero__label" style="margin-bottom:.8rem">Applied at</p>
+                <ul class="mx-plist" style="margin-top:0">
+                  <li>Discharge</li>
+                  <li>Smokestack</li>
+                  <li>Facility</li>
+                  <li>Landfill</li>
+                  <li>Point of consumption</li>
+                </ul>
+              </div>
+              <div>
+                <p class="hero__label" style="margin-bottom:.8rem;color:var(--rich-gold)">Administrative advantages</p>
+                <ul class="mx-plist" style="margin-top:0">
+                  <li>Closer to the actual harm</li>
+                  <li>Geographically precise</li>
+                  <li>Useful for facility-level accountability</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">Assessment lands where the harm physically occurs — facility by facility</div>
+        </div>
+      </div>
+      <div class="mx-sim" role="group" aria-label="Demonstration: the same harm quantity priced upstream versus downstream">
+        <div id="simUp" class="is-active">
+          <span class="k">Demo simulation — 10,000 t CO₂e priced upstream</span>
+          <b>$862,000</b>
+          <p>3 assessment points · $86.20 effective rate per ton</p>
+        </div>
+        <div id="simDown">
+          <span class="k">Demo simulation — 10,000 t CO₂e priced downstream</span>
+          <b>$899,400</b>
+          <p>214 assessment points · $89.94 effective rate incl. geographic adjustment</p>
+        </div>
+      </div>
+      <p class="proto-note" style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARGINAL DAMAGE / ABATEMENT ============ -->
+<section class="section section--line" aria-labelledby="mdac-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Rate Discipline</p>
+      <h2 class="h2" id="mdac-h" data-reveal>Marginal damage meets <span class="gold-text">marginal abatement.</span></h2>
+    </div>
+    <div class="grid-2" style="gap:clamp(2rem,4vw,3.5rem);align-items:start">
+      <div data-reveal>
+        <dl class="deflist">
+          <div>
+            <dt>Marginal Damage</dt>
+            <dd>The additional harm created by one more unit of pollution — the incremental public burden each further ton, pound, or gallon imposes on health, water, land, and future government cost.</dd>
+          </div>
+          <div>
+            <dt>Marginal Abatement Cost</dt>
+            <dd>The cost of preventing, reducing, cleaning up, or transitioning away from that same unit — the price of not creating the harm in the first place.</dd>
+          </div>
+        </dl>
+        <p style="color:var(--ink-dim);font-size:.95rem;line-height:1.7;margin-top:1.6rem">Where the two curves meet defines the economically disciplined zone for a policy rate: below it, harm remains underpriced; above it, abatement capital is misallocated. Real methodologies require category-specific research, public review, legal analysis, and sensitivity testing before any rate is proposed.</p>
+        <p class="serif-note" style="margin-top:1.4rem">A defensible rate is discovered, not declared.</p>
+      </div>
+      <div data-reveal>
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Rate Curve Analysis — Conceptual</span>
+          </div>
+          <div class="panel__body" style="padding:1rem">
+            <svg class="mx-mdac" viewBox="0 0 720 420" role="img" aria-label="Conceptual line chart. X axis: units of pollution. Y axis: cost. A rising gold marginal damage curve and a falling gray marginal abatement cost curve intersect at a gold diamond marked as the suggested policy rate zone.">
+              <g stroke="rgba(212,175,55,.08)">
+                <line x1="70" y1="115" x2="690" y2="115"/>
+                <line x1="70" y1="190" x2="690" y2="190"/>
+                <line x1="70" y1="265" x2="690" y2="265"/>
+              </g>
+              <rect x="462" y="40" width="68" height="300" fill="rgba(212,175,55,.07)"/>
+              <line x1="496" y1="40" x2="496" y2="340" stroke="rgba(212,175,55,.35)" stroke-dasharray="3 5"/>
+              <line x1="70" y1="198" x2="496" y2="198" stroke="rgba(245,242,234,.18)" stroke-dasharray="3 5"/>
+              <line x1="70" y1="340" x2="690" y2="340" stroke="rgba(166,166,166,.5)"/>
+              <line x1="70" y1="40" x2="70" y2="340" stroke="rgba(166,166,166,.5)"/>
+              <path d="M90 330 C 280 320, 480 250, 660 60" fill="none" stroke="#D4AF37" stroke-width="2.4"/>
+              <path d="M90 60 C 280 70, 480 160, 660 320" fill="none" stroke="rgba(245,242,234,.6)" stroke-width="2"/>
+              <rect x="490" y="192" width="12" height="12" transform="rotate(45 496 198)" fill="#F1D77A"/>
+              <text x="496" y="26" text-anchor="middle" font-size="11.5" fill="#F1D77A" letter-spacing="1">SUGGESTED POLICY RATE ZONE</text>
+              <text x="655" y="48" text-anchor="end" font-size="12" fill="#D4AF37">Marginal damage</text>
+              <text x="95" y="48" font-size="12" fill="#A6A6A6">Marginal abatement cost</text>
+              <text x="56" y="202" text-anchor="end" font-size="11" fill="#F1D77A">R*</text>
+              <text x="496" y="360" text-anchor="middle" font-size="11" fill="#F1D77A">Q*</text>
+              <text x="70" y="360" text-anchor="start" font-size="11" fill="#6E6A5E">0</text>
+              <text x="690" y="382" text-anchor="end" font-size="12" fill="#A6A6A6">Units of pollution →</text>
+              <text x="30" y="190" text-anchor="middle" font-size="12" fill="#A6A6A6" transform="rotate(-90 30 190)">Cost →</text>
+            </svg>
+            <div class="chart__legend" style="padding:0 .4rem .3rem">
+              <span><i style="background:#D4AF37"></i>Marginal damage</span>
+              <span><i style="background:rgba(245,242,234,.6)"></i>Marginal abatement cost</span>
+              <span><i style="background:#F1D77A"></i>Suggested policy rate zone</span>
+            </div>
+          </div>
+          <div class="panel__foot">Conceptual illustration — no category rate is implied</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVIDENCE CONFIDENCE FRAMEWORK ============ -->
+<section class="section section--line" aria-labelledby="conf-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Evidence Confidence Framework</p>
+      <h2 class="h2" id="conf-h" data-reveal>Five levels of evidence. <span class="gold-text">No unlabeled certainty.</span></h2>
+      <p class="lead" data-reveal>Every record in the ledger is graded before it is priced. A figure's confidence level is displayed as prominently as the figure itself.</p>
+    </div>
+    <div class="mx-ladder" data-reveal>
+      <div class="mx-rung" style="background:rgba(212,175,55,.09)">
+        <span class="mx-rung__lvl">1<small>Level</small></span>
+        <div>
+          <p class="mx-rung__name">Verified direct measurement</p>
+          <p class="mx-rung__desc">Instrumented, continuous, or sampled measurement of the harm itself, independently validated against calibration standards.</p>
+        </div>
+        <span class="badge badge--verified">Verified</span>
+      </div>
+      <div class="mx-rung" style="background:rgba(212,175,55,.06)">
+        <span class="mx-rung__lvl">2<small>Level</small></span>
+        <div>
+          <p class="mx-rung__name">Verified regulatory record</p>
+          <p class="mx-rung__desc">Official filings, permits, monitoring reports, and enforcement records drawn directly from government sources.</p>
+        </div>
+        <span class="badge badge--verified">Verified</span>
+      </div>
+      <div class="mx-rung" style="background:rgba(212,175,55,.035)">
+        <span class="mx-rung__lvl">3<small>Level</small></span>
+        <div>
+          <p class="mx-rung__name">Strong modeled estimate</p>
+          <p class="mx-rung__desc">Peer-reviewed models with validated inputs, disclosed sensitivity ranges, and reproducible parameters.</p>
+        </div>
+        <span class="badge badge--estimated">Estimated</span>
+      </div>
+      <div class="mx-rung" style="background:rgba(212,175,55,.015)">
+        <span class="mx-rung__lvl">4<small>Level</small></span>
+        <div>
+          <p class="mx-rung__name">Preliminary estimate</p>
+          <p class="mx-rung__desc">Early-stage modeling with material data gaps — suitable for screening and prioritization, not for assessment.</p>
+        </div>
+        <span class="badge badge--review">Under Review</span>
+      </div>
+      <div class="mx-rung">
+        <span class="mx-rung__lvl">5<small>Level</small></span>
+        <div>
+          <p class="mx-rung__name">Insufficient evidence</p>
+          <p class="mx-rung__desc">A record exists but cannot support a liability figure — displayed without a dollar value until evidence improves.</p>
+        </div>
+        <span class="badge badge--incomplete">Data Incomplete</span>
+      </div>
+    </div>
+    <div data-reveal style="margin-top:2rem">
+      <p style="color:var(--ink-dim);font-size:.93rem;margin-bottom:.9rem">Every liability result displays, alongside its figure:</p>
+      <div class="chips" aria-label="Disclosure elements shown with every liability result">
+        <span class="chip">Source quality</span>
+        <span class="chip">Model uncertainty</span>
+        <span class="chip">Confidence interval</span>
+        <span class="chip">Reporting period</span>
+        <span class="chip">Methodology version</span>
+        <span class="chip">Assumptions</span>
+        <span class="chip">Data gaps</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALCULATOR ============ -->
+<section class="section section--line" aria-labelledby="calc-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Interactive Demonstration</p>
+      <h2 class="h2" id="calc-h" data-reveal>Environmental debt <span class="gold-text">calculator.</span></h2>
+      <p class="lead" data-reveal>Set a category, a measured quantity, and the assessment parameters to see how the three-layer methodology composes a modeled liability — with its uncertainty disclosed.</p>
+    </div>
+    <div class="panel" id="calculator" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Environmental Debt Calculator — Prototype</span>
+      </div>
+      <div class="panel__body">
+        <div class="mx-calc">
+          <div>
+            <div class="field--row">
+              <div class="field">
+                <label for="calcCat">Category</label>
+                <select id="calcCat">
+                  <option value="energy">Energy</option>
+                  <option value="transport">Transport</option>
+                  <option value="pollution">Pollution</option>
+                  <option value="resources">Resources</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="calcPol">Pollutant or activity</label>
+                <select id="calcPol"></select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="calcQty">Measured quantity <span class="mx-unit" id="calcUnit">tons CO₂e</span></label>
+              <input type="number" id="calcQty" min="0" step="any" value="10000" inputmode="decimal">
+              <span class="mx-err" id="calcErr">Enter a measured quantity greater than zero.</span>
+            </div>
+            <div class="field">
+              <div class="mx-sl">
+                <label for="calcFactor">Environmental debt factor</label>
+                <output id="calcFactorVal" for="calcFactor">1.0×</output>
+              </div>
+              <input type="range" id="calcFactor" min="0.5" max="5" step="0.1" value="1">
+            </div>
+            <div class="field">
+              <div class="mx-sl">
+                <label for="calcRate">Federal base rate</label>
+                <output id="calcRateVal" for="calcRate">$85 per unit</output>
+              </div>
+              <input type="range" id="calcRate" min="1" max="500" step="1" value="85">
+            </div>
+            <div class="field">
+              <label for="calcGeo">Geography</label>
+              <select id="calcGeo">
+                <option value="1.00">National Composite</option>
+                <option value="1.18">Northeast Corridor</option>
+                <option value="1.09">Great Lakes Basin</option>
+                <option value="1.15">Gulf Coast Industrial Belt</option>
+                <option value="0.94">Mountain West &amp; Basin</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="mx-sl">
+                <label for="calcPop">Affected population</label>
+                <output id="calcPopVal" for="calcPop">250,000</output>
+              </div>
+              <input type="range" id="calcPop" min="0" max="2000000" step="25000" value="250000">
+            </div>
+            <button type="button" class="btn btn--gold" id="calcRun">Compute Assessment <span class="btn__arrow" aria-hidden="true">→</span></button>
+          </div>
+          <div class="mx-out" aria-live="polite">
+            <span class="mx-out__label">Estimated Environmental Debt</span>
+            <p class="mx-placeholder" id="calcPlaceholder">Awaiting computation — set the assessment parameters and run the model. Results are modeled liabilities, graded for evidence confidence and displayed with their uncertainty range.</p>
+            <div id="calcResult" hidden>
+              <p class="mx-out__num" id="calcDebt">$0</p>
+              <div class="mx-out__rows">
+                <div class="mx-out__row"><span>Uncertainty range (±25%)</span><b id="calcRange">—</b></div>
+                <div class="mx-out__row"><span>Evidence confidence</span><span class="badge badge--review" id="calcBadge">Under Review</span></div>
+                <p class="mx-conf" id="calcConf">Level 4 — Preliminary estimate</p>
+                <div class="mx-out__row"><span>Potential public burden share <span class="mono" style="font-size:.7rem;color:var(--mid-gray)">(modeled 62%)</span></span><b id="calcBurden">—</b></div>
+                <div class="mx-out__row"><span>Potential trust allocation <span class="mono" style="font-size:.7rem;color:var(--mid-gray)">(modeled 85%)</span></span><b id="calcTrust">—</b></div>
+              </div>
+              <p class="mx-method" id="calcMethod"></p>
+            </div>
+          </div>
+        </div>
+        <p class="proto-note" style="margin-top:1.6rem">This calculator is a prototype and does not create a tax, fee, liability, legal obligation, or government determination.</p>
+        <p class="proto-note" style="margin-top:.7rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+      </div>
+      <div class="panel__foot">Measured Harm Unit × Environmental Debt Factor × Federal Base Rate · Regional exposure · Population adjustment</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOVERNANCE ============ -->
+<section class="section section--line" aria-labelledby="gov-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Governance</p>
+      <h2 class="h2" id="gov-h" data-reveal>An independent <span class="gold-text">methodology council.</span></h2>
+      <p class="lead" data-reveal>No methodology enters production on the word of its authors. A standing council of independent seats reviews every factor, rate basis, and model revision before it is versioned into the ledger.</p>
+    </div>
+    <div class="grid-4" data-reveal-stagger>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Environmental Scientists</h3><p>Harm characterization and measurement standards.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Toxicologists</h3><p>Exposure pathways, dose-response, and persistence review.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Economists</h3><p>Damage valuation and market-transition modeling.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Accountants</h3><p>Liability recognition and audit-grade calculation review.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Federal-Finance Specialists</h3><p>Base-rate design and collection mechanics.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Former Regulators</h3><p>Enforceability and administrative feasibility.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Environmental Attorneys</h3><p>Legal defensibility and due-process review.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Public-Health Professionals</h3><p>Affected-population and health-burden analysis.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Restoration Engineers</h3><p>Cleanup difficulty and restoration costing.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Data-Governance Experts</h3><p>Provenance, privacy, and version control.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Community Representatives</h3><p>Standing for those who carry the public burden.</p></div>
+      <div class="card"><h3 class="h3" style="font-size:1.05rem">Rotating Public Seat</h3><p>Open nomination through public comment cycles.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEGAL & ETHICAL SAFEGUARDS ============ -->
+<section class="section section--line" aria-labelledby="safe-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Safeguards</p>
+      <h2 class="h2" id="safe-h" data-reveal>Legal and ethical safeguards are <span class="gold-text">part of the methodology.</span></h2>
+      <p class="lead" data-reveal>Defensibility is designed in, not appended. Each safeguard below is a standing operational control — not a policy aspiration.</p>
+    </div>
+    <ul class="mx-safe" data-reveal-stagger>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>No unsupported accusations</b><p>Records assert only what evidence supports; neutral language is enforced platform-wide.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Fact and estimate distinction</b><p>Verified facts and modeled estimates are never displayed in the same register.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Transparent methodology</b><p>Every formula, factor, and rate basis is published, citable, and reproducible.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Correction rights</b><p>Named entities may submit corrections with supporting evidence at any time.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Appeal process</b><p>A structured dispute pathway precedes any final record status.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Public rulemaking compatibility</b><p>Methodologies are structured for notice-and-comment adoption by public authorities.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Conflict-of-interest disclosures</b><p>Council members disclose interests and recuse where required.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Independent audit</b><p>Calculations, records, and allocations are examined by outside auditors.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Version-controlled calculations</b><p>Every result carries its methodology version and can be recomputed exactly.</p></div>
+      </li>
+      <li>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5 L6.5 12.5 L13.5 3.5" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><b>Privacy and cybersecurity controls</b><p>Federal-grade data handling governs every record and submission.</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section final" aria-labelledby="final-h">
+  <div class="wrap">
+    <p class="eyebrow final__eyebrow" data-reveal>The Standard</p>
+    <h2 class="h2" id="final-h" data-reveal>Defensible numbers. Disclosed uncertainty. <span class="gold-text">Public methodology.</span></h2>
+    <div class="btns" data-reveal>
+      <a href="explorer.html" class="btn btn--gold">Explore the Ledger <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <a href="contact.html" class="btn btn--ghost">Request a Federal Briefing</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__col footer__brand">
+        <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+          <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+            <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+        </a>
+        <p>Make environmental damage financially accountable. Identify environmental debt, quantify public burden, support lawful collection, protect restoration funding, and verify measurable outcomes.</p>
+      </div>
+      <div class="footer__col">
+        <p class="t">Platform</p>
+        <a href="explorer.html">Ledger Explorer</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="products.html">Products</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="crisis.html">The Environmental Blind Spot</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Institution</p>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html">Government Inquiries</a>
+        <a href="contact.html">Careers</a>
+        <a href="crisis.html#sources">Data Sources</a>
+        <a href="explorer.html#dispute">Corrections</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Legal</p>
+        <a href="contact.html">Terms</a>
+        <a href="contact.html">Privacy</a>
+        <a href="contact.html">Security</a>
+        <a href="contact.html">Legal</a>
+        <a href="contact.html">Accessibility</a>
+      </div>
+    </div>
+    <p class="fineprint">ReVerity Ledger is a private technology and research platform. It does not independently levy taxes, impose governmental penalties, issue legal determinations, or control public funds. Any mandatory assessment, tax, fee, penalty, collection, or public-fund allocation must be authorized and administered by the appropriate government authority. Prototype demonstration data shown throughout this site is not an official legal, tax, accounting, or regulatory determination.<span class="copy">© ReVerity Ledger. Identify. Quantify. Rectify.</span></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+/* Methodology page — upstream/downstream toggle + environmental debt calculator */
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Upstream / Downstream toggle ---------- */
+  var upBtn = document.getElementById("udUp");
+  var downBtn = document.getElementById("udDown");
+  var upPanel = document.getElementById("udPanelUp");
+  var downPanel = document.getElementById("udPanelDown");
+  var simUp = document.getElementById("simUp");
+  var simDown = document.getElementById("simDown");
+  function setUD(up) {
+    upBtn.setAttribute("aria-pressed", String(up));
+    downBtn.setAttribute("aria-pressed", String(!up));
+    upPanel.hidden = !up;
+    downPanel.hidden = up;
+    simUp.classList.toggle("is-active", up);
+    simDown.classList.toggle("is-active", !up);
+  }
+  if (upBtn && downBtn && upPanel && downPanel) {
+    upBtn.addEventListener("click", function () { setUD(true); });
+    downBtn.addEventListener("click", function () { setUD(false); });
+  }
+
+  /* ---------- Environmental debt calculator ---------- */
+  var DATA = {
+    energy: [
+      { name: "Carbon dioxide equivalent (CO₂e)", unit: "tons CO₂e", rate: 85, factor: 1.0 },
+      { name: "Methane release", unit: "tons CH₄", rate: 240, factor: 2.8 },
+      { name: "Fossil fuel extraction", unit: "tons extracted", rate: 40, factor: 1.3 },
+      { name: "Fossil electricity generation", unit: "MWh generated", rate: 24, factor: 0.9 }
+    ],
+    transport: [
+      { name: "Vehicle fleet emissions", unit: "tons CO₂e", rate: 85, factor: 1.0 },
+      { name: "Aviation fuel combustion", unit: "thousand gallons", rate: 96, factor: 1.4 },
+      { name: "Marine shipping emissions", unit: "tons CO₂e", rate: 78, factor: 1.1 },
+      { name: "Congestion-related burden", unit: "thousand vehicle-hours", rate: 18, factor: 0.7 }
+    ],
+    pollution: [
+      { name: "PFAS compounds released", unit: "pounds PFAS", rate: 310, factor: 4.2 },
+      { name: "Toxic air release", unit: "pounds released", rate: 12, factor: 2.1 },
+      { name: "Contaminated wastewater discharge", unit: "thousand gallons", rate: 9, factor: 1.6 },
+      { name: "Hazardous waste disposal", unit: "tons disposed", rate: 130, factor: 2.4 }
+    ],
+    resources: [
+      { name: "Water abstraction", unit: "thousand gallons", rate: 4, factor: 0.8 },
+      { name: "Mining and aggregates extraction", unit: "tons extracted", rate: 21, factor: 1.2 },
+      { name: "Land conversion", unit: "acres converted", rate: 480, factor: 1.9 },
+      { name: "Timber and forestry removal", unit: "tons removed", rate: 34, factor: 1.1 }
+    ]
+  };
+  var GEO_NAMES = {
+    "1.00": "National Composite",
+    "1.18": "Northeast Corridor",
+    "1.09": "Great Lakes Basin",
+    "1.15": "Gulf Coast Industrial Belt",
+    "0.94": "Mountain West & Basin"
+  };
+
+  var cat = document.getElementById("calcCat");
+  var pol = document.getElementById("calcPol");
+  var qty = document.getElementById("calcQty");
+  var unit = document.getElementById("calcUnit");
+  var factor = document.getElementById("calcFactor");
+  var factorVal = document.getElementById("calcFactorVal");
+  var rate = document.getElementById("calcRate");
+  var rateVal = document.getElementById("calcRateVal");
+  var geo = document.getElementById("calcGeo");
+  var pop = document.getElementById("calcPop");
+  var popVal = document.getElementById("calcPopVal");
+  var run = document.getElementById("calcRun");
+  var err = document.getElementById("calcErr");
+  var placeholder = document.getElementById("calcPlaceholder");
+  var result = document.getElementById("calcResult");
+  var outDebt = document.getElementById("calcDebt");
+  var outRange = document.getElementById("calcRange");
+  var outBadge = document.getElementById("calcBadge");
+  var outConf = document.getElementById("calcConf");
+  var outBurden = document.getElementById("calcBurden");
+  var outTrust = document.getElementById("calcTrust");
+  var outMethod = document.getElementById("calcMethod");
+  if (!cat || !pol || !run) return;
+
+  function money(v) { return "$" + Math.round(v).toLocaleString("en-US"); }
+  function num(v) { return Number(v).toLocaleString("en-US"); }
+
+  function currentItem() {
+    var items = DATA[cat.value] || DATA.energy;
+    var i = parseInt(pol.value, 10);
+    return items[isNaN(i) ? 0 : Math.min(i, items.length - 1)];
+  }
+
+  function syncSliders() {
+    factorVal.textContent = parseFloat(factor.value).toFixed(1) + "×";
+    rateVal.textContent = "$" + num(rate.value) + " per unit";
+    popVal.textContent = num(pop.value);
+  }
+
+  function applyItem() {
+    var it = currentItem();
+    unit.textContent = it.unit;
+    factor.value = String(it.factor);
+    rate.value = String(it.rate);
+    syncSliders();
+  }
+
+  function fillPollutants() {
+    var items = DATA[cat.value] || DATA.energy;
+    pol.innerHTML = "";
+    items.forEach(function (it, i) {
+      var o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = it.name;
+      pol.appendChild(o);
+    });
+    pol.selectedIndex = 0;
+    applyItem();
+  }
+
+  cat.addEventListener("change", fillPollutants);
+  pol.addEventListener("change", applyItem);
+  [factor, rate, pop].forEach(function (el) {
+    el.addEventListener("input", syncSliders);
+  });
+  qty.addEventListener("input", function () { err.classList.remove("is-shown"); });
+
+  function animateMoney(el, target) {
+    if (reduceMotion) { el.textContent = money(target); return; }
+    var start = null, dur = 900;
+    var tick = function (ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = money(target * eased);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  run.addEventListener("click", function () {
+    var q = parseFloat(qty.value);
+    if (isNaN(q) || q <= 0) {
+      err.classList.add("is-shown");
+      qty.focus();
+      return;
+    }
+    err.classList.remove("is-shown");
+    var it = currentItem();
+    var f = parseFloat(factor.value);
+    var r = parseFloat(rate.value);
+    var g = parseFloat(geo.value);
+    var p = parseFloat(pop.value);
+    var popAdj = 1 + (p / 2000000) * 0.4;
+    var debt = q * f * r * g * popAdj;
+
+    placeholder.hidden = true;
+    result.hidden = false;
+    animateMoney(outDebt, debt);
+    outRange.textContent = money(debt * 0.75) + " – " + money(debt * 1.25);
+    outBurden.textContent = money(debt * 0.62);
+    outTrust.textContent = money(debt * 0.85);
+
+    var extreme = f >= 4.5 || r > it.rate * 3;
+    if (extreme) {
+      outBadge.className = "badge badge--pending";
+      outBadge.textContent = "Methodology Pending";
+      outConf.textContent = "Parameters exceed the validated range — council review required before this configuration can grade above screening level.";
+    } else {
+      outBadge.className = "badge badge--review";
+      outBadge.textContent = "Under Review";
+      outConf.textContent = "Level 4 — Preliminary estimate (user-supplied parameters; screening use only).";
+    }
+
+    outMethod.textContent = num(q) + " " + it.unit + " × debt factor " + f.toFixed(1) +
+      " × $" + num(r) + "/unit × regional exposure " + g.toFixed(2) +
+      " (" + (GEO_NAMES[geo.value] || "Region") + ") × population adjustment " + popAdj.toFixed(2) +
+      " = modeled environmental debt.";
+  });
+
+  fillPollutants();
+})();
+</script>
+</body>
+</html>

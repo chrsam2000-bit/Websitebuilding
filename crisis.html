@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="The Environmental Blind Spot Crisis — an evidence-based briefing on why environmental damage must become financially accountable: public burden transfer, missing environmental debt accounting, fragmented institutional response, and the restoration funding gap.">
+<title>The Environmental Blind Spot — ReVerity Ledger</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23050505'/%3E%3Crect x='1' y='1' width='30' height='30' rx='4.5' fill='none' stroke='%23D4AF37' stroke-width='1.4'/%3E%3Cpath d='M9 8 L16 25 L23 8' fill='none' stroke='%23D4AF37' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============ Crisis page (.cx-) ============ */
+.cx-sub{font-family:var(--font-display);font-style:italic;font-weight:600;font-size:clamp(1.15rem,1.9vw,1.5rem);color:var(--rich-gold);margin-bottom:1.9rem;max-width:36ch}
+.page-hero .pullquote{margin-top:.6rem}
+
+.cx-acc .acc__body p{max-width:66rem;margin:0 0 1rem;font-size:.95rem;line-height:1.7}
+.cx-blk{margin-top:2rem}
+.cx-lbl{font-family:var(--font-mono);font-size:.66rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--soft-gray);margin-bottom:.9rem}
+.cx-lbl--gold{color:var(--rich-gold)}
+
+.cx-harms{display:grid;grid-template-columns:1fr 1fr;gap:.55rem 2.4rem;max-width:46rem;margin:1.3rem 0 1.9rem}
+.cx-harms li{position:relative;padding-left:1.25rem;font-size:.92rem;color:var(--ink-dim)}
+.cx-harms li::before{content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;background:var(--rich-gold);transform:rotate(45deg)}
+
+.cx-srcs{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:rgba(5,5,5,.4);max-width:64rem}
+.cx-srcs>div{display:grid;grid-template-columns:2.4fr .8fr 1.1fr auto;gap:1rem;align-items:center;padding:.72rem 1.05rem;border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:.72rem;color:var(--ink-dim)}
+.cx-srcs>div:last-child{border-bottom:0}
+.cx-srcs .cx-srcs__h{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rich-gold);background:rgba(5,5,5,.6)}
+
+.cx-books{margin-top:.4rem}
+.cx-books li{display:flex;justify-content:space-between;align-items:baseline;gap:1.2rem;padding:.62rem 0;border-bottom:1px dashed rgba(166,166,166,.18);font-size:.88rem;color:var(--ink-dim)}
+.cx-books li:last-child{border-bottom:0}
+.cx-books .amt{font-family:var(--font-mono);color:var(--warm-white);white-space:nowrap}
+.cx-missing{border-color:rgba(212,175,55,.55);box-shadow:0 0 0 1px rgba(212,175,55,.18),0 30px 80px rgba(0,0,0,.5)}
+.cx-missing .amt{color:var(--light-gold)}
+
+.cx-frags{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;max-width:58rem}
+.cx-frag{border:1px solid var(--line);border-radius:6px;padding:.85rem .95rem;background:rgba(245,242,234,.02)}
+.cx-frag b{display:block;font-family:var(--font-mono);font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-white);margin-bottom:.3rem}
+.cx-frag span{font-size:.78rem;color:var(--soft-gray);line-height:1.45;display:block}
+
+.cx-statement{font-family:var(--font-display);font-style:italic;font-weight:700;font-size:clamp(1.5rem,3vw,2.25rem);line-height:1.3;color:var(--pure-white);max-width:26ch;margin:2.2rem 0 .5rem}
+
+.cx-broken .node{border-style:dashed}
+.cx-broken .arrow{color:rgba(166,166,166,.45)}
+
+.cx-light .pullquote{color:#26221a;border-left-color:var(--metal-gold)}
+.cx-light .pullquote cite{color:#57503f}
+.cx-light .cx-note{color:#57503f;font-size:.92rem;max-width:52rem;margin-top:1.7rem;line-height:1.7}
+
+.cx-dash{display:grid;grid-template-columns:1.12fr .88fr;gap:1.8rem;align-items:start}
+.cx-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.cx-srcline{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft-gray);line-height:1.8;margin-top:1.1rem}
+.cx-srcline b{color:var(--rich-gold);font-weight:600}
+
+@media(max-width:900px){
+  .cx-dash{grid-template-columns:1fr}
+  .cx-frags{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .cx-harms{grid-template-columns:1fr}
+  .cx-frags{grid-template-columns:1fr}
+  .cx-metrics{grid-template-columns:1fr}
+  .cx-srcs>div{grid-template-columns:1fr;gap:.25rem}
+  .cx-srcs .cx-srcs__h{display:none}
+}
+/* Page-scoped fix: keep the menu toggle reachable on narrow phones */
+@media(max-width:520px){
+  .nav__cta{display:none}
+  .nav .wrap{gap:.75rem}
+  .brand__text small{letter-spacing:.18em}
+}
+#sources{scroll-margin-top:calc(var(--nav-h) + 1rem)}
+</style>
+</head>
+<body data-page="crisis">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+        <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="crisis.html" aria-current="page">The Crisis</a></li>
+        <li><a href="explorer.html">Ledger Explorer</a></li>
+        <li><a href="methodology.html">Methodology</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__right">
+      <a href="explorer.html" class="btn btn--ghost nav__cta--ghost">Explore the Ledger</a>
+      <a href="contact.html" class="btn btn--gold nav__cta">Request Institutional Access</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="crisis.html" aria-current="page">The Crisis</a>
+  <a href="explorer.html">Ledger Explorer</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="products.html">Products</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn--gold btn--block">Request Institutional Access</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero" aria-labelledby="crisis-h">
+  <div class="page-hero__glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>The Crisis Briefing</p>
+    <h1 class="h1" id="crisis-h" data-reveal>The Environmental Blind Spot Crisis</h1>
+    <p class="cx-sub" data-reveal>Why Environmental Damage Must Become Financially Accountable</p>
+    <blockquote class="pullquote" data-reveal>
+      The United States collects enormous amounts of environmental data, but it lacks one mandatory federal system that closes the financial books on environmental harm.
+      <cite>ReVerity Crisis Briefing — Opening Statement</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ============ SEVEN-PART EVIDENCE FRAMEWORK ============ -->
+<section class="section section--line" aria-labelledby="framework-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>The Evidence Framework</p>
+      <h2 class="h2" id="framework-h" data-reveal>Seven findings. <span class="gold-text">One structural blind spot.</span></h2>
+      <p class="lead" data-reveal>Each chapter of this briefing is assembled from public evidence categories and documented fiscal mechanics. Read in sequence, they define the gap between what the nation measures and what it makes financially accountable.</p>
+    </div>
+
+    <div class="acc cx-acc" data-reveal>
+
+      <!-- CH 01 -->
+      <div class="acc__item is-open">
+        <button class="acc__head" type="button" aria-expanded="true" aria-controls="ch1-body" id="ch1-head">
+          <span class="idx">01</span>
+          <span class="t">Environmental Harm Is Active and Worsening</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch1-body" role="region" aria-labelledby="ch1-head">
+          <p>The evidence base does not describe a stable condition. Climate overheating is intensifying extreme heat and severe weather. Air pollution continues to impose measurable respiratory and cardiovascular burdens. Water contamination and chemical pollution — including persistent compounds such as PFAS — accumulate faster than they are remediated. Waste and landfill burdens, land degradation, biodiversity loss, and broader ecosystem instability compound one another across regions.</p>
+          <p>Each of these harm categories is documented by monitoring infrastructure that already exists. What planetary boundary accounting makes plain is that the indicators move together, in one direction, while the financial system that should register them records almost nothing.</p>
+          <ul class="cx-harms">
+            <li>Climate overheating</li>
+            <li>Extreme heat exposure</li>
+            <li>Severe weather intensification</li>
+            <li>Air pollution burden</li>
+            <li>Water contamination</li>
+            <li>Chemical pollution</li>
+            <li>PFAS persistence</li>
+            <li>Waste and landfill burdens</li>
+            <li>Land degradation</li>
+            <li>Biodiversity loss</li>
+            <li>Ecosystem instability</li>
+          </ul>
+          <div class="cx-blk">
+            <p class="cx-lbl">Combined harm indicators — composite index (2000 = 100)</p>
+            <div class="chart" style="max-width:640px">
+              <svg viewBox="0 0 560 250" role="img" aria-label="Illustrative rising trend line of combined environmental harm indicators from 2000 to 2025, climbing from an index of roughly 103 to roughly 165. Prototype demonstration only.">
+                <g stroke="rgba(212,175,55,.10)">
+                  <line x1="46" y1="30" x2="536" y2="30"/>
+                  <line x1="46" y1="85" x2="536" y2="85"/>
+                  <line x1="46" y1="140" x2="536" y2="140"/>
+                </g>
+                <line x1="46" y1="195" x2="536" y2="195" stroke="rgba(212,175,55,.35)"/>
+                <path d="M46,195 L46,190 L95,186 L144,182 L193,184 L242,174 L291,166 L340,156 L389,148 L438,132 L487,112 L536,88 L536,195 Z" fill="rgba(212,175,55,.10)"/>
+                <polyline points="46,190 95,186 144,182 193,184 242,174 291,166 340,156 389,148 438,132 487,112 536,88" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+                <circle cx="536" cy="88" r="3.6" fill="#F1D77A"/>
+                <text x="38" y="199" text-anchor="end" font-size="10" fill="#A6A6A6">100</text>
+                <text x="38" y="144" text-anchor="end" font-size="10" fill="#A6A6A6">130</text>
+                <text x="38" y="89" text-anchor="end" font-size="10" fill="#A6A6A6">160</text>
+                <text x="38" y="34" text-anchor="end" font-size="10" fill="#A6A6A6">190</text>
+                <text x="46" y="218" text-anchor="middle" font-size="10" fill="#A6A6A6">2000</text>
+                <text x="144" y="218" text-anchor="middle" font-size="10" fill="#A6A6A6">2005</text>
+                <text x="242" y="218" text-anchor="middle" font-size="10" fill="#A6A6A6">2010</text>
+                <text x="340" y="218" text-anchor="middle" font-size="10" fill="#A6A6A6">2015</text>
+                <text x="438" y="218" text-anchor="middle" font-size="10" fill="#A6A6A6">2020</text>
+                <text x="536" y="218" text-anchor="middle" font-size="10" fill="#A6A6A6">2025</text>
+                <text x="46" y="18" font-size="10" letter-spacing="2" fill="#6E6A5E">ILLUSTRATIVE TREND — PROTOTYPE</text>
+                <text x="46" y="244" font-size="9" fill="#6E6A5E">Composite of monitored harm categories · demonstration series</text>
+              </svg>
+            </div>
+          </div>
+          <div class="cx-blk">
+            <p class="cx-lbl">Underlying source records — illustrative</p>
+            <div class="cx-srcs">
+              <div class="cx-srcs__h" aria-hidden="true"><span>Source</span><span>Published</span><span>Jurisdiction</span><span>Confidence</span></div>
+              <div><span>National atmospheric monitoring series (illustrative)</span><span>2025</span><span>United States</span><span><span class="badge badge--verified">Verified</span></span></div>
+              <div><span>Multi-decade severe-weather loss dataset (illustrative)</span><span>2024</span><span>National</span><span><span class="badge badge--estimated">Estimated</span></span></div>
+              <div><span>Peer-reviewed contamination survey (illustrative)</span><span>2023</span><span>Multi-state</span><span><span class="badge badge--review">Under Review</span></span></div>
+            </div>
+          </div>
+          <p class="proto-note" style="margin-top:1.6rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+        </div>
+      </div>
+
+      <!-- CH 02 -->
+      <div class="acc__item">
+        <button class="acc__head" type="button" aria-expanded="false" aria-controls="ch2-body" id="ch2-head">
+          <span class="idx">02</span>
+          <span class="t">Environmental Damage Creates Public Burden</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch2-body" role="region" aria-labelledby="ch2-head">
+          <p>Environmental harm rarely stays where it is created. It converts, step by step, into public expenditure: taxpayer-funded cleanup programs, public water treatment costs, disaster recovery outlays, public-health burdens, and federal infrastructure spending. Below the federal level it appears as municipal fiscal stress, insurance strain, property-value loss, and liabilities carried forward onto budgets that have not yet been written.</p>
+          <ul class="cx-harms">
+            <li>Taxpayer-funded cleanup</li>
+            <li>Public water treatment costs</li>
+            <li>Disaster recovery outlays</li>
+            <li>Public-health burdens</li>
+            <li>Federal infrastructure spending</li>
+            <li>Municipal fiscal stress</li>
+            <li>Insurance strain</li>
+            <li>Property-value loss and future liabilities</li>
+          </ul>
+          <div class="cx-blk">
+            <p class="cx-lbl cx-lbl--gold">Public burden transfer — how private harm becomes public debt</p>
+            <div class="flow" aria-label="Public burden transfer: Company to Community to Municipality to State to Federal Government to Future Generations">
+              <span class="node">Company</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Community</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Municipality</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">State</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Federal Government</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Future Generations</span>
+            </div>
+          </div>
+          <p style="margin-top:1.6rem">Every step in that transfer is a financing decision. None of them is recorded as one. The public burden grows precisely because no ledger requires it to be recognized at the moment it is created.</p>
+        </div>
+      </div>
+
+      <!-- CH 03 -->
+      <div class="acc__item">
+        <button class="acc__head" type="button" aria-expanded="false" aria-controls="ch3-body" id="ch3-head">
+          <span class="idx">03</span>
+          <span class="t">Economic Actors Are Not Fully Inside the Financial Equation</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch3-body" role="region" aria-labelledby="ch3-head">
+          <p>The internal equation of a modern enterprise is complete, audited, and closed every quarter. The external equation — the one that runs through air, water, land, and public health — operates in parallel and is settled by the public. Environmental debt accounting exists to bring the second equation onto the same page as the first.</p>
+          <div class="cx-blk">
+            <p class="cx-lbl cx-lbl--gold">Recorded equation — audited quarterly</p>
+            <div class="flow flow--gold" aria-label="Recorded equation: Revenue to Profit to Shareholder Value">
+              <span class="node">Revenue</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Profit</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Shareholder Value</span>
+            </div>
+          </div>
+          <div class="cx-blk" style="margin-top:1.3rem">
+            <p class="cx-lbl">Unrecorded equation — settled by the public</p>
+            <div class="flow" aria-label="Unrecorded equation: Pollution to Public Health Impact to Cleanup to Taxpayer Burden">
+              <span class="node">Pollution</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Public Health Impact</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Cleanup</span><span class="arrow" aria-hidden="true">→</span>
+              <span class="node">Taxpayer Burden</span>
+            </div>
+          </div>
+          <div class="cx-blk">
+            <p class="cx-lbl">The environmental debt balance sheet — illustrative composite, Northstar Industrial Holdings (fictional entity)</p>
+            <div class="grid-2" style="gap:1.4rem;align-items:stretch">
+              <div class="panel">
+                <div class="panel__bar">
+                  <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="panel__title">Recorded on the books</span>
+                </div>
+                <div class="panel__body">
+                  <ul class="cx-books">
+                    <li><span>Cost of goods sold</span><span class="amt">$8.42B</span></li>
+                    <li><span>Payroll and benefits</span><span class="amt">$1.96B</span></li>
+                    <li><span>Compliance and permitting</span><span class="amt">$114M</span></li>
+                    <li><span>Insurance premiums</span><span class="amt">$86M</span></li>
+                    <li><span>Booked remediation reserves</span><span class="amt">$42M</span></li>
+                    <li><span>Reported penalties paid</span><span class="amt">$9M</span></li>
+                  </ul>
+                </div>
+                <div class="panel__foot">Audited · Reported · Closed annually</div>
+              </div>
+              <div class="panel cx-missing">
+                <div class="panel__bar">
+                  <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="panel__title">Missing from the books</span>
+                </div>
+                <div class="panel__body">
+                  <ul class="cx-books">
+                    <li><span>Modeled downstream water treatment burden</span><span class="amt">$1.21B</span></li>
+                    <li><span>Public-health exposure burden (modeled)</span><span class="amt">$940M</span></li>
+                    <li><span>Unresolved long-term site liabilities</span><span class="amt">$780M</span></li>
+                    <li><span>Restoration cost of affected land (estimated)</span><span class="amt">$415M</span></li>
+                    <li><span>Future environmental resource losses</span><span class="amt">$602M</span></li>
+                    <li><span>Disaster and infrastructure stress share</span><span class="amt">$233M</span></li>
+                  </ul>
+                </div>
+                <div class="panel__foot">Unrecorded · Unassessed · Carried by the public</div>
+              </div>
+            </div>
+            <p class="proto-note" style="margin-top:1.4rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CH 04 -->
+      <div class="acc__item">
+        <button class="acc__head" type="button" aria-expanded="false" aria-controls="ch4-body" id="ch4-head">
+          <span class="idx">04</span>
+          <span class="t">Harm Is Not Consistently Priced or Charged</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch4-body" role="region" aria-labelledby="ch4-head">
+          <p>Pricing mechanisms exist — but as fragments. Each instrument below charges for a slice of environmental harm, under its own statute, on its own schedule, with its own definitions. None of them reconciles against the others, and no instrument closes the account.</p>
+          <div class="cx-frags cx-blk">
+            <div class="cx-frag"><b>Excise taxes</b><span>Product- and activity-specific; rates set by category, not by measured harm.</span></div>
+            <div class="cx-frag"><b>Superfund taxes</b><span>Chemical and petroleum levies feeding a single remediation program.</span></div>
+            <div class="cx-frag"><b>Ozone-depleting chemical taxes</b><span>Narrow class of substances; legacy scope.</span></div>
+            <div class="cx-frag"><b>Penalties</b><span>Assessed after violations; episodic and enforcement-dependent.</span></div>
+            <div class="cx-frag"><b>Settlements</b><span>Negotiated case outcomes; terms vary by docket.</span></div>
+            <div class="cx-frag"><b>Consent decrees</b><span>Court-supervised obligations bound to individual matters.</span></div>
+            <div class="cx-frag"><b>Cleanup obligations</b><span>Site-specific duties; scope ends at the property line.</span></div>
+            <div class="cx-frag"><b>Permit fees</b><span>Administrative cost recovery, not harm pricing.</span></div>
+            <div class="cx-frag"><b>Cost recovery</b><span>Reimbursement actions pursued site by site, year by year.</span></div>
+          </div>
+          <p class="cx-statement">No unified annual environmental debt <span class="gold-text">closing statement.</span></p>
+          <p>Nothing in federal practice requires the harm created, the amounts assessed, the amounts collected, and the restoration delivered to be reconciled in one annual account. That reconciliation is the missing layer.</p>
+        </div>
+      </div>
+
+      <!-- CH 05 -->
+      <div class="acc__item">
+        <button class="acc__head" type="button" aria-expanded="false" aria-controls="ch5-body" id="ch5-head">
+          <span class="idx">05</span>
+          <span class="t">Collected Money Is Not Consistently Routed Into Restoration</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch5-body" role="region" aria-labelledby="ch5-head">
+          <p>Even where environmental money is collected, its routing — not its collection — determines whether repair ever happens. The destinations below behave very differently, and most of them are structurally disconnected from the harm that generated the payment.</p>
+          <dl class="deflist cx-blk">
+            <div><dt>General Fund revenue</dt><dd>Environmental taxes and many penalties dissolve into general revenue, with no earmark connecting the dollar collected to the damage that produced it.</dd></div>
+            <div><dt>Dedicated trust funds</dt><dd>A minority of collections reach trust structures. Balances are episodic, program-bound, and periodically redirected by appropriations politics.</dd></div>
+            <div><dt>Agency appropriations</dt><dd>Restoration competes annually against every other national priority; funding levels reset each cycle regardless of accumulated need.</dd></div>
+            <div><dt>Settlements</dt><dd>Case-by-case outcomes with terms that vary by negotiation. Only some route funds to the places that carried the burden.</dd></div>
+            <div><dt>Project-specific cleanup accounts</dt><dd>Bound to single sites and single responsible parties. They cannot address cumulative, regional, or orphaned harm.</dd></div>
+            <div><dt>Public grants</dt><dd>Discretionary, oversubscribed, and awarded by application — not tied to the harm that created the need for them.</dd></div>
+          </dl>
+          <p class="cx-statement">Collection does not automatically <span class="gold-text">create restoration.</span></p>
+          <p>A dollar collected for environmental harm has no default path to environmental repair. Restoration funding is the exception in the current architecture — not the rule.</p>
+        </div>
+      </div>
+
+      <!-- CH 06 -->
+      <div class="acc__item">
+        <button class="acc__head" type="button" aria-expanded="false" aria-controls="ch6-body" id="ch6-head">
+          <span class="idx">06</span>
+          <span class="t">Government Response Is Fragmented</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch6-body" role="region" aria-labelledby="ch6-head">
+          <p>Thirteen kinds of institutions each hold a fragment of the environmental account. Regulators hold the monitoring data. Revenue agencies hold the collections. Enforcement bodies hold the case records. Utilities and health departments hold the cost of living with the harm. No institution holds the whole.</p>
+          <div class="cx-blk">
+            <p class="cx-lbl">The institutional map — each holds a fragment</p>
+            <div class="flow" aria-label="Thirteen institutions that each hold part of the environmental account">
+              <span class="node">EPA</span>
+              <span class="node">Treasury</span>
+              <span class="node">IRS</span>
+              <span class="node">DOE</span>
+              <span class="node">DOI</span>
+              <span class="node">NOAA</span>
+              <span class="node">FEMA</span>
+              <span class="node">USDA</span>
+              <span class="node">DOJ</span>
+              <span class="node">SEC</span>
+              <span class="node">State Regulators</span>
+              <span class="node">Municipal Utilities</span>
+              <span class="node">Public-Health Departments</span>
+            </div>
+          </div>
+          <div class="cx-blk">
+            <p class="cx-lbl">The chain no single system connects</p>
+            <div class="flow cx-broken" aria-label="Unconnected chain: Actor, Facility, Harm, Liability, Payment, Fund, Restoration">
+              <span class="node">Actor</span><span class="arrow" aria-hidden="true">⇢</span>
+              <span class="node">Facility</span><span class="arrow" aria-hidden="true">⇢</span>
+              <span class="node">Harm</span><span class="arrow" aria-hidden="true">⇢</span>
+              <span class="node">Liability</span><span class="arrow" aria-hidden="true">⇢</span>
+              <span class="node">Payment</span><span class="arrow" aria-hidden="true">⇢</span>
+              <span class="node">Fund</span><span class="arrow" aria-hidden="true">⇢</span>
+              <span class="node">Restoration</span>
+            </div>
+          </div>
+          <p style="margin-top:1.6rem">No single federal system connects actor to facility, facility to harm, harm to liability, liability to payment, payment to fund, and fund to verified restoration. The fragmentation is not a failure of any one agency — it is the absence of the connecting ledger.</p>
+        </div>
+      </div>
+
+      <!-- CH 07 -->
+      <div class="acc__item">
+        <button class="acc__head" type="button" aria-expanded="false" aria-controls="ch7-body" id="ch7-head">
+          <span class="idx">07</span>
+          <span class="t">Restoration and Transition Remain Underfunded</span>
+          <span class="ic" aria-hidden="true">+</span>
+        </button>
+        <div class="acc__body" id="ch7-body" role="region" aria-labelledby="ch7-head">
+          <p>The consequence of the previous six findings is arithmetic. The national repair bill compounds annually, while the combined flow of appropriations, responsible-party recoveries, tax receipts, and private restoration capital covers a fraction of it. The remainder — the restoration funding gap — is the unpaid balance of the national environmental account, and it is also the capital shortfall blocking an orderly market transition away from harmful systems.</p>
+          <div class="cx-blk">
+            <p class="cx-lbl">Restoration funding gap — US$ billions, prototype ranges</p>
+            <div class="chart" style="max-width:820px">
+              <svg viewBox="0 0 720 312" role="img" aria-label="Horizontal bar chart of prototype ranges: estimated restoration need 1,280 billion dollars, federal appropriations 210 billion, responsible-party recoveries 95 billion, environmental tax receipts 60 billion, private restoration capital 140 billion, remaining funding gap 775 billion shown in bright gold. Illustrative demonstration only.">
+                <g font-size="10" letter-spacing="1.5" fill="#A6A6A6">
+                  <text x="12" y="16">ESTIMATED RESTORATION NEED</text>
+                  <text x="12" y="64">FEDERAL APPROPRIATIONS (RESTORATION-DIRECTED)</text>
+                  <text x="12" y="112">RESPONSIBLE-PARTY RECOVERIES</text>
+                  <text x="12" y="160">ENVIRONMENTAL TAX RECEIPTS (RESTORATION-ROUTED)</text>
+                  <text x="12" y="208">PRIVATE RESTORATION CAPITAL</text>
+                  <text x="12" y="256" fill="#F1D77A">REMAINING FUNDING GAP</text>
+                </g>
+                <rect x="12" y="22" width="600" height="17" fill="rgba(245,242,234,.78)"/>
+                <rect x="12" y="70" width="98" height="17" fill="rgba(166,166,166,.38)"/>
+                <rect x="12" y="118" width="45" height="17" fill="rgba(166,166,166,.38)"/>
+                <rect x="12" y="166" width="28" height="17" fill="rgba(166,166,166,.38)"/>
+                <rect x="12" y="214" width="66" height="17" fill="rgba(166,166,166,.38)"/>
+                <rect x="12" y="262" width="363" height="17" fill="#F1D77A" stroke="#D4AF37" stroke-width="1"/>
+                <g font-size="11" fill="#EDEAE0">
+                  <text x="620" y="35">$1,280B</text>
+                  <text x="118" y="83">$210B</text>
+                  <text x="65" y="131">$95B</text>
+                  <text x="48" y="179">$60B</text>
+                  <text x="86" y="227">$140B</text>
+                  <text x="383" y="275" fill="#F1D77A">$775B</text>
+                </g>
+                <text x="12" y="302" font-size="9" fill="#6E6A5E">Illustrative prototype ranges · restoration funding vs. modeled need · demonstration only</text>
+              </svg>
+            </div>
+          </div>
+          <p class="proto-note" style="margin-top:1.4rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination. All values shown are clearly labeled prototype ranges, not measured national totals.</p>
+          <p style="margin-top:1.4rem">Closing that gap is not a charitable project. It is a receivables problem — and receivables problems are solved with accounting, assessment, collection, protected funds, and verified deployment.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ EMERGENCY RECOGNITION PARALLEL ============ -->
+<section class="section section--line section--light cx-light" aria-labelledby="covid-h">
+  <div class="wrap">
+    <div class="section__head" style="margin-bottom:2rem">
+      <p class="eyebrow" data-reveal>The Precedent</p>
+      <h2 class="h2" id="covid-h" data-reveal>What Emergency Recognition Changes</h2>
+    </div>
+    <blockquote class="pullquote" data-reveal>
+      COVID demonstrated that when a threat is measured, systemic, immediate, and nationally consequential, government can mobilize extraordinary coordination and resources. Environmental breakdown is not identical to a pandemic, but it also requires emergency-level seriousness. The appropriate response is mandatory financial accountability, restoration funding, and transition away from harmful systems.
+    </blockquote>
+    <p class="cx-note" data-reveal>The legal authorities involved in pandemic response and environmental financial accountability differ, and no equivalence between statutory regimes is implied. The parallel is one of measurement, seriousness, and coordination — not of identical powers.</p>
+  </div>
+</section>
+
+<!-- ============ CRISIS DASHBOARD ============ -->
+<section class="section section--line" aria-labelledby="dash-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>The National Picture</p>
+      <h2 class="h2" id="dash-h" data-reveal>Crisis Dashboard</h2>
+      <p class="lead" data-reveal>One prototype view of nine harm categories: where the burden signal concentrates, how the trend moves, and what the public balance carries.</p>
+    </div>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">National Environmental Crisis Monitor — Prototype</span>
+      </div>
+      <div class="panel__body">
+        <div class="chips" id="cxChips" role="group" aria-label="Crisis category filter" style="margin-bottom:1.6rem">
+          <button class="chip is-active" type="button" data-cat="climate" aria-pressed="true">Climate</button>
+          <button class="chip" type="button" data-cat="air" aria-pressed="false">Air</button>
+          <button class="chip" type="button" data-cat="water" aria-pressed="false">Water</button>
+          <button class="chip" type="button" data-cat="chemicals" aria-pressed="false">Chemicals</button>
+          <button class="chip" type="button" data-cat="land" aria-pressed="false">Land</button>
+          <button class="chip" type="button" data-cat="waste" aria-pressed="false">Waste</button>
+          <button class="chip" type="button" data-cat="biodiversity" aria-pressed="false">Biodiversity</button>
+          <button class="chip" type="button" data-cat="health" aria-pressed="false">Public Health</button>
+          <button class="chip" type="button" data-cat="future" aria-pressed="false">Future Resources</button>
+        </div>
+        <div class="cx-dash">
+          <div>
+            <svg id="cxMap" viewBox="0 0 600 360" role="img" aria-label="Prototype national dot map highlighting regions with an elevated climate burden signal. Illustrative demonstration only."></svg>
+            <div class="chart__legend" style="margin-top:.4rem">
+              <span><i style="background:#F1D77A"></i>Elevated burden signal</span>
+              <span><i style="background:rgba(212,175,55,.28)"></i>Monitored region</span>
+            </div>
+          </div>
+          <div>
+            <div class="cx-metrics" aria-live="polite">
+              <div class="metric">
+                <span class="metric__num" id="cxFac">—</span>
+                <span class="metric__label">Affected facilities (tracked)</span>
+              </div>
+              <div class="metric">
+                <span class="metric__num" id="cxBur">—</span>
+                <span class="metric__label">Estimated public burden</span>
+              </div>
+              <div class="metric">
+                <span class="metric__num" id="cxNeed">—</span>
+                <span class="metric__label">Restoration need (modeled)</span>
+              </div>
+              <div class="metric">
+                <span id="cxConf"><span class="badge badge--estimated">Estimated</span></span>
+                <span class="metric__label">Data confidence grade</span>
+              </div>
+            </div>
+            <div class="cx-blk" style="margin-top:1.4rem">
+              <p class="cx-lbl" id="cxTrendLbl">Category trend — illustrative 12-year series</p>
+              <div class="chart">
+                <svg id="cxTrend" viewBox="0 0 300 110" role="img" aria-label="Illustrative twelve-year trend line for the selected category. Prototype demonstration only."></svg>
+              </div>
+            </div>
+            <p class="cx-srcline"><b>Primary sources:</b> <span id="cxSources">—</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot">Demonstration dashboard · category signal · prototype purposes only</div>
+    </div>
+    <p class="proto-note" data-reveal style="margin-top:1.4rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+  </div>
+</section>
+
+<!-- ============ SOURCES AND EVIDENCE ============ -->
+<section class="section section--line" id="sources" aria-labelledby="sources-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Sources and Evidence</p>
+      <h2 class="h2" id="sources-h" data-reveal>An evidence library, <span class="gold-text">not an opinion.</span></h2>
+      <p class="lead" data-reveal>Every figure in the production system must trace to a named source, a methodology, a jurisdiction, and a confidence grade. These are the evidence categories the ledger is built to ingest.</p>
+    </div>
+    <div class="grid-4" data-reveal-stagger>
+      <div class="card"><span class="card__num">SRC 01</span><h3 class="h3" style="font-size:1.05rem">Federal Government Records</h3><p>Monitoring series, program data, and administrative records published by federal bodies.</p></div>
+      <div class="card"><span class="card__num">SRC 02</span><h3 class="h3" style="font-size:1.05rem">Peer-Reviewed Research</h3><p>Published exposure, contamination, and burden studies with stated methods and review.</p></div>
+      <div class="card"><span class="card__num">SRC 03</span><h3 class="h3" style="font-size:1.05rem">Court &amp; Enforcement Records</h3><p>Dockets, settlements, and consent decrees as documented liability events.</p></div>
+      <div class="card"><span class="card__num">SRC 04</span><h3 class="h3" style="font-size:1.05rem">Public Finance Documents</h3><p>Budgets, appropriations, trust-fund statements, and municipal cost filings.</p></div>
+      <div class="card"><span class="card__num">SRC 05</span><h3 class="h3" style="font-size:1.05rem">Infrastructure Reports</h3><p>Engineering condition assessments of water, waste, and energy systems.</p></div>
+      <div class="card"><span class="card__num">SRC 06</span><h3 class="h3" style="font-size:1.05rem">State Records</h3><p>State-level permits, discharge monitoring, and remediation registries.</p></div>
+      <div class="card"><span class="card__num">SRC 07</span><h3 class="h3" style="font-size:1.05rem">Facility Disclosures</h3><p>Operator-reported releases, inventories, and self-disclosed obligations.</p></div>
+      <div class="card"><span class="card__num">SRC 08</span><h3 class="h3" style="font-size:1.05rem">Verified Monitoring Data</h3><p>Calibrated sensor networks and sampling series with chain-of-custody records.</p></div>
+    </div>
+    <div class="cx-blk" data-reveal style="margin-top:2.6rem">
+      <p class="cx-lbl">Sample evidence records — illustrative source types</p>
+      <div class="table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th data-sort="">Source Name</th>
+              <th data-sort="">Published</th>
+              <th>Jurisdiction</th>
+              <th>Methodology</th>
+              <th data-sort="">Confidence</th>
+              <th data-sort="">Last Updated</th>
+              <th>Citation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Federal enforcement docket (illustrative)</strong></td><td class="num">2024</td><td>Federal</td><td>Records review</td><td><span class="badge badge--verified">Verified</span></td><td class="num">2026-05</td><td class="mono">RVL-EV-104</td></tr>
+            <tr><td><strong>Peer-reviewed exposure study (illustrative)</strong></td><td class="num">2023</td><td>Multi-state</td><td>Cohort exposure model</td><td><span class="badge badge--verified">Verified</span></td><td class="num">2026-04</td><td class="mono">RVL-EV-233</td></tr>
+            <tr><td><strong>State discharge monitoring record (illustrative)</strong></td><td class="num">2025</td><td>State</td><td>Continuous monitoring</td><td><span class="badge badge--review">Under Review</span></td><td class="num">2026-06</td><td class="mono">RVL-EV-318</td></tr>
+            <tr><td><strong>Public water treatment cost filing (illustrative)</strong></td><td class="num">2024</td><td>Municipal</td><td>Cost accounting</td><td><span class="badge badge--estimated">Estimated</span></td><td class="num">2026-03</td><td class="mono">RVL-EV-407</td></tr>
+            <tr><td><strong>Facility self-disclosure report (illustrative)</strong></td><td class="num">2025</td><td>Facility</td><td>Operator reported</td><td><span class="badge badge--incomplete">Data Incomplete</span></td><td class="num">2026-06</td><td class="mono">RVL-EV-512</td></tr>
+            <tr><td><strong>Infrastructure condition assessment (illustrative)</strong></td><td class="num">2022</td><td>Regional</td><td>Engineering survey</td><td><span class="badge badge--estimated">Estimated</span></td><td class="num">2026-01</td><td class="mono">RVL-EV-609</td></tr>
+            <tr><td><strong>Court settlement record (illustrative)</strong></td><td class="num">2023</td><td>Federal</td><td>Docket extraction</td><td><span class="badge badge--verified">Verified</span></td><td class="num">2026-02</td><td class="mono">RVL-EV-655</td></tr>
+            <tr><td><strong>Independent sensor network series (illustrative)</strong></td><td class="num">2025</td><td>Multi-state</td><td>Calibrated sensors</td><td><span class="badge badge--pending">Methodology Pending</span></td><td class="num">2026-06</td><td class="mono">RVL-EV-702</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="proto-note" style="margin-top:1.4rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section final" aria-labelledby="final-h">
+  <div class="wrap">
+    <p class="eyebrow final__eyebrow" data-reveal>The Mandate</p>
+    <h2 class="h2" id="final-h" data-reveal>Collection is not restoration. <span class="gold-text">Recognition is not repair.</span></h2>
+    <div class="btns" data-reveal>
+      <a href="explorer.html" class="btn btn--gold">Explore the Ledger <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <a href="methodology.html" class="btn btn--ghost">See the Methodology</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__col footer__brand">
+        <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+          <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+            <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+        </a>
+        <p>Make environmental damage financially accountable. Identify environmental debt, quantify public burden, support lawful collection, protect restoration funding, and verify measurable outcomes.</p>
+      </div>
+      <div class="footer__col">
+        <p class="t">Platform</p>
+        <a href="explorer.html">Ledger Explorer</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="products.html">Products</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="crisis.html">The Environmental Blind Spot</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Institution</p>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html">Government Inquiries</a>
+        <a href="contact.html">Careers</a>
+        <a href="crisis.html#sources">Data Sources</a>
+        <a href="explorer.html#dispute">Corrections</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Legal</p>
+        <a href="contact.html">Terms</a>
+        <a href="contact.html">Privacy</a>
+        <a href="contact.html">Security</a>
+        <a href="contact.html">Legal</a>
+        <a href="contact.html">Accessibility</a>
+      </div>
+    </div>
+    <p class="fineprint">ReVerity Ledger is a private technology and research platform. It does not independently levy taxes, impose governmental penalties, issue legal determinations, or control public funds. Any mandatory assessment, tax, fee, penalty, collection, or public-fund allocation must be authorized and administered by the appropriate government authority. Prototype demonstration data shown throughout this site is not an official legal, tax, accounting, or regulatory determination.<span class="copy">© ReVerity Ledger. Identify. Quantify. Rectify.</span></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+/* Crisis Dashboard — category-driven national map, trend, and metrics */
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var map = document.getElementById("cxMap");
+  var trend = document.getElementById("cxTrend");
+  var chipsWrap = document.getElementById("cxChips");
+  if (!map || !trend || !chipsWrap) return;
+
+  /* Hand-authored 30×17 land mask of the continental United States (canon) */
+  var MASK = [
+    "################..............",
+    "#################.###.......##",
+    "####################.......###",
+    "####################.##..#####",
+    "######################.######.",
+    "###########################...",
+    "##########################....",
+    ".#########################....",
+    ".#########################....",
+    "..########################....",
+    "...######################.....",
+    "....####################......",
+    "........###############.......",
+    "...........######....##.......",
+    "............###.......##......",
+    ".............##.......##......",
+    ".......................#......"
+  ];
+  var COLS = 30, ROWS = 17, W = 600, H = 360, padX = 30, padY = 24;
+  var cw = (W - padX * 2) / (COLS - 1);
+  var ch = (H - padY * 2) / (ROWS - 1);
+
+  var CATS = {
+    climate: { label: "Climate", fac: 48200, bur: 412, need: 196, conf: ["badge--estimated", "Estimated"], seed: 3, density: 0.32,
+      trend: [52, 54, 55, 58, 61, 63, 66, 68, 71, 75, 78, 83],
+      sources: "national climate records · disaster expenditure series · insured-loss datasets" },
+    air: { label: "Air", fac: 61400, bur: 288, need: 121, conf: ["badge--verified", "Verified"], seed: 11, density: 0.36,
+      trend: [44, 45, 47, 46, 49, 51, 52, 55, 57, 58, 61, 63],
+      sources: "continuous emissions monitors · ambient air networks · exposure studies" },
+    water: { label: "Water", fac: 9800, bur: 173, need: 88, conf: ["badge--review", "Under Review"], seed: 23, density: 0.22,
+      trend: [38, 40, 41, 43, 44, 47, 49, 50, 53, 56, 58, 61],
+      sources: "discharge monitoring records · public water system filings · treatment cost data" },
+    chemicals: { label: "Chemicals", fac: 23750, bur: 226, need: 143, conf: ["badge--estimated", "Estimated"], seed: 37, density: 0.26,
+      trend: [30, 32, 35, 36, 39, 42, 44, 47, 51, 54, 58, 62],
+      sources: "chemical release inventories · site assessment records · PFAS sampling series" },
+    land: { label: "Land", fac: 17300, bur: 94, need: 61, conf: ["badge--incomplete", "Data Incomplete"], seed: 41, density: 0.24,
+      trend: [25, 26, 28, 29, 31, 32, 34, 36, 37, 39, 41, 43],
+      sources: "land condition surveys · remediation registries · soil sampling programs" },
+    waste: { label: "Waste", fac: 12600, bur: 78, need: 45, conf: ["badge--verified", "Verified"], seed: 53, density: 0.2,
+      trend: [33, 34, 36, 38, 39, 41, 44, 46, 47, 50, 52, 55],
+      sources: "landfill capacity records · leachate monitoring · waste-stream manifests" },
+    biodiversity: { label: "Biodiversity", fac: 6900, bur: 132, need: 97, conf: ["badge--pending", "Methodology Pending"], seed: 61, density: 0.18,
+      trend: [40, 42, 45, 47, 50, 53, 57, 60, 64, 67, 71, 76],
+      sources: "habitat condition indices · species monitoring series · ecosystem assessments" },
+    health: { label: "Public Health", fac: 31500, bur: 341, need: 156, conf: ["badge--review", "Under Review"], seed: 71, density: 0.3,
+      trend: [36, 38, 39, 42, 45, 47, 51, 54, 58, 61, 66, 70],
+      sources: "public-health surveillance · hospital burden studies · exposure cohort research" },
+    future: { label: "Future Resources", fac: 8200, bur: 260, need: 188, conf: ["badge--pending", "Methodology Pending"], seed: 83, density: 0.21,
+      trend: [20, 23, 26, 30, 33, 37, 42, 46, 51, 57, 63, 70],
+      sources: "resource depletion models · aquifer drawdown records · long-horizon liability studies" }
+  };
+
+  /* Build dots once */
+  var dots = [];
+  var dotsG = document.createElementNS(NS, "g");
+  for (var r = 0; r < ROWS; r++) {
+    for (var c = 0; c < COLS; c++) {
+      if (MASK[r].charAt(c) !== "#") continue;
+      var d = document.createElementNS(NS, "circle");
+      d.setAttribute("cx", padX + c * cw);
+      d.setAttribute("cy", padY + r * ch);
+      d.setAttribute("r", "2.5");
+      d.setAttribute("fill", "rgba(212,175,55,.2)");
+      dotsG.appendChild(d);
+      dots.push({ el: d, r: r, c: c });
+    }
+  }
+  map.appendChild(dotsG);
+
+  var facEl = document.getElementById("cxFac");
+  var burEl = document.getElementById("cxBur");
+  var needEl = document.getElementById("cxNeed");
+  var confEl = document.getElementById("cxConf");
+  var srcEl = document.getElementById("cxSources");
+  var trendLbl = document.getElementById("cxTrendLbl");
+
+  function animNum(el, to, fmtFn) {
+    var from = parseFloat(el.getAttribute("data-v") || "0");
+    el.setAttribute("data-v", String(to));
+    if (reduceMotion) { el.textContent = fmtFn(to); return; }
+    var start = null, dur = 480;
+    var tick = function (ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmtFn(from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  var fmtInt = function (v) { return Math.round(v).toLocaleString("en-US"); };
+  var fmtB = function (v) { return "$" + Math.round(v) + "B"; };
+
+  function drawTrend(cat) {
+    while (trend.firstChild) trend.removeChild(trend.firstChild);
+    var vals = cat.trend;
+    var TW = 300, TH = 110, pl = 10, pr = 34, pt = 16, pb = 20;
+    var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+    var span = (max - min) || 1;
+    var pts = [];
+    for (var i = 0; i < vals.length; i++) {
+      var x = pl + i * (TW - pl - pr) / (vals.length - 1);
+      var y = pt + (1 - (vals[i] - min) / span) * (TH - pt - pb);
+      pts.push([x, y]);
+    }
+    var base = document.createElementNS(NS, "line");
+    base.setAttribute("x1", pl); base.setAttribute("y1", TH - pb);
+    base.setAttribute("x2", TW - pr); base.setAttribute("y2", TH - pb);
+    base.setAttribute("stroke", "rgba(212,175,55,.3)");
+    trend.appendChild(base);
+    var area = document.createElementNS(NS, "path");
+    var dStr = "M" + pl + "," + (TH - pb);
+    pts.forEach(function (p) { dStr += " L" + p[0].toFixed(1) + "," + p[1].toFixed(1); });
+    dStr += " L" + (TW - pr) + "," + (TH - pb) + " Z";
+    area.setAttribute("d", dStr);
+    area.setAttribute("fill", "rgba(212,175,55,.09)");
+    trend.appendChild(area);
+    var line = document.createElementNS(NS, "polyline");
+    line.setAttribute("points", pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" "));
+    line.setAttribute("fill", "none");
+    line.setAttribute("stroke", "#D4AF37");
+    line.setAttribute("stroke-width", "2");
+    line.setAttribute("stroke-linejoin", "round");
+    line.setAttribute("stroke-linecap", "round");
+    trend.appendChild(line);
+    var end = document.createElementNS(NS, "circle");
+    end.setAttribute("cx", pts[pts.length - 1][0].toFixed(1));
+    end.setAttribute("cy", pts[pts.length - 1][1].toFixed(1));
+    end.setAttribute("r", "3");
+    end.setAttribute("fill", "#F1D77A");
+    trend.appendChild(end);
+    var pct = Math.round((vals[vals.length - 1] - vals[0]) / vals[0] * 100);
+    var t1 = document.createElementNS(NS, "text");
+    t1.setAttribute("x", TW - pr + 5); t1.setAttribute("y", pts[pts.length - 1][1] + 3);
+    t1.setAttribute("font-size", "9"); t1.setAttribute("fill", "#F1D77A");
+    t1.textContent = "+" + pct + "%";
+    trend.appendChild(t1);
+    var t2 = document.createElementNS(NS, "text");
+    t2.setAttribute("x", pl); t2.setAttribute("y", TH - 6);
+    t2.setAttribute("font-size", "8.5"); t2.setAttribute("fill", "#6E6A5E");
+    t2.textContent = "2014";
+    trend.appendChild(t2);
+    var t3 = document.createElementNS(NS, "text");
+    t3.setAttribute("x", TW - pr); t3.setAttribute("y", TH - 6);
+    t3.setAttribute("text-anchor", "end");
+    t3.setAttribute("font-size", "8.5"); t3.setAttribute("fill", "#6E6A5E");
+    t3.textContent = "2025";
+    trend.appendChild(t3);
+    trend.setAttribute("aria-label", "Illustrative twelve-year rising trend for " + cat.label + ", up " + pct + " percent. Prototype demonstration only.");
+  }
+
+  function select(key) {
+    var cat = CATS[key];
+    if (!cat) return;
+    dots.forEach(function (d) {
+      var h = (d.r * 7 + d.c * 13 + cat.seed * 29) % 100;
+      var lit = h < cat.density * 100;
+      d.el.setAttribute("fill", lit ? "#F1D77A" : "rgba(212,175,55,.2)");
+      d.el.setAttribute("r", lit ? "3.1" : "2.5");
+    });
+    map.setAttribute("aria-label", "Prototype national dot map highlighting regions with an elevated " + cat.label.toLowerCase() + " burden signal. Illustrative demonstration only.");
+    animNum(facEl, cat.fac, fmtInt);
+    animNum(burEl, cat.bur, fmtB);
+    animNum(needEl, cat.need, fmtB);
+    confEl.innerHTML = '<span class="badge ' + cat.conf[0] + '">' + cat.conf[1] + "</span>";
+    srcEl.textContent = cat.sources;
+    trendLbl.textContent = cat.label + " trend — illustrative 12-year series";
+    drawTrend(cat);
+  }
+
+  var chips = Array.prototype.slice.call(chipsWrap.querySelectorAll(".chip"));
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (x) {
+        var on = x === chip;
+        x.classList.toggle("is-active", on);
+        x.setAttribute("aria-pressed", String(on));
+      });
+      select(chip.getAttribute("data-cat"));
+    });
+  });
+
+  select("climate");
+})();
+</script>
+</body>
+</html>

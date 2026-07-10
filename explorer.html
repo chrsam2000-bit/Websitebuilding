@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="Ledger Explorer — search the ReVerity Ledger prototype: environmental debt accounting records, planetary boundary exposure, public burden analysis, and annual environmental debt statements for demonstration entities.">
+<title>Ledger Explorer — ReVerity Ledger</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23050505'/%3E%3Crect x='1' y='1' width='30' height='30' rx='4.5' fill='none' stroke='%23D4AF37' stroke-width='1.4'/%3E%3Cpath d='M9 8 L16 25 L23 8' fill='none' stroke='%23D4AF37' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ---- Ledger Explorer page-specific (.ex-) ---- */
+.ex-search-row{display:flex;align-items:center;gap:.9rem;margin-bottom:1.1rem}
+.ex-search-row svg{flex:none}
+.ex-search-input{
+  width:100%;font-family:var(--font-mono);font-size:.95rem;color:var(--ink);
+  background:rgba(245,242,234,.03);border:1px solid var(--line-strong);border-radius:var(--radius);
+  padding:1rem 1.1rem;caret-color:var(--rich-gold);transition:border-color .18s,background .18s;
+}
+.ex-search-input::placeholder{color:var(--mid-gray)}
+.ex-search-input:focus{outline:none;border-color:var(--rich-gold);background:rgba(212,175,55,.05)}
+.ex-filters{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem}
+.ex-filters .field{margin-bottom:0}
+.ex-filters label{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-gray);font-weight:600}
+.ex-filters select{font-size:.8rem;padding:.6rem 1.9rem .6rem .7rem}
+.ex-count{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rich-gold)}
+.ex-modebar{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem}
+.ex-row{cursor:pointer}
+.ex-row.is-active{background:rgba(212,175,55,.09)}
+.ex-row.is-active td:first-child{box-shadow:inset 3px 0 0 var(--rich-gold)}
+.ex-empty td{text-align:center;padding:2.2rem 1rem;color:var(--mid-gray);font-family:var(--font-mono);font-size:.8rem;letter-spacing:.08em}
+.ex-hint{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid-gray);margin-top:.8rem}
+.ex-wheel-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(1.4rem,3vw,2.6rem);align-items:start}
+.ex-wheel-seg{cursor:pointer;transition:opacity .18s}
+.ex-wheel-seg:hover{opacity:.85}
+.ex-wheel-seg:focus-visible{outline:2px solid var(--rich-gold);outline-offset:2px}
+.ex-wheel-seg.is-active{stroke:#F1D77A;stroke-width:2}
+.ex-detail dl{display:grid;gap:0}
+.ex-detail dl>div{display:grid;grid-template-columns:150px 1fr;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--line)}
+.ex-detail dl>div:last-child{border-bottom:0}
+.ex-detail dt{font-family:var(--font-mono);font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rich-gold);padding-top:.2rem}
+.ex-detail dd{color:var(--ink-dim);font-size:.88rem}
+.ex-profile-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:1rem;margin-bottom:.4rem}
+.ex-profile-head .h3{font-size:clamp(1.6rem,3vw,2.3rem)}
+.ex-fid{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--soft-gray)}
+.ex-block{margin-top:2.6rem}
+.ex-block>.hero__label{margin-bottom:1rem;color:var(--rich-gold)}
+.ex-statement{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;align-items:stretch}
+.ex-ledger td.num{color:var(--ink)}
+.ex-ledger tr.ex-total td{border-top:1px solid var(--line-strong);color:var(--rich-gold);font-weight:600}
+.ex-ledger tr.ex-total td strong{color:var(--rich-gold)}
+.ex-ledger tr.ex-memo td{color:var(--mid-gray);font-size:.8rem}
+.ex-bars .row{display:grid;grid-template-columns:170px 1fr 62px;gap:.9rem;align-items:center;padding:.42rem 0}
+.ex-bars .lbl{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
+.ex-bars .val{font-family:var(--font-mono);font-size:.72rem;color:var(--rich-gold);text-align:right}
+.ex-bars .track{height:10px;background:rgba(245,242,234,.05);border-radius:2px;overflow:hidden}
+.ex-bars .fill{display:block;height:100%;background:linear-gradient(90deg,var(--metal-gold),var(--rich-gold));border-radius:2px}
+.ex-cards-note{margin-top:1.6rem}
+@media (max-width:1100px){
+  .ex-filters{grid-template-columns:repeat(3,1fr)}
+  .ex-statement{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .ex-wheel-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .ex-filters{grid-template-columns:1fr 1fr}
+  .ex-bars .row{grid-template-columns:110px 1fr 56px;gap:.6rem}
+  .ex-detail dl>div{grid-template-columns:1fr;gap:.25rem;padding:.65rem 0}
+}
+</style>
+</head>
+<body data-page="explorer">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+        <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="crisis.html">The Crisis</a></li>
+        <li><a href="explorer.html" aria-current="page">Ledger Explorer</a></li>
+        <li><a href="methodology.html">Methodology</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__right">
+      <a href="explorer.html" class="btn btn--ghost nav__cta--ghost">Explore the Ledger</a>
+      <a href="contact.html" class="btn btn--gold nav__cta">Request Institutional Access</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="crisis.html">The Crisis</a>
+  <a href="explorer.html" aria-current="page">Ledger Explorer</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="products.html">Products</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn--gold btn--block">Request Institutional Access</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero" aria-labelledby="hero-h">
+  <div class="page-hero__glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>The National Ledger</p>
+    <h1 class="h1" id="hero-h" data-reveal>Search the ledger of <span class="gold-text">environmental debt.</span></h1>
+    <p class="lead" data-reveal>The Ledger Explorer is the public window into the prototype system of record for environmental debt accounting — responsible entities, measured harm, modeled liability, public burden, and the restoration funding each record requires. Search it the way an examiner would.</p>
+    <p class="proto-note" data-reveal style="margin-top:1.6rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination. All entities shown are fictional.</p>
+  </div>
+</section>
+
+<!-- ============ SEARCH INTERFACE ============ -->
+<section class="section section--tight section--line" aria-labelledby="search-h">
+  <div class="wrap">
+    <h2 class="sr-only" id="search-h">Search and filter the ledger</h2>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Ledger Query Console — Prototype</span>
+      </div>
+      <div class="panel__body">
+        <div class="ex-search-row">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5.5" stroke="#D4AF37" stroke-width="1.6"/><path d="M12 12 L16.5 16.5" stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <label class="sr-only" for="exSearch">Search the ledger</label>
+          <input class="ex-search-input" id="exSearch" type="search" autocomplete="off" spellcheck="false"
+            placeholder="Search a company, parent company, facility, sector, pollutant, state, county, watershed, or environmental debt category.">
+        </div>
+        <div class="ex-filters">
+          <div class="field">
+            <label for="fIndustry">Industry</label>
+            <select id="fIndustry" data-filter>
+              <option value="">All industries</option>
+              <option>Energy &amp; Chemicals</option>
+              <option>Specialty Chemicals</option>
+              <option>Mining &amp; Materials</option>
+              <option>Aggregates &amp; Cement</option>
+              <option>Fossil Generation</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fCategory">Environmental category</label>
+            <select id="fCategory" data-filter>
+              <option value="">All categories</option>
+              <option>Greenhouse-gas emissions</option>
+              <option>Methane</option>
+              <option>Air pollutants</option>
+              <option>PFAS &amp; novel entities</option>
+              <option>Toxic releases</option>
+              <option>Wastewater</option>
+              <option>Hazardous waste</option>
+              <option>Land degradation</option>
+              <option>Biodiversity pressure</option>
+              <option>Resource extraction</option>
+              <option>Future resource burden</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fBoundary">Planetary boundary</label>
+            <select id="fBoundary" data-filter>
+              <option value="">All boundaries</option>
+              <option>Climate change</option>
+              <option>Biosphere integrity</option>
+              <option>Land-system change</option>
+              <option>Freshwater change</option>
+              <option>Biogeochemical flows</option>
+              <option>Ocean acidification</option>
+              <option>Atmospheric aerosol loading</option>
+              <option>Stratospheric ozone depletion</option>
+              <option>Novel entities</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fConfidence">Evidence confidence</label>
+            <select id="fConfidence" data-filter>
+              <option value="">All confidence levels</option>
+              <option>Verified</option>
+              <option>Estimated</option>
+              <option>Under Review</option>
+              <option>Data Incomplete</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fStatus">Liability status</label>
+            <select id="fStatus" data-filter>
+              <option value="">All statuses</option>
+              <option>Assessment modeled</option>
+              <option>Under review</option>
+              <option>Partially reconciled</option>
+              <option>Data under review</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fYear">Reporting year</label>
+            <select id="fYear" data-filter>
+              <option value="">All years</option>
+              <option value="FY2025" selected>FY2025 (demo)</option>
+              <option value="FY2024">FY2024 — not in prototype</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot"><span id="exCount" class="ex-count" aria-live="polite">5 of 5 entities match</span></div>
+    </div>
+  </div>
+</section>
+<!-- ============ EXPLORER MODES ============ -->
+<section class="section section--line" aria-labelledby="modes-h">
+  <div class="wrap">
+    <div class="section__head ex-modebar" data-reveal>
+      <div>
+        <p class="eyebrow">Explorer Modes</p>
+        <h2 class="h2" id="modes-h">One ledger. <span class="gold-text">Four lenses.</span></h2>
+      </div>
+    </div>
+
+    <div class="tabs" data-tabs="modes" role="tablist" aria-label="Explorer modes" data-reveal>
+      <button class="tab" role="tab" data-tab="map" aria-selected="false">Map View</button>
+      <button class="tab" role="tab" data-tab="company" aria-selected="true" id="tabCompany">Company View</button>
+      <button class="tab" role="tab" data-tab="boundary" aria-selected="false">Boundary View</button>
+      <button class="tab" role="tab" data-tab="burden" aria-selected="false">Public Burden View</button>
+    </div>
+
+    <!-- MAP VIEW -->
+    <div data-tabpanel="modes" data-panel="map" role="tabpanel" hidden>
+      <div class="panel">
+        <div class="panel__bar">
+          <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="panel__title">Geographic Concentration of Environmental Harm — Prototype</span>
+        </div>
+        <div class="panel__body" style="padding:.9rem">
+          <svg id="exMap" viewBox="0 0 600 360" role="img" aria-label="Stylized dot map of the United States showing facility clusters for five fictional demonstration entities, with brighter clusters indicating higher geographic concentration of estimated environmental harm."></svg>
+          <div class="chart__legend" style="margin-top:.6rem;padding:0 .4rem .3rem">
+            <span><i style="background:#F1D77A"></i>High-concentration cluster</span>
+            <span><i style="background:#D4AF37"></i>Facility cluster hub</span>
+            <span><i style="background:rgba(212,175,55,.35)"></i>Monitored territory</span>
+          </div>
+        </div>
+        <div class="panel__foot">Cluster intensity reflects modeled harm concentration — hover a hub for the entity</div>
+      </div>
+      <p class="proto-note" style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+    </div>
+
+    <!-- COMPANY VIEW -->
+    <div data-tabpanel="modes" data-panel="company" role="tabpanel">
+      <div class="table-scroll">
+        <table class="table" id="companyTable">
+          <thead>
+            <tr>
+              <th data-sort>Company</th>
+              <th data-sort>Industry</th>
+              <th class="num" data-sort>Facilities</th>
+              <th class="num" data-sort>Est. Environmental Debt Range ($M)</th>
+              <th class="num" data-sort>Public Burden ($M)</th>
+              <th data-sort>Evidence Confidence</th>
+              <th data-sort>Enforcement</th>
+            </tr>
+          </thead>
+          <tbody id="companyBody"></tbody>
+        </table>
+      </div>
+      <p class="ex-hint">Select a row to load the full company record and Annual Environmental Debt Statement below.</p>
+      <p class="proto-note" style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+    </div>
+
+    <!-- BOUNDARY VIEW -->
+    <div data-tabpanel="modes" data-panel="boundary" role="tabpanel" hidden>
+      <div class="ex-wheel-grid">
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Planetary Boundary Debt Wheel — Prototype</span>
+          </div>
+          <div class="panel__body" style="padding:1rem">
+            <svg id="exWheel" viewBox="-42 0 564 480" role="img" aria-label="Interactive wheel of the nine planetary boundaries. Segment intensity indicates demonstration risk state. Select a segment to view its detail record."></svg>
+            <div class="chart__legend" style="justify-content:center">
+              <span><i style="background:rgba(212,175,55,.95)"></i>Exceeded — high risk</span>
+              <span><i style="background:rgba(212,175,55,.55)"></i>Exceeded</span>
+              <span><i style="background:rgba(212,175,55,.28)"></i>Approaching</span>
+              <span><i style="background:rgba(245,242,234,.10)"></i>Within boundary</span>
+            </div>
+          </div>
+          <div class="panel__foot">Planetary boundary accounting — demonstration risk states</div>
+        </div>
+        <div class="panel ex-detail" aria-live="polite">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Boundary Detail Record</span>
+          </div>
+          <div class="panel__body">
+            <h3 class="h3" id="bdName" style="font-size:1.4rem">Climate change</h3>
+            <div style="margin:.6rem 0 1rem" id="bdBadge"></div>
+            <dl id="bdList"></dl>
+            <p class="serif-note" id="bdPathway" style="margin-top:1.1rem"></p>
+          </div>
+          <div class="panel__foot">No uncertain figure is presented as fact — every figure carries its confidence badge</div>
+        </div>
+      </div>
+      <p class="proto-note" style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+    </div>
+
+    <!-- PUBLIC BURDEN VIEW -->
+    <div data-tabpanel="modes" data-panel="burden" role="tabpanel" hidden>
+      <div class="panel">
+        <div class="panel__bar">
+          <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="panel__title">Public Burden Transfer by Sector — Prototype ($B, Demo)</span>
+        </div>
+        <div class="panel__body chart">
+          <svg id="exBurdenChart" viewBox="0 0 760 380" role="img" aria-label="Stacked bar chart of demonstration public burden transfer by sector, split across federal, state, municipal, ratepayer, public-health, and future-generation bearers."></svg>
+          <div class="chart__legend" id="exBurdenLegend"></div>
+        </div>
+        <div class="panel__foot">Modeled liability transferred to public systems — demonstration values</div>
+      </div>
+      <p class="lead" style="margin-top:1.6rem;font-size:1rem;max-width:56em">When environmental harm never enters the operator&rsquo;s cost structure, the expense does not disappear — it transfers. Federal budgets absorb remediation, states absorb infrastructure strain, municipalities absorb water treatment, ratepayers absorb pass-through costs, public-health systems absorb exposure outcomes, and future generations inherit the unresolved balance. Public burden accounting makes that transfer visible, sector by sector.</p>
+      <p class="proto-note" style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+    </div>
+  </div>
+</section>
+<!-- ============ COMPANY PROFILE ============ -->
+<section class="section section--line" id="profile" aria-labelledby="profile-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Entity Record</p>
+      <h2 class="h2" id="profile-h" data-reveal>Company profile &amp; <span class="gold-text">debt statement.</span></h2>
+      <p class="lead" data-reveal>Every entity in the ledger carries a full accounting record: identity, exposure, harm categories, an annual environmental debt statement that reconciles to the dollar, the public burden its unpaid balance transfers, and the evidence behind every figure.</p>
+    </div>
+
+    <div aria-live="polite">
+      <div class="ex-profile-head" data-reveal>
+        <h3 class="h3" id="pfName">—</h3>
+        <span id="pfBadge"></span>
+        <span class="ex-fid mono" id="pfFid"></span>
+      </div>
+      <p style="color:var(--ink-dim);max-width:56em;font-size:.95rem" id="pfSummary"></p>
+
+      <!-- Corporate identity -->
+      <div class="ex-block" data-reveal>
+        <p class="hero__label">01 — Corporate Identity</p>
+        <dl class="deflist" id="pfIdentity"></dl>
+      </div>
+
+      <!-- Exposure summary -->
+      <div class="ex-block" data-reveal>
+        <p class="hero__label">02 — Environmental Exposure Summary</p>
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title" id="pfMonitorTitle">Exposure Monitor</span>
+          </div>
+          <div class="monitor" id="pfMonitor"></div>
+          <div class="panel__foot">Source status: Verified · Estimated · Under Review · Data Incomplete · Methodology Pending</div>
+        </div>
+        <p class="proto-note" style="margin-top:1.1rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+      </div>
+
+      <!-- Harm categories -->
+      <div class="ex-block" data-reveal>
+        <p class="hero__label">03 — Active Harm Categories</p>
+        <div class="chips" id="pfHarms"></div>
+      </div>
+
+      <!-- Annual environmental debt statement -->
+      <div class="ex-block" data-reveal>
+        <p class="hero__label">04 — Annual Environmental Debt Statement</p>
+        <div class="ex-statement">
+          <div class="panel">
+            <div class="panel__bar">
+              <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="panel__title">Annual Environmental Debt Statement — FY2025 (Demo)</span>
+            </div>
+            <div class="table-scroll" style="border:0;border-radius:0">
+              <table class="table ex-ledger" style="min-width:420px">
+                <thead>
+                  <tr><th>Line Item</th><th class="num">Amount ($M)</th></tr>
+                </thead>
+                <tbody id="pfLedger"></tbody>
+              </table>
+            </div>
+            <div class="panel__foot">Statement reconciles arithmetically — demonstration figures</div>
+          </div>
+          <div class="panel">
+            <div class="panel__bar">
+              <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="panel__title">Debt Movement Waterfall — FY2025 (Demo)</span>
+            </div>
+            <div class="panel__body chart" style="display:flex;flex-direction:column;justify-content:center;height:100%">
+              <svg id="pfWaterfall" viewBox="0 0 720 320" role="img" aria-label="Waterfall chart of the annual environmental debt statement: opening balance, harm additions, legacy adjustments, payments, settlements, restoration credits, verified remediation, and closing balance."></svg>
+              <div class="chart__legend">
+                <span><i style="background:#A6A6A6"></i>Balance</span>
+                <span><i style="background:#D4AF37"></i>Debt added</span>
+                <span><i style="background:rgba(212,175,55,.30)"></i>Debt reduced</span>
+                <span><i style="background:#F1D77A"></i>Closing balance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="proto-note" style="margin-top:1.1rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+      </div>
+
+      <!-- Public burden allocation -->
+      <div class="ex-block" data-reveal>
+        <p class="hero__label">05 — Public Burden Allocation</p>
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Who Carries the Unpaid Balance — % of Modeled Public Burden</span>
+          </div>
+          <div class="panel__body ex-bars" id="pfBurden"></div>
+          <div class="panel__foot">Allocation percentages are modeled — methodology pending validation</div>
+        </div>
+        <p class="proto-note" style="margin-top:1.1rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+      </div>
+
+      <!-- Evidence room -->
+      <div class="ex-block" data-reveal>
+        <p class="hero__label">06 — Evidence Room</p>
+        <div class="table-scroll">
+          <table class="table" style="min-width:900px">
+            <thead>
+              <tr>
+                <th>Source Type</th>
+                <th>Agency Type</th>
+                <th>Reporting Period</th>
+                <th>Record Basis</th>
+                <th class="num">Confidence Range</th>
+                <th>Methodology Tag</th>
+                <th>Revision Note</th>
+              </tr>
+            </thead>
+            <tbody id="pfEvidence"></tbody>
+          </table>
+        </div>
+        <p class="proto-note" style="margin-top:1.1rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ PROTOTYPE RANKINGS ============ -->
+<section class="section section--line" aria-labelledby="rank-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Prototype Rankings</p>
+      <h2 class="h2" id="rank-h" data-reveal>Demonstration rankings of <span class="gold-text">fictional entities.</span></h2>
+      <p class="lead" data-reveal>How a production ledger would rank exposure across the economy — modeled liability, public burden transfer, unresolved legacy records, and verified debt reduction. Every entity below is fictional; every figure is demonstration data. Click a column to sort.</p>
+    </div>
+    <div class="table-scroll" data-reveal>
+      <table class="table" style="min-width:900px">
+        <thead>
+          <tr>
+            <th data-sort>Company</th>
+            <th class="num" data-sort>Est. Environmental Debt — High ($M)</th>
+            <th class="num" data-sort>Public Burden Exposure ($M)</th>
+            <th class="num" data-sort>Unresolved Legacy Burden ($M)</th>
+            <th class="num" data-sort>Restoration Funding Gap ($M)</th>
+            <th class="num" data-sort>YoY Harm Change (%)</th>
+            <th class="num" data-sort>Verified Debt Reduction ($M)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Northstar Industrial Holdings</strong></td><td class="num">2,300</td><td class="num">1,240</td><td class="num">1,412</td><td class="num">678</td><td class="num">+6.2</td><td class="num">57</td></tr>
+          <tr><td><strong>Crown River Energy</strong></td><td class="num">1,950</td><td class="num">1,092</td><td class="num">1,205</td><td class="num">577</td><td class="num">+4.7</td><td class="num">38</td></tr>
+          <tr><td><strong>Meridian Chemical Systems</strong></td><td class="num">1,540</td><td class="num">815</td><td class="num">1,036</td><td class="num">492</td><td class="num">+9.8</td><td class="num">31</td></tr>
+          <tr><td><strong>Dominion Resource Processing</strong></td><td class="num">1,180</td><td class="num">566</td><td class="num">684</td><td class="num">329</td><td class="num">+3.1</td><td class="num">44</td></tr>
+          <tr><td><strong>Atlas Materials Group</strong></td><td class="num">620</td><td class="num">296</td><td class="num">302</td><td class="num">93</td><td class="num">&minus;2.4</td><td class="num">29</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="proto-note" data-reveal style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+  </div>
+</section>
+
+<!-- ============ DISPUTE & CORRECTION ============ -->
+<section class="section section--line" id="dispute" aria-labelledby="dispute-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Dispute &amp; Correction Process</p>
+      <h2 class="h2" id="dispute-h" data-reveal>A ledger is only as strong as its <span class="gold-text">right of correction.</span></h2>
+      <p class="lead" data-reveal>This platform never rests on unsupported accusations. Every record carries a formal path to challenge it: disputes are logged, versioned, and publicly traceable, and every correction becomes part of the permanent audit history of the record it amends.</p>
+    </div>
+    <div class="cards" data-reveal-stagger>
+      <article class="card">
+        <span class="card__num">DC-01</span>
+        <h3 class="h3" style="font-size:1.15rem">Submit a Correction</h3>
+        <p>File a structured correction against any figure, attribution, or classification in an entity record. Each submission receives a tracked reference.</p>
+        <a class="link-arrow" href="contact.html">Open a correction</a>
+      </article>
+      <article class="card">
+        <span class="card__num">DC-02</span>
+        <h3 class="h3" style="font-size:1.15rem">Upload Supporting Evidence</h3>
+        <p>Attach monitoring data, filings, laboratory results, or remediation documentation to strengthen or contest an existing record.</p>
+        <a class="link-arrow" href="contact.html">Submit evidence</a>
+      </article>
+      <article class="card">
+        <span class="card__num">DC-03</span>
+        <h3 class="h3" style="font-size:1.15rem">Contest a Methodology</h3>
+        <p>Challenge the calculation method behind a modeled liability. Methodology disputes are reviewed against the published standards library.</p>
+        <a class="link-arrow" href="methodology.html">Review methodologies</a>
+      </article>
+      <article class="card">
+        <span class="card__num">DC-04</span>
+        <h3 class="h3" style="font-size:1.15rem">Flag Outdated Information</h3>
+        <p>Identify records superseded by newer filings, completed remediation, ownership changes, or corrected agency data.</p>
+        <a class="link-arrow" href="contact.html">Flag a record</a>
+      </article>
+      <article class="card">
+        <span class="card__num">DC-05</span>
+        <h3 class="h3" style="font-size:1.15rem">Request Formal Review</h3>
+        <p>Escalate a contested record to structured review with documented findings, response timelines, and a published disposition.</p>
+        <a class="link-arrow" href="contact.html">Request review</a>
+      </article>
+      <article class="card">
+        <span class="card__num">DC-06</span>
+        <h3 class="h3" style="font-size:1.15rem">View Version History</h3>
+        <p>Every record is version-controlled. See what changed, when, on what evidence, and at whose request — nothing is silently rewritten.</p>
+        <a class="link-arrow" href="methodology.html">See how versioning works</a>
+      </article>
+    </div>
+    <p class="proto-note ex-cards-note" data-reveal>Dispute and correction workflows shown are prototype demonstrations of the intended production process.</p>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section final" aria-labelledby="final-h">
+  <div class="wrap">
+    <p class="eyebrow final__eyebrow" data-reveal>Institutional Access</p>
+    <h2 class="h2" id="final-h" data-reveal>The full ledger runs deeper than the <span class="gold-text">public view.</span></h2>
+    <div class="btns" data-reveal>
+      <a href="contact.html" class="btn btn--gold">Request Institutional Access <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <a href="pricing.html" class="btn btn--ghost">View Pricing</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__col footer__brand">
+        <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+          <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+            <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+        </a>
+        <p>Make environmental damage financially accountable. Identify environmental debt, quantify public burden, support lawful collection, protect restoration funding, and verify measurable outcomes.</p>
+      </div>
+      <div class="footer__col">
+        <p class="t">Platform</p>
+        <a href="explorer.html">Ledger Explorer</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="products.html">Products</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="crisis.html">The Environmental Blind Spot</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Institution</p>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html">Government Inquiries</a>
+        <a href="contact.html">Careers</a>
+        <a href="crisis.html#sources">Data Sources</a>
+        <a href="explorer.html#dispute">Corrections</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Legal</p>
+        <a href="contact.html">Terms</a>
+        <a href="contact.html">Privacy</a>
+        <a href="contact.html">Security</a>
+        <a href="contact.html">Legal</a>
+        <a href="contact.html">Accessibility</a>
+      </div>
+    </div>
+    <p class="fineprint">ReVerity Ledger is a private technology and research platform. It does not independently levy taxes, impose governmental penalties, issue legal determinations, or control public funds. Any mandatory assessment, tax, fee, penalty, collection, or public-fund allocation must be authorized and administered by the appropriate government authority. Prototype demonstration data shown throughout this site is not an official legal, tax, accounting, or regulatory determination.<span class="copy">© ReVerity Ledger. Identify. Quantify. Rectify.</span></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+/* Ledger Explorer — page interactions */
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var svgEl = function (tag, attrs, parent) {
+    var el = document.createElementNS(NS, tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  };
+  var fmtM = function (n) { return n.toLocaleString("en-US"); };
+  var BADGE_CLASS = {
+    "Verified": "badge--verified",
+    "Estimated": "badge--estimated",
+    "Under Review": "badge--review",
+    "Modeled": "badge--review",
+    "Data Incomplete": "badge--incomplete",
+    "Insufficient Data": "badge--incomplete",
+    "Methodology Pending": "badge--pending"
+  };
+  var badgeHTML = function (label) {
+    return '<span class="badge ' + (BADGE_CLASS[label] || "badge--estimated") + '">' + label + "</span>";
+  };
+  /* ---------- Dataset: five fictional demonstration entities ---------- */
+  var COMPANIES = [
+    {
+      id: "northstar",
+      name: "Northstar Industrial Holdings",
+      parent: "Northstar Group plc (fictional holding parent)",
+      subs: ["Northstar Petrochemical LLC", "Gulfline Processing Co.", "Northstar Terminal Services Inc."],
+      hq: "Houston, TX",
+      industry: "Energy & Chemicals",
+      fid: "FRN-0000-DEMO-171",
+      facilities: 214, states: 28,
+      harms: ["Greenhouse-gas emissions", "Methane", "Air pollutants", "Toxic releases", "Hazardous waste", "Wastewater"],
+      boundaries: ["Climate change", "Novel entities", "Biogeochemical flows", "Ocean acidification"],
+      debtLow: 1650, debtHigh: 2300,
+      currentYear: 312, legacy: 1528, publicBurden: 1240, restorationNeed: 890,
+      matters: 14, confidence: "Estimated", status: "Assessment modeled",
+      summary: "Diversified energy and chemicals conglomerate with the largest modeled liability in the prototype ledger — driven by combustion emissions, legacy site records, and unresolved wastewater exposure across the Gulf corridor.",
+      keywords: "texas gulf houston harris county galveston bay watershed refinery petrochemical",
+      stmt: { opening: 1840, additions: 312, legacyAdj: 96, payments: 118, settlements: 64, credits: 42, remediation: 57, unresolved: 1412 },
+      alloc: [["Federal", 22], ["State", 14], ["Municipal", 8], ["Taxpayers", 12], ["Ratepayers", 6], ["Public Health", 15], ["Communities", 9], ["Future Generations", 10], ["Ecosystems", 4]],
+      evidence: [
+        ["Continuous emissions monitoring", "Federal environmental agency", "FY2025 Q1–Q4", "Verified fact", "±4%", "EM-CEMS-2.1", "Rev 3 — meter recalibration applied"],
+        ["Facility-level release report", "Federal environmental agency", "CY2024", "Reported release", "±9%", "TR-REL-1.4", "Rev 1 — initial intake"],
+        ["Legacy site assessment model", "State environmental agency", "1978–2019", "Model estimate", "±28%", "LG-SITE-0.9", "Rev 5 — methodology pending validation"],
+        ["Wastewater discharge permit data", "State water authority", "FY2025", "Verified fact", "±6%", "WW-PRM-3.0", "Rev 2 — outfall 7 data under review"],
+        ["Public-health exposure model", "Academic consortium", "2015–2025", "Model estimate", "±35%", "PH-EXP-0.7", "Rev 4 — confidence range widened"]
+      ]
+    },
+    {
+      id: "meridian",
+      name: "Meridian Chemical Systems",
+      parent: "Meridian Science Holdings (fictional holding parent)",
+      subs: ["Meridian Fluorochemicals LLC", "Brandywine Surface Technologies Inc."],
+      hq: "Wilmington, DE",
+      industry: "Specialty Chemicals",
+      fid: "FRN-0000-DEMO-284",
+      facilities: 63, states: 11,
+      harms: ["PFAS & novel entities", "Toxic releases", "Wastewater", "Hazardous waste"],
+      boundaries: ["Novel entities", "Freshwater change", "Biogeochemical flows"],
+      debtLow: 980, debtHigh: 1540,
+      currentYear: 204, legacy: 1104, publicBurden: 815, restorationNeed: 640,
+      matters: 11, confidence: "Under Review",
+      status: "Under review",
+      summary: "Specialty chemicals manufacturer whose modeled liability is dominated by PFAS and novel-entity records — the fastest-growing harm category in the prototype and the least settled methodologically.",
+      keywords: "delaware wilmington new castle county brandywine creek watershed pfas fluoropolymer",
+      stmt: { opening: 1120, additions: 204, legacyAdj: 148, payments: 72, settlements: 95, credits: 18, remediation: 31, unresolved: 1036 },
+      alloc: [["Federal", 16], ["State", 12], ["Municipal", 14], ["Taxpayers", 9], ["Ratepayers", 11], ["Public Health", 18], ["Communities", 8], ["Future Generations", 9], ["Ecosystems", 3]],
+      evidence: [
+        ["Drinking-water sampling program", "State water authority", "FY2024–FY2025", "Verified fact", "±5%", "WQ-SMP-2.2", "Rev 2 — expanded well coverage"],
+        ["Novel-entity persistence model", "Federal research program", "2000–2025", "Model estimate", "±40%", "NE-PERS-0.5", "Rev 6 — methodology pending validation"],
+        ["Toxic release inventory filing", "Federal environmental agency", "CY2024", "Reported release", "±8%", "TR-REL-1.4", "Rev 1 — initial intake"],
+        ["Groundwater plume delineation", "State environmental agency", "2018–2025", "Model estimate", "±22%", "GW-PLM-1.1", "Rev 3 — plume boundary revised"]
+      ]
+    },
+    {
+      id: "dominion",
+      name: "Dominion Resource Processing",
+      parent: "Dominion Resource Partners LP (fictional holding parent)",
+      subs: ["Wasatch Ore Recovery LLC", "Dominion Tailings Management Co.", "Great Basin Leaching Inc."],
+      hq: "Salt Lake City, UT",
+      industry: "Mining & Materials",
+      fid: "FRN-0000-DEMO-093",
+      facilities: 87, states: 8,
+      harms: ["Land degradation", "Resource extraction", "Biodiversity pressure", "Wastewater", "Hazardous waste"],
+      boundaries: ["Land-system change", "Freshwater change", "Biosphere integrity"],
+      debtLow: 760, debtHigh: 1180,
+      currentYear: 141, legacy: 782, publicBurden: 566, restorationNeed: 505,
+      matters: 9, confidence: "Estimated", status: "Assessment modeled",
+      summary: "Mining and materials processor with concentrated land-system and freshwater exposure in the intermountain West — tailings, disturbed acreage, and long-tail closure obligations dominate its record.",
+      keywords: "utah salt lake county nevada great salt lake watershed tailings ore smelter acreage",
+      stmt: { opening: 930, additions: 141, legacyAdj: 62, payments: 88, settlements: 27, credits: 35, remediation: 44, unresolved: 684 },
+      alloc: [["Federal", 24], ["State", 16], ["Municipal", 5], ["Taxpayers", 11], ["Ratepayers", 3], ["Public Health", 10], ["Communities", 12], ["Future Generations", 12], ["Ecosystems", 7]],
+      evidence: [
+        ["Aerial land-disturbance survey", "Federal land agency", "FY2025", "Verified fact", "±3%", "LD-AER-2.0", "Rev 1 — initial intake"],
+        ["Tailings volume assessment", "State mining authority", "FY2024", "Model estimate", "±18%", "TL-VOL-1.3", "Rev 2 — density factor revised"],
+        ["Watershed sediment load model", "Federal water science agency", "2010–2025", "Model estimate", "±26%", "WS-SED-0.8", "Rev 4 — data under review"],
+        ["Closure obligation filing", "State mining authority", "FY2025", "Verified fact", "±7%", "CL-OBL-2.4", "Rev 1 — initial intake"],
+        ["Habitat pressure index", "Academic consortium", "2012–2024", "Model estimate", "±33%", "BD-HPI-0.6", "Rev 3 — methodology pending validation"]
+      ]
+    },
+    {
+      id: "atlas",
+      name: "Atlas Materials Group",
+      parent: "Atlas Infrastructure Corp. (fictional holding parent)",
+      subs: ["Atlas Cement Works LLC", "Buckeye Aggregates Co."],
+      hq: "Columbus, OH",
+      industry: "Aggregates & Cement",
+      fid: "FRN-0000-DEMO-412",
+      facilities: 132, states: 19,
+      harms: ["Greenhouse-gas emissions", "Air pollutants", "Land degradation", "Resource extraction"],
+      boundaries: ["Climate change", "Land-system change", "Atmospheric aerosol loading"],
+      debtLow: 380, debtHigh: 620,
+      currentYear: 97, legacy: 351, publicBurden: 296, restorationNeed: 214,
+      matters: 4, confidence: "Verified", status: "Partially reconciled",
+      summary: "Aggregates and cement producer with the strongest verified record in the prototype — declining year-over-year harm, active quarry restoration, and the smallest restoration funding gap on the ledger.",
+      keywords: "ohio columbus franklin county scioto river watershed quarry kiln cement clinker",
+      stmt: { opening: 486, additions: 97, legacyAdj: -18, payments: 54, settlements: 12, credits: 22, remediation: 29, unresolved: 302 },
+      alloc: [["Federal", 18], ["State", 15], ["Municipal", 10], ["Taxpayers", 13], ["Ratepayers", 4], ["Public Health", 12], ["Communities", 11], ["Future Generations", 11], ["Ecosystems", 6]],
+      evidence: [
+        ["Stack emissions test report", "State air authority", "FY2025", "Verified fact", "±4%", "EM-STK-2.3", "Rev 1 — initial intake"],
+        ["Quarry restoration verification", "Independent verifier", "FY2024–FY2025", "Verified fact", "±5%", "RS-VER-3.1", "Rev 2 — acreage re-surveyed"],
+        ["Process-emissions inventory", "Federal environmental agency", "CY2024", "Reported release", "±10%", "EM-PRC-1.7", "Rev 1 — initial intake"],
+        ["Land-take footprint model", "Academic consortium", "2005–2025", "Model estimate", "±20%", "LD-FTP-0.9", "Rev 3 — satellite baseline updated"]
+      ]
+    },
+    {
+      id: "crownriver",
+      name: "Crown River Energy",
+      parent: "Crown River Utilities Inc. (fictional holding parent)",
+      subs: ["Crown River Generation LLC", "Monongahela Ash Services Co.", "Keystone Peaking Partners"],
+      hq: "Pittsburgh, PA",
+      industry: "Fossil Generation",
+      fid: "FRN-0000-DEMO-358",
+      facilities: 41, states: 6,
+      harms: ["Greenhouse-gas emissions", "Methane", "Air pollutants", "Future resource burden"],
+      boundaries: ["Climate change", "Atmospheric aerosol loading", "Ocean acidification", "Biogeochemical flows"],
+      debtLow: 1340, debtHigh: 1950,
+      currentYear: 268, legacy: 1342, publicBurden: 1092, restorationNeed: 760,
+      matters: 12, confidence: "Data Incomplete", status: "Data under review",
+      summary: "Fossil-generation operator with heavy combustion and coal-ash legacy exposure. Key legacy records remain incomplete, so its statement carries the widest confidence intervals in the prototype ledger.",
+      keywords: "pennsylvania pittsburgh allegheny county monongahela river watershed coal ash impoundment turbine",
+      stmt: { opening: 1510, additions: 268, legacyAdj: 41, payments: 97, settlements: 48, credits: 26, remediation: 38, unresolved: 1205 },
+      alloc: [["Federal", 19], ["State", 13], ["Municipal", 7], ["Taxpayers", 10], ["Ratepayers", 16], ["Public Health", 14], ["Communities", 8], ["Future Generations", 10], ["Ecosystems", 3]],
+      evidence: [
+        ["Continuous emissions monitoring", "Federal environmental agency", "FY2025 Q1–Q4", "Verified fact", "±4%", "EM-CEMS-2.1", "Rev 1 — initial intake"],
+        ["Ash impoundment integrity file", "State environmental agency", "1969–2025", "Unresolved record", "±38%", "AI-IMP-0.4", "Rev 7 — data incomplete, under review"],
+        ["Ratepayer pass-through analysis", "State utility commission", "FY2024", "Model estimate", "±15%", "RP-PSS-1.2", "Rev 2 — tariff schedule updated"],
+        ["Future decommissioning burden model", "Federal energy agency", "2025–2060", "Model estimate", "±45%", "FD-DCM-0.3", "Rev 5 — methodology pending validation"],
+        ["Regional air quality attainment file", "State air authority", "CY2024", "Verified fact", "±6%", "AQ-ATT-2.0", "Rev 1 — initial intake"]
+      ]
+    }
+  ];
+
+  /* ---------- Planetary boundary demonstration records ---------- */
+  var BOUNDARIES = [
+    { key: "Climate change", risk: 3, state: "Boundary exceeded — increasing risk",
+      us: "≈ 11–13% of global emissions (modeled)", sectors: "Fossil generation · energy & chemicals · cement",
+      conf: "Verified", debt: "$8.4T modeled national exposure (demo)",
+      path: "Restoration pathway: priced combustion liability funding grid transition and verified drawdown." },
+    { key: "Biosphere integrity", risk: 3, state: "Boundary exceeded — high risk",
+      us: "Habitat conversion & extraction pressure (modeled)", sectors: "Mining & materials · land development · agriculture-adjacent industry",
+      conf: "Estimated", debt: "$2.9T modeled national exposure (demo)",
+      path: "Restoration pathway: extraction-linked assessments funding habitat restoration with verified outcomes." },
+    { key: "Land-system change", risk: 2, state: "Boundary exceeded",
+      us: "Disturbed and converted acreage (modeled)", sectors: "Mining & materials · aggregates & cement",
+      conf: "Estimated", debt: "$1.7T modeled national exposure (demo)",
+      path: "Restoration pathway: land-take liability funding re-vegetation, closure, and soil recovery programs." },
+    { key: "Freshwater change", risk: 2, state: "Boundary exceeded — regional stress",
+      us: "Basin-level withdrawal and contamination stress (modeled)", sectors: "Specialty chemicals · mining & materials",
+      conf: "Modeled", debt: "$1.1T modeled national exposure (demo)",
+      path: "Restoration pathway: watershed-indexed assessments funding treatment capacity and aquifer recovery." },
+    { key: "Biogeochemical flows", risk: 3, state: "Boundary exceeded — highest overshoot",
+      us: "Nitrogen & phosphorus loading (verified monitoring, modeled attribution)", sectors: "Energy & chemicals · fossil generation",
+      conf: "Verified", debt: "$3.6T modeled national exposure (demo)",
+      path: "Restoration pathway: nutrient-loading liability funding runoff interception and dead-zone recovery." },
+    { key: "Ocean acidification", risk: 1, state: "Approaching boundary",
+      us: "Carbonate chemistry shift attributable to emissions (modeled)", sectors: "Fossil generation · energy & chemicals",
+      conf: "Modeled", debt: "$940B modeled national exposure (demo)",
+      path: "Restoration pathway: emissions-linked liability funding coastal buffering and fisheries resilience." },
+    { key: "Atmospheric aerosol loading", risk: 1, state: "Within boundary — regionally exceeded",
+      us: "Regional particulate concentrations (verified monitoring)", sectors: "Fossil generation · aggregates & cement",
+      conf: "Estimated", debt: "$610B modeled national exposure (demo)",
+      path: "Restoration pathway: particulate liability funding abatement retrofits and exposure reduction." },
+    { key: "Stratospheric ozone depletion", risk: 0, state: "Within boundary — recovering",
+      us: "Residual legacy substances (verified inventory)", sectors: "Legacy chemical records",
+      conf: "Verified", debt: "$85B residual legacy exposure (demo)",
+      path: "Restoration pathway: proof that priced liability plus protected funding produces measurable recovery." },
+    { key: "Novel entities", risk: 3, state: "Boundary exceeded — quantification incomplete",
+      us: "PFAS and persistent synthetics — attribution incomplete", sectors: "Specialty chemicals · energy & chemicals",
+      conf: "Insufficient Data", debt: "Not yet reliably quantifiable — methodology pending",
+      path: "Restoration pathway: persistence-weighted liability funding destruction technology and water treatment." }
+  ];
+
+  /* ---------- Public burden transfer by sector (demo $B) ---------- */
+  var BURDEN_BEARERS = ["Federal", "State", "Municipal", "Ratepayers", "Public Health", "Future Generations"];
+  var BURDEN_COLORS = ["#F1D77A", "#D4AF37", "#8C7420", "#A6A6A6", "#6E6A5E", "rgba(212,175,55,.30)"];
+  var BURDEN_SECTORS = [
+    { name: "Energy & Chem.", vals: [86, 54, 31, 24, 59, 39] },
+    { name: "Fossil Gen.", vals: [71, 48, 26, 62, 52, 37] },
+    { name: "Spec. Chem.", vals: [39, 29, 34, 27, 44, 22] },
+    { name: "Mining & Mat.", vals: [58, 39, 12, 7, 24, 29] },
+    { name: "Agg. & Cement", vals: [26, 22, 15, 6, 17, 16] }
+  ];
+  /* ---------- Company table + live filtering ---------- */
+  var tbody = document.getElementById("companyBody");
+  var countEl = document.getElementById("exCount");
+  var activeId = "northstar";
+  var companyTab = document.getElementById("tabCompany");
+
+  var markActive = function () {
+    Array.prototype.forEach.call(tbody.querySelectorAll("tr.ex-row"), function (tr) {
+      tr.classList.toggle("is-active", tr.getAttribute("data-id") === activeId);
+    });
+  };
+
+  var companyRow = function (c) {
+    var tr = document.createElement("tr");
+    tr.className = "ex-row";
+    tr.setAttribute("data-id", c.id);
+    tr.tabIndex = 0;
+    tr.setAttribute("aria-label", "Load ledger record for " + c.name);
+    tr.innerHTML =
+      "<td><strong>" + c.name + "</strong></td>" +
+      "<td>" + c.industry + "</td>" +
+      '<td class="num">' + c.facilities + "</td>" +
+      '<td class="num">' + fmtM(c.debtLow) + " – " + fmtM(c.debtHigh) + "</td>" +
+      '<td class="num">' + fmtM(c.publicBurden) + "</td>" +
+      "<td>" + badgeHTML(c.confidence) + "</td>" +
+      "<td>" + c.matters + " unresolved records — data under review</td>";
+    var load = function () {
+      activeId = c.id;
+      renderProfile(c);
+      markActive();
+    };
+    tr.addEventListener("click", load);
+    tr.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); load(); }
+    });
+    return tr;
+  };
+
+  var F = {
+    industry: document.getElementById("fIndustry"),
+    category: document.getElementById("fCategory"),
+    boundary: document.getElementById("fBoundary"),
+    confidence: document.getElementById("fConfidence"),
+    status: document.getElementById("fStatus"),
+    year: document.getElementById("fYear")
+  };
+  var searchInput = document.getElementById("exSearch");
+
+  var haystack = function (c) {
+    return [c.name, c.parent, c.subs.join(" "), c.hq, c.industry, c.fid,
+      c.harms.join(" "), c.boundaries.join(" "), c.status, c.confidence, c.keywords
+    ].join(" ").toLowerCase();
+  };
+
+  var applyFilters = function () {
+    var terms = searchInput.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var matched = COMPANIES.filter(function (c) {
+      if (F.industry.value && c.industry !== F.industry.value) return false;
+      if (F.category.value && c.harms.indexOf(F.category.value) === -1) return false;
+      if (F.boundary.value && c.boundaries.indexOf(F.boundary.value) === -1) return false;
+      if (F.confidence.value && c.confidence !== F.confidence.value) return false;
+      if (F.status.value && c.status !== F.status.value) return false;
+      if (F.year.value === "FY2024") return false;
+      if (!terms.length) return true;
+      var h = haystack(c);
+      return terms.every(function (t) { return h.indexOf(t) !== -1; });
+    });
+    tbody.innerHTML = "";
+    if (!matched.length) {
+      var tr = document.createElement("tr");
+      tr.className = "ex-empty";
+      tr.innerHTML = '<td colspan="7">No matching records in the prototype ledger — adjust the query or filters.</td>';
+      tbody.appendChild(tr);
+    } else {
+      matched.forEach(function (c) { tbody.appendChild(companyRow(c)); });
+      markActive();
+    }
+    countEl.textContent = matched.length + " of " + COMPANIES.length + " entities match";
+  };
+
+  var ensureCompanyTab = function () {
+    var panel = document.querySelector('[data-tabpanel="modes"][data-panel="company"]');
+    if (panel && panel.hidden && companyTab) companyTab.click();
+  };
+
+  searchInput.addEventListener("input", function () { applyFilters(); ensureCompanyTab(); });
+  Object.keys(F).forEach(function (k) {
+    F[k].addEventListener("change", function () { applyFilters(); ensureCompanyTab(); });
+  });
+
+  /* ---------- Map view: national dot map with facility clusters ---------- */
+  var buildMap = function () {
+    var svg = document.getElementById("exMap");
+    if (!svg) return;
+    var MASK = [
+      "################..............",
+      "#################.###.......##",
+      "####################.......###",
+      "####################.##..#####",
+      "######################.######.",
+      "###########################...",
+      "##########################....",
+      ".#########################....",
+      ".#########################....",
+      "..########################....",
+      "...######################.....",
+      "....####################......",
+      "........###############.......",
+      "...........######....##.......",
+      "............###.......##......",
+      ".............##.......##......",
+      ".......................#......"
+    ];
+    var COLS = 30, ROWS = 17, W = 600, H = 360, padX = 30, padY = 24;
+    var cw = (W - padX * 2) / (COLS - 1);
+    var ch = (H - padY * 2) / (ROWS - 1);
+    var px = function (c) { return padX + c * cw; };
+    var py = function (r) { return padY + r * ch; };
+
+    var defs = svgEl("defs", {}, svg);
+    defs.innerHTML =
+      '<filter id="exGlow" x="-80%" y="-80%" width="260%" height="260%">' +
+      '<feGaussianBlur stdDeviation="3.2" result="b"/>' +
+      '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+
+    var CLUSTERS = [
+      { c: 14, r: 12, name: "Northstar Industrial Holdings — 214 facilities · Gulf corridor cluster", w: 1.0 },
+      { c: 24, r: 5, name: "Meridian Chemical Systems — 63 facilities · Mid-Atlantic cluster", w: 0.7 },
+      { c: 6, r: 7, name: "Dominion Resource Processing — 87 facilities · Intermountain cluster", w: 0.8 },
+      { c: 19, r: 5, name: "Atlas Materials Group — 132 facilities · Ohio Valley cluster", w: 0.85 },
+      { c: 22, r: 3, name: "Crown River Energy — 41 facilities · Appalachian cluster", w: 0.75 }
+    ];
+
+    /* land dots, heat-shaded by proximity to clusters */
+    for (var r = 0; r < ROWS; r++) {
+      for (var c = 0; c < COLS; c++) {
+        if (MASK[r].charAt(c) !== "#") continue;
+        var near = 99;
+        CLUSTERS.forEach(function (h) {
+          var d = Math.sqrt((h.c - c) * (h.c - c) + (h.r - r) * (h.r - r)) / h.w;
+          if (d < near) near = d;
+        });
+        var heat = Math.max(0, 1 - near / 4.6);
+        svgEl("circle", {
+          cx: px(c), cy: py(r), r: (2.3 + heat * 1.2).toFixed(2),
+          fill: "rgba(212,175,55," + (0.16 + heat * 0.58).toFixed(2) + ")"
+        }, svg);
+      }
+    }
+
+    /* cluster hubs: glow ring + core + satellites */
+    CLUSTERS.forEach(function (h, i) {
+      var x = px(h.c), y = py(h.r);
+      var g = svgEl("g", { "class": "ex-map-hub" }, svg);
+      var t = document.createElementNS(NS, "title");
+      t.textContent = h.name;
+      g.appendChild(t);
+      svgEl("circle", { cx: x, cy: y, r: 15 + h.w * 8, fill: "rgba(212,175,55,.10)" }, g);
+      for (var s = 0; s < 6; s++) {
+        var a = (Math.PI * 2 / 6) * s + i;
+        var rr = 10 + h.w * 7;
+        svgEl("circle", {
+          cx: (x + Math.cos(a) * rr).toFixed(1), cy: (y + Math.sin(a) * rr * 0.8).toFixed(1),
+          r: 1.7, fill: "rgba(241,215,122,.7)"
+        }, g);
+      }
+      svgEl("circle", { cx: x, cy: y, r: 5, fill: i === 0 ? "#F1D77A" : "#D4AF37", filter: "url(#exGlow)" }, g);
+    });
+  };
+  /* ---------- Boundary view: planetary boundary debt wheel ---------- */
+  var wheelSegs = [];
+  var selectBoundary = function (i) {
+    var b = BOUNDARIES[i];
+    wheelSegs.forEach(function (s, j) { s.classList.toggle("is-active", j === i); });
+    document.getElementById("bdName").textContent = b.key;
+    document.getElementById("bdBadge").innerHTML =
+      badgeHTML(b.conf) + ' <span class="mono" style="font-size:.66rem;letter-spacing:.14em;color:var(--soft-gray);text-transform:uppercase">' + b.state + "</span>";
+    var row = function (dt, dd) { return "<div><dt>" + dt + "</dt><dd>" + dd + "</dd></div>"; };
+    document.getElementById("bdList").innerHTML =
+      row("Risk state", b.state) +
+      row("U.S. contribution", b.us + " &nbsp;" + badgeHTML(b.conf)) +
+      row("Sector exposure", b.sectors) +
+      row("Data confidence", badgeHTML(b.conf)) +
+      row("Assoc. environmental debt", b.debt + " &nbsp;" + badgeHTML(b.conf === "Verified" ? "Estimated" : b.conf));
+    document.getElementById("bdPathway").textContent = b.path;
+  };
+
+  var buildWheel = function () {
+    var svg = document.getElementById("exWheel");
+    if (!svg) return;
+    var CX = 240, CY = 240, R0 = 96, R1 = 176, RL = 196;
+    var FILLS = ["rgba(245,242,234,.10)", "rgba(212,175,55,.28)", "rgba(212,175,55,.55)", "rgba(212,175,55,.95)"];
+    var LABELS = ["CLIMATE", "BIOSPHERE", "LAND USE", "FRESHWATER", "BIOGEOCHEM", "OCEAN ACID.", "AEROSOLS", "OZONE", "NOVEL ENT."];
+    var polar = function (r, aDeg) {
+      var a = (aDeg - 90) * Math.PI / 180;
+      return [CX + r * Math.cos(a), CY + r * Math.sin(a)];
+    };
+    var seg = 360 / 9, gap = 3;
+    BOUNDARIES.forEach(function (b, i) {
+      var a0 = i * seg + gap / 2, a1 = (i + 1) * seg - gap / 2;
+      var p0 = polar(R1, a0), p1 = polar(R1, a1), p2 = polar(R0, a1), p3 = polar(R0, a0);
+      var d = "M" + p0[0].toFixed(1) + " " + p0[1].toFixed(1) +
+        " A" + R1 + " " + R1 + " 0 0 1 " + p1[0].toFixed(1) + " " + p1[1].toFixed(1) +
+        " L" + p2[0].toFixed(1) + " " + p2[1].toFixed(1) +
+        " A" + R0 + " " + R0 + " 0 0 0 " + p3[0].toFixed(1) + " " + p3[1].toFixed(1) + " Z";
+      var path = svgEl("path", {
+        d: d, fill: FILLS[b.risk], stroke: "rgba(212,175,55,.35)", "stroke-width": "1",
+        "class": "ex-wheel-seg", tabindex: "0", role: "button",
+        "aria-label": b.key + " — " + b.state + ". Select for detail record."
+      }, svg);
+      var t = document.createElementNS(NS, "title");
+      t.textContent = b.key + " — " + b.state;
+      path.appendChild(t);
+      var open = function () { selectBoundary(i); };
+      path.addEventListener("click", open);
+      path.addEventListener("mouseenter", open);
+      path.addEventListener("focus", open);
+      path.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectBoundary(i); }
+      });
+      wheelSegs.push(path);
+      /* label */
+      var mid = (a0 + a1) / 2;
+      var lp = polar(RL, mid);
+      var anchor = "middle";
+      if (mid > 20 && mid < 160) anchor = "start";
+      else if (mid > 200 && mid < 340) anchor = "end";
+      svgEl("text", {
+        x: lp[0].toFixed(1), y: (lp[1] + 3).toFixed(1), "text-anchor": anchor,
+        fill: "#A6A6A6", "font-size": "10", "letter-spacing": "1.5"
+      }, svg).textContent = LABELS[i];
+    });
+    /* center */
+    svgEl("circle", { cx: CX, cy: CY, r: R0 - 14, fill: "none", stroke: "rgba(212,175,55,.25)", "stroke-width": "1" }, svg);
+    var c1 = svgEl("text", { x: CX, y: CY - 8, "text-anchor": "middle", fill: "#D4AF37", "font-size": "13", "letter-spacing": "2.5" }, svg);
+    c1.textContent = "9 BOUNDARIES";
+    var c2 = svgEl("text", { x: CX, y: CY + 12, "text-anchor": "middle", fill: "#6E6A5E", "font-size": "8.5", "letter-spacing": "2" }, svg);
+    c2.textContent = "PLANETARY BOUNDARY";
+    var c3 = svgEl("text", { x: CX, y: CY + 26, "text-anchor": "middle", fill: "#6E6A5E", "font-size": "8.5", "letter-spacing": "2" }, svg);
+    c3.textContent = "ACCOUNTING";
+  };
+
+  /* ---------- Public burden view: stacked bars by sector ---------- */
+  var buildBurdenChart = function () {
+    var svg = document.getElementById("exBurdenChart");
+    if (!svg) return;
+    var W = 760, H = 380, L = 58, R = 20, T = 24, B = 58;
+    var plotW = W - L - R, plotH = H - T - B;
+    var maxV = 300;
+    var y = function (v) { return T + plotH - (v / maxV) * plotH; };
+    /* gridlines */
+    [0, 100, 200, 300].forEach(function (g) {
+      svgEl("line", { x1: L, x2: W - R, y1: y(g), y2: y(g), stroke: g === 0 ? "rgba(212,175,55,.35)" : "rgba(212,175,55,.10)", "stroke-width": "1" }, svg);
+      var t = svgEl("text", { x: L - 8, y: y(g) + 3, "text-anchor": "end", fill: "#6E6A5E", "font-size": "10" }, svg);
+      t.textContent = "$" + g + "B";
+    });
+    var step = plotW / BURDEN_SECTORS.length;
+    BURDEN_SECTORS.forEach(function (s, i) {
+      var bx = L + step * i + (step - 74) / 2;
+      var acc = 0, total = 0;
+      s.vals.forEach(function (v) { total += v; });
+      s.vals.forEach(function (v, j) {
+        var rect = svgEl("rect", {
+          x: bx.toFixed(1), y: y(acc + v).toFixed(1), width: 74,
+          height: Math.max(1, (v / maxV) * plotH).toFixed(1),
+          fill: BURDEN_COLORS[j], stroke: "rgba(5,5,5,.6)", "stroke-width": "1"
+        }, svg);
+        var t = document.createElementNS(NS, "title");
+        t.textContent = s.name + " — " + BURDEN_BEARERS[j] + ": $" + v + "B (demo)";
+        rect.appendChild(t);
+        acc += v;
+      });
+      var vt = svgEl("text", { x: (bx + 37).toFixed(1), y: (y(total) - 7).toFixed(1), "text-anchor": "middle", fill: "#D4AF37", "font-size": "11" }, svg);
+      vt.textContent = "$" + total + "B";
+      var lt = svgEl("text", { x: (bx + 37).toFixed(1), y: H - 32, "text-anchor": "middle", fill: "#A6A6A6", "font-size": "10.5", "letter-spacing": "1" }, svg);
+      lt.textContent = s.name.toUpperCase();
+      var st = svgEl("text", { x: (bx + 37).toFixed(1), y: H - 16, "text-anchor": "middle", fill: "#6E6A5E", "font-size": "8.5", "letter-spacing": "1" }, svg);
+      st.textContent = "MODELED (DEMO)";
+    });
+    var legend = document.getElementById("exBurdenLegend");
+    legend.innerHTML = BURDEN_BEARERS.map(function (b, j) {
+      return "<span><i style=\"background:" + BURDEN_COLORS[j] + "\"></i>" + b + "</span>";
+    }).join("");
+  };
+  /* ---------- Company profile renderer ---------- */
+  var closingOf = function (s) {
+    return s.opening + s.additions + s.legacyAdj - s.payments - s.settlements - s.credits - s.remediation;
+  };
+
+  var renderWaterfall = function (c) {
+    var svg = document.getElementById("pfWaterfall");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var s = c.stmt, closing = closingOf(s);
+    var steps = [
+      { l: "OPEN", v: s.opening, kind: "abs" },
+      { l: "+HARM", v: s.additions, kind: "add" },
+      { l: (s.legacyAdj >= 0 ? "+ADJ" : "−ADJ"), v: s.legacyAdj, kind: s.legacyAdj >= 0 ? "add" : "sub" },
+      { l: "−PAY", v: -s.payments, kind: "sub" },
+      { l: "−SETL", v: -s.settlements, kind: "sub" },
+      { l: "−CRED", v: -s.credits, kind: "sub" },
+      { l: "−REM", v: -s.remediation, kind: "sub" },
+      { l: "CLOSE", v: closing, kind: "close" }
+    ];
+    var peak = Math.max(s.opening + s.additions + Math.max(0, s.legacyAdj), closing);
+    var W = 720, H = 320, L = 56, R = 14, T = 30, B = 40;
+    var plotW = W - L - R, plotH = H - T - B;
+    var y = function (v) { return T + plotH - (v / peak) * plotH; };
+    var y0 = y(0);
+    svgEl("line", { x1: L, x2: W - R, y1: y0, y2: y0, stroke: "rgba(212,175,55,.35)", "stroke-width": "1" }, svg);
+    var t0 = svgEl("text", { x: L - 8, y: y0 + 3, "text-anchor": "end", fill: "#6E6A5E", "font-size": "10" }, svg);
+    t0.textContent = "$0M";
+    var tp = svgEl("text", { x: L - 8, y: y(peak) + 3, "text-anchor": "end", fill: "#6E6A5E", "font-size": "10" }, svg);
+    tp.textContent = "$" + fmtM(peak) + "M";
+    svgEl("line", { x1: L, x2: W - R, y1: y(peak), y2: y(peak), stroke: "rgba(212,175,55,.10)", "stroke-width": "1" }, svg);
+
+    var FILL = { abs: "#A6A6A6", add: "#D4AF37", sub: "rgba(212,175,55,.30)", close: "#F1D77A" };
+    var step = plotW / steps.length, bw = Math.min(58, step - 16);
+    var run = 0, prevTopX = null, prevTopY = null;
+    steps.forEach(function (st, i) {
+      var lo, hi;
+      if (st.kind === "abs" || st.kind === "close") { lo = 0; hi = st.v; run = st.v; }
+      else { lo = Math.min(run, run + st.v); hi = Math.max(run, run + st.v); run += st.v; }
+      var bx = L + step * i + (step - bw) / 2;
+      var rect = svgEl("rect", {
+        x: bx.toFixed(1), y: y(hi).toFixed(1), width: bw.toFixed(1),
+        height: Math.max(2, y(lo) - y(hi)).toFixed(1),
+        fill: FILL[st.kind], stroke: st.kind === "sub" ? "rgba(212,175,55,.55)" : "none", "stroke-width": "1", rx: 2
+      }, svg);
+      var title = document.createElementNS(NS, "title");
+      title.textContent = st.l + " " + (st.v >= 0 && st.kind !== "abs" && st.kind !== "close" ? "+" : "") + fmtM(st.v) + " $M (demo)";
+      rect.appendChild(title);
+      /* connector from previous running level */
+      var lvlY = y(run);
+      if (prevTopX !== null) {
+        svgEl("line", { x1: prevTopX, x2: bx, y1: prevTopY, y2: prevTopY, stroke: "rgba(166,166,166,.4)", "stroke-width": "1", "stroke-dasharray": "3 3" }, svg);
+      }
+      prevTopX = bx + bw; prevTopY = lvlY;
+      /* value label */
+      var sign = (st.kind === "add" && st.v >= 0) ? "+" : "";
+      var vl = svgEl("text", { x: (bx + bw / 2).toFixed(1), y: (y(hi) - 6).toFixed(1), "text-anchor": "middle", fill: st.kind === "close" ? "#F1D77A" : "#B7B2A3", "font-size": "10.5" }, svg);
+      vl.textContent = sign + fmtM(st.v);
+      /* x label */
+      var xl = svgEl("text", { x: (bx + bw / 2).toFixed(1), y: H - 14, "text-anchor": "middle", fill: "#6E6A5E", "font-size": "9.5", "letter-spacing": "1" }, svg);
+      xl.textContent = st.l;
+    });
+  };
+
+  var EVIDENCE_BADGE = {
+    "Verified fact": "Verified",
+    "Model estimate": "Estimated",
+    "Reported release": "Under Review",
+    "Unresolved record": "Data Incomplete"
+  };
+
+  var renderProfile = function (c) {
+    var s = c.stmt, closing = closingOf(s);
+    document.getElementById("pfName").textContent = c.name;
+    document.getElementById("pfBadge").innerHTML = badgeHTML(c.confidence);
+    document.getElementById("pfFid").textContent = c.fid;
+    document.getElementById("pfSummary").textContent = c.summary;
+
+    var dl = function (dt, dd) { return "<div><dt>" + dt + "</dt><dd>" + dd + "</dd></div>"; };
+    document.getElementById("pfIdentity").innerHTML =
+      dl("Legal name", "<strong style='color:var(--warm-white)'>" + c.name + "</strong>") +
+      dl("Parent organization", c.parent) +
+      dl("Subsidiaries", c.subs.join(" · ")) +
+      dl("Headquarters", c.hq) +
+      dl("Industry", c.industry) +
+      dl("Federal ID (demo)", '<span class="mono">' + c.fid + "</span>") +
+      dl("Operating footprint", c.facilities + " facilities across " + c.states + " states") +
+      dl("Liability status", c.status) +
+      dl("Enforcement matters", c.matters + " unresolved records — data under review");
+
+    document.getElementById("pfMonitorTitle").textContent = "Exposure Monitor — " + c.name + " (Demo)";
+    var metric = function (num, label, badge) {
+      return '<div class="metric"><span class="metric__num">' + num + '</span><span class="metric__label">' + label + '</span><span class="metric__badge">' + badgeHTML(badge) + "</span></div>";
+    };
+    document.getElementById("pfMonitor").innerHTML =
+      metric("$" + fmtM(c.debtLow) + "–" + fmtM(c.debtHigh) + '<span class="unit">M</span>', "Estimated environmental debt range", "Estimated") +
+      metric("$" + fmtM(c.currentYear) + '<span class="unit">M</span>', "Current-year burden", "Estimated") +
+      metric("$" + fmtM(c.legacy) + '<span class="unit">M</span>', "Legacy burden", "Under Review") +
+      metric("$" + fmtM(c.publicBurden) + '<span class="unit">M</span>', "Public burden estimate", "Methodology Pending") +
+      metric("$" + fmtM(c.restorationNeed) + '<span class="unit">M</span>', "Restoration need", "Estimated") +
+      metric(String(c.facilities), "Facilities registered", "Verified") +
+      metric(String(c.states), "States in footprint", "Verified") +
+      metric(String(c.matters), "Unresolved records — data under review", c.confidence === "Verified" ? "Verified" : "Under Review");
+
+    document.getElementById("pfHarms").innerHTML = c.harms.map(function (h) {
+      return '<span class="chip">' + h + "</span>";
+    }).join("");
+
+    var line = function (label, val, cls) {
+      return '<tr class="' + (cls || "") + '"><td>' + label + '</td><td class="num">' + val + "</td></tr>";
+    };
+    var sgn = function (v) { return (v >= 0 ? "+" : "−") + fmtM(Math.abs(v)); };
+    document.getElementById("pfLedger").innerHTML =
+      line("Opening balance", fmtM(s.opening)) +
+      line("Current-year harm additions", "+" + fmtM(s.additions)) +
+      line("Legacy adjustments", sgn(s.legacyAdj)) +
+      line("Payments made", "−" + fmtM(s.payments)) +
+      line("Settlements", "−" + fmtM(s.settlements)) +
+      line("Restoration credits", "−" + fmtM(s.credits)) +
+      line("Verified remediation", "−" + fmtM(s.remediation)) +
+      line("<strong>Closing balance</strong>", "<strong>" + fmtM(closing) + "</strong>", "ex-total") +
+      line("&nbsp;&nbsp;of which unresolved debt (memo)", fmtM(s.unresolved), "ex-memo");
+
+    renderWaterfall(c);
+
+    var maxAlloc = 0;
+    c.alloc.forEach(function (a) { if (a[1] > maxAlloc) maxAlloc = a[1]; });
+    document.getElementById("pfBurden").innerHTML = c.alloc.map(function (a) {
+      return '<div class="row"><span class="lbl">' + a[0] + '</span>' +
+        '<span class="track" role="img" aria-label="' + a[0] + " carries " + a[1] + ' percent of modeled public burden"><span class="fill" style="width:' + (a[1] / maxAlloc * 100).toFixed(1) + '%"></span></span>' +
+        '<span class="val">' + a[1] + "%</span></div>";
+    }).join("");
+
+    document.getElementById("pfEvidence").innerHTML = c.evidence.map(function (e) {
+      return "<tr><td><strong>" + e[0] + "</strong></td><td>" + e[1] + "</td><td class=\"mono\" style=\"white-space:nowrap\">" + e[2] + "</td><td>" +
+        badgeHTML(EVIDENCE_BADGE[e[3]] || "Estimated") + '<span style="display:block;margin-top:.3rem;font-size:.78rem">' + e[3] + "</span></td>" +
+        '<td class="num">' + e[4] + '</td><td class="mono">' + e[5] + "</td><td>" + e[6] + "</td></tr>";
+    }).join("");
+  };
+
+  /* ---------- Init ---------- */
+  applyFilters();
+  buildMap();
+  buildWheel();
+  buildBurdenChart();
+  selectBoundary(0);
+  renderProfile(COMPANIES[0]);
+})();
+</script>
+</body>
+</html>
