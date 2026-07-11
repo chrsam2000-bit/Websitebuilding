@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="ReVerity Ledger Products — eight institutional infrastructure modules for federal environmental debt accounting: the national ledger, government burden dashboards, corporate filing, advisory, legacy registers, trust administration, restoration procurement, and API access.">
+<title>Products — ReVerity Ledger</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23050505'/%3E%3Crect x='1' y='1' width='30' height='30' rx='4.5' fill='none' stroke='%23D4AF37' stroke-width='1.4'/%3E%3Cpath d='M9 8 L16 25 L23 8' fill='none' stroke='%23D4AF37' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============ Products page (pd-) ============ */
+.pd-index{
+  position:relative;z-index:90;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:rgba(7,6,4,.92);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:.95rem 0;
+}
+@media (min-width:1101px){.pd-index{position:sticky;top:63px}}
+.pd-index .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.pd-index a.chip{text-decoration:none}
+
+.pd-module{scroll-margin-top:150px}
+@media (max-width:1100px){.pd-module{scroll-margin-top:90px}}
+.pd-num{font-family:var(--font-mono);font-size:.7rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--rich-gold);display:block;margin-bottom:1rem}
+.pd-for{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft-gray);line-height:2;margin-top:1.1rem;max-width:58rem}
+.pd-for b{color:var(--warm-white);font-weight:600;letter-spacing:.24em;margin-right:.55rem}
+.pd-desc{color:var(--ink-dim);margin-top:1.2rem;max-width:44rem;font-size:.97rem;line-height:1.7}
+
+.pd-cols{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(1.8rem,3.5vw,3.4rem);align-items:start}
+.pd-caps{display:grid;grid-template-columns:1fr 1fr;gap:.62rem 1.6rem}
+.pd-caps li{position:relative;padding-left:1.35rem;font-size:.9rem;color:var(--ink-dim);line-height:1.5}
+.pd-caps li::before{content:"";position:absolute;left:1px;top:.5em;width:6px;height:6px;background:var(--rich-gold);transform:rotate(45deg)}
+.pd-caps-label{font-family:var(--font-mono);font-size:.62rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--soft-gray);margin-bottom:1rem}
+.pd-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem;margin-top:1.8rem}
+
+.pd-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.pd-mini>div{background:var(--panel);padding:1.05rem 1.3rem}
+.pd-mini b{display:block;font-family:var(--font-mono);font-weight:600;font-size:1.3rem;color:var(--rich-gold)}
+.pd-mini span{font-size:.76rem;color:var(--ink-dim)}
+
+.pd-statement{
+  border-left:2px solid var(--rich-gold);padding:.35rem 0 .35rem 1.2rem;
+  font-family:var(--font-display);font-style:italic;font-size:1.08rem;line-height:1.55;
+  color:var(--warm-white);margin-top:1.6rem;max-width:40rem;
+}
+
+.pd-register li{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.pd-register li:last-child{border-bottom:0;padding-bottom:.2rem}
+.pd-register li:first-child{padding-top:.2rem}
+.pd-register .t{font-size:.88rem;color:var(--warm-white);font-weight:500}
+.pd-register .d{display:block;font-family:var(--font-mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft-gray);margin-top:.35rem;line-height:1.7}
+.pd-register .badge{flex:none;margin-top:.15rem}
+
+.pd-endpoints li{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem .85rem;padding:.72rem 0;border-bottom:1px solid var(--line)}
+.pd-endpoints li:last-child{border-bottom:0}
+.pd-endpoints .m{font-family:var(--font-mono);font-size:.58rem;font-weight:600;letter-spacing:.14em;color:var(--rich-gold);border:1px solid var(--line-strong);border-radius:3px;padding:.22rem 0;width:3.9rem;text-align:center;flex:none}
+.pd-endpoints code{font-family:var(--font-mono);font-size:.78rem;color:var(--warm-white);word-break:break-word}
+.pd-endpoints .d{font-size:.78rem;color:var(--soft-gray);flex-basis:100%;padding-left:calc(3.9rem + .85rem)}
+
+.pd-code{background:#060503;border:1px solid var(--line);border-radius:8px;padding:1.1rem 1.25rem;overflow-x:auto}
+.pd-code .pd-get{display:block;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;color:var(--rich-gold);padding-bottom:.75rem;margin-bottom:.85rem;border-bottom:1px dashed var(--line);white-space:nowrap}
+.pd-code pre{margin:0;font-family:var(--font-mono);font-size:.74rem;line-height:1.8;color:var(--soft-gray)}
+.pd-k{color:var(--light-gold)}
+.pd-s{color:var(--warm-white)}
+.pd-n{color:var(--rich-gold)}
+
+.pd-roles{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.8rem 0 1.6rem}
+.pd-roles li{
+  font-family:var(--font-mono);font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid rgba(20,16,3,.28);border-radius:999px;padding:.55rem 1.05rem;
+  color:#3a3423;background:rgba(255,255,255,.55);
+}
+.pd-roles-note{color:#57503f;font-size:.95rem;max-width:52rem;line-height:1.7}
+
+@media (max-width:900px){
+  .pd-cols{grid-template-columns:1fr}
+  .pd-endpoints .d{padding-left:0}
+}
+@media (max-width:640px){
+  .pd-caps{grid-template-columns:1fr}
+  .pd-mini{grid-template-columns:1fr}
+  .pd-register li{flex-direction:column;gap:.5rem}
+}
+</style>
+</head>
+<body data-page="products">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+        <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="crisis.html">The Crisis</a></li>
+        <li><a href="explorer.html">Ledger Explorer</a></li>
+        <li><a href="methodology.html">Methodology</a></li>
+        <li><a href="products.html" aria-current="page">Products</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__right">
+      <a href="explorer.html" class="btn btn--ghost nav__cta--ghost">Explore the Ledger</a>
+      <a href="contact.html" class="btn btn--gold nav__cta">Request Institutional Access</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="crisis.html">The Crisis</a>
+  <a href="explorer.html">Ledger Explorer</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="products.html" aria-current="page">Products</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn--gold btn--block">Request Institutional Access</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero" aria-labelledby="ph-h">
+  <div class="page-hero__glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>The Platform</p>
+    <h1 class="h1" id="ph-h" data-reveal>Infrastructure modules for the <span class="gold-text">environmental ledger.</span></h1>
+    <p class="lead" data-reveal>ReVerity Ledger is not a suite of consulting packages. It is one federal-grade environmental debt accounting system, delivered as eight interoperable infrastructure modules — a single system of record for public burden, restoration funding, and market transition, serving government, regulated organizations, counsel, and restoration developers.</p>
+  </div>
+</section>
+
+<!-- ============ MODULE INDEX ============ -->
+<nav class="pd-index" aria-label="Module index">
+  <div class="wrap">
+    <span class="sr-only">Module index</span>
+    <a class="chip" href="#m01">Federal Ledger</a>
+    <a class="chip" href="#m02">Burden Dashboard</a>
+    <a class="chip" href="#m03">Corporate Filing</a>
+    <a class="chip" href="#m04">Advisory</a>
+    <a class="chip" href="#m05">Legacy Register</a>
+    <a class="chip" href="#m06">Trust Administration</a>
+    <a class="chip" href="#m07">Marketplace</a>
+    <a class="chip" href="#m08">API &amp; Data</a>
+  </div>
+</nav>
+
+<!-- ============ MODULE 01 — FEDERAL ENVIRONMENTAL DEBT LEDGER ============ -->
+<section class="section pd-module" id="m01" aria-labelledby="m01-h">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="pd-num" data-reveal>Module 01</span>
+      <h2 class="h2" id="m01-h" data-reveal>Federal Environmental Debt Ledger</h2>
+      <p class="pd-for" data-reveal><b>For</b> Federal agencies · Treasury · OMB · EPA · Congressional offices · Federal auditors</p>
+    </div>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Module 01 — National System of Record</span>
+      </div>
+      <div class="panel__body">
+        <div class="pd-cols">
+          <div>
+            <h3 class="h3">The national balance sheet for environmental debt.</h3>
+            <p class="pd-desc">The core module of the platform: a national liability registry that records environmental harm as financial liability, maps it to facilities and parent companies, and states it in annual environmental debt statements built to a federal audit standard. It is the reference against which every other module reconciles.</p>
+            <p class="pd-statement">A liability that never appears on a ledger is a liability the public pays twice.</p>
+            <div class="pd-ctas">
+              <a href="contact.html?tier=Federal%20%26%20Government%20Infrastructure" class="btn btn--gold">Request Federal Demonstration <span class="btn__arrow" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <div>
+            <p class="pd-caps-label">Core Capabilities</p>
+            <ul class="pd-caps">
+              <li>National liability registry</li>
+              <li>Annual environmental debt statements</li>
+              <li>Facility and parent-company mapping</li>
+              <li>Public burden estimates</li>
+              <li>Debt-category tracking</li>
+              <li>Payment and obligation records</li>
+              <li>Trust-fund routing</li>
+              <li>Restoration verification</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pd-mini" aria-label="Prototype registry scale">
+        <div><b><span data-count="2.1" data-prefix="$" data-suffix="T" data-decimals="1">$0.0T</span></b><span>Estimated environmental liabilities tracked</span></div>
+        <div><b><span data-count="348000">0</span></b><span>Active facilities monitored</span></div>
+        <div><b><span data-count="12900">0</span></b><span>Responsible entities mapped</span></div>
+      </div>
+      <div class="panel__foot">Registry status: Verified · Estimated · Under Review · Data Incomplete · Methodology Pending</div>
+    </div>
+    <p class="proto-note" data-reveal style="margin-top:1.4rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+  </div>
+</section>
+
+<!-- ============ MODULE 02 — GOVERNMENT ENVIRONMENTAL BURDEN DASHBOARD ============ -->
+<section class="section section--line pd-module" id="m02" aria-labelledby="m02-h">
+  <div class="wrap">
+    <div class="pd-cols">
+      <div data-reveal>
+        <span class="pd-num">Module 02</span>
+        <h2 class="h2" id="m02-h">Government Environmental Burden Dashboard</h2>
+        <p class="pd-for"><b>For</b> Federal, state, county, and municipal governments · Public utilities</p>
+        <p class="pd-desc">Every level of government inherits environmental burden it did not create. This module turns that inherited exposure into an operating picture: where the burden sits, which populations carry it, what public infrastructure is exposed, and where restoration funding closes the largest gap per dollar.</p>
+        <div class="pd-ctas">
+          <a href="contact.html?tier=Federal%20%26%20Government%20Infrastructure" class="btn btn--ghost">Request a Government Briefing</a>
+          <a href="pricing.html" class="link-arrow">Government deployment terms</a>
+        </div>
+      </div>
+      <div data-reveal>
+        <p class="pd-caps-label">Core Capabilities</p>
+        <ul class="pd-caps">
+          <li>Geographic burden mapping</li>
+          <li>Contaminated-site tracking</li>
+          <li>Public infrastructure exposure</li>
+          <li>Affected population analysis</li>
+          <li>Restoration-priority scoring</li>
+          <li>Funding-gap analysis</li>
+          <li>Project-pipeline planning</li>
+        </ul>
+        <p class="pd-statement">Public-finance officers plan against roads and pensions. Environmental burden belongs in the same book.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 03 — CORPORATE ENVIRONMENTAL DEBT FILING ============ -->
+<section class="section section--line pd-module" id="m03" aria-labelledby="m03-h">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="pd-num" data-reveal>Module 03</span>
+      <h2 class="h2" id="m03-h" data-reveal>Corporate Environmental Debt Filing</h2>
+      <p class="pd-for" data-reveal><b>For</b> Covered companies and facilities · Filing officers · Corporate counsel</p>
+    </div>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Module 03 — Annual Filing Infrastructure</span>
+      </div>
+      <div class="panel__body">
+        <div class="pd-cols">
+          <div>
+            <h3 class="h3">Built to the standard of a tax filing, not a sustainability report.</h3>
+            <p class="pd-desc">This is not optional ESG reporting. Corporate Environmental Debt Filing is prototype infrastructure for future mandatory or government-authorized environmental debt filing systems — a full filing workflow with evidence, calculation, dispute rights, and a closing statement, designed so environmental financial accountability can be administered the way tax obligations already are.</p>
+            <p class="pd-statement">Filers receive what any legitimate filing system owes them: clear methodology, correction rights, and a defensible record.</p>
+            <div class="pd-ctas">
+              <a href="contact.html" class="btn btn--ghost">Review Filing Readiness</a>
+              <a href="methodology.html" class="link-arrow">Read the methodology</a>
+            </div>
+          </div>
+          <div>
+            <p class="pd-caps-label">Filing Workflow Capabilities</p>
+            <ul class="pd-caps">
+              <li>Annual filing workflow</li>
+              <li>Facility data submission</li>
+              <li>Source-document upload</li>
+              <li>Liability calculation</li>
+              <li>Payment obligation preview</li>
+              <li>Dispute and correction process</li>
+              <li>Remediation reporting</li>
+              <li>Environmental debt closing statement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot">Prototype filing infrastructure · Mandatory application requires government authorization</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 04 — ENVIRONMENTAL TAX AND LIABILITY ADVISORY ============ -->
+<section class="section section--line pd-module" id="m04" aria-labelledby="m04-h">
+  <div class="wrap">
+    <div class="pd-cols">
+      <div data-reveal>
+        <span class="pd-num">Module 04</span>
+        <h2 class="h2" id="m04-h">Environmental Tax and Liability Advisory</h2>
+        <p class="pd-for"><b>For</b> Covered companies · General counsel · Finance and transaction teams</p>
+        <p class="pd-desc">A senior advisory practice operated to the standard of an elite tax engagement. The advisory group works from the same ledger, the same methodology, and the same evidence grades as the platform itself — so a company's environmental debt position is reviewed, documented, and prepared before any filing, transaction, or government proceeding tests it.</p>
+        <p class="pd-statement">Environmental debt should be underwritten like tax exposure — reviewed annually, documented fully, and never discovered by surprise.</p>
+        <div class="pd-ctas">
+          <a href="contact.html" class="btn btn--ghost">Engage the Advisory Practice</a>
+        </div>
+        <p class="proto-note" style="margin-top:1.8rem">ReVerity Ledger is not a law firm, accounting firm, or governmental taxing authority. Legal, accounting, and tax advice must be provided by appropriately licensed professionals.</p>
+      </div>
+      <div data-reveal>
+        <p class="pd-caps-label">Scope of Engagement</p>
+        <ul class="pd-caps">
+          <li>Environmental tax exposure review</li>
+          <li>Environmental debt readiness</li>
+          <li>Facility-liability mapping</li>
+          <li>Data-quality review</li>
+          <li>Public-burden analysis</li>
+          <li>Government-filing preparation</li>
+          <li>Methodology interpretation</li>
+          <li>Restoration obligation planning</li>
+          <li>Transaction and acquisition diligence</li>
+          <li>Legacy-liability review</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 05 — LEGACY ENVIRONMENTAL DEBT REGISTER ============ -->
+<section class="section section--line pd-module" id="m05" aria-labelledby="m05-h">
+  <div class="wrap">
+    <div class="pd-cols">
+      <div data-reveal>
+        <span class="pd-num">Module 05</span>
+        <h2 class="h2" id="m05-h">Legacy Environmental Debt Register</h2>
+        <p class="pd-for"><b>For</b> Governments · Redevelopment authorities · Federal legacy-site programs</p>
+        <p class="pd-desc">Much of the national environmental debt has no active operator attached to it — only a site, a community, and an unresolved record. The Legacy Register gives that debt a permanent accounting entry: it maps the site, traces the historical responsible parties where records allow, and states the potential public burden until the obligation is resolved.</p>
+        <p class="pd-caps-label" style="margin-top:1.8rem">Register Coverage</p>
+        <ul class="pd-caps">
+          <li>Brownfield mapping</li>
+          <li>Orphan landfill tracking</li>
+          <li>Abandoned industrial sites</li>
+          <li>Contaminated groundwater</li>
+          <li>Abandoned mine liabilities</li>
+          <li>Legacy chemical contamination</li>
+          <li>Unresolved remediation obligations</li>
+          <li>Historical responsible-party research</li>
+        </ul>
+        <div class="pd-ctas">
+          <a href="contact.html" class="link-arrow">Submit a legacy site record</a>
+        </div>
+      </div>
+      <div data-reveal>
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Legacy Register — Sample Entries</span>
+          </div>
+          <div class="panel__body">
+            <ul class="pd-register">
+              <li>
+                <span><span class="t">Former Atlas Materials Group finishing works</span><span class="d">Legacy soil contamination · unresolved record</span></span>
+                <span class="badge badge--incomplete">Data Incomplete</span>
+              </li>
+              <li>
+                <span><span class="t">County-owned orphan landfill, Parcel 118-A</span><span class="d">Closure obligation · potential public burden</span></span>
+                <span class="badge badge--review">Under Review</span>
+              </li>
+              <li>
+                <span><span class="t">Dominion Resource Processing — retired mine complex</span><span class="d">Abandoned mine liability · responsible-party research</span></span>
+                <span class="badge badge--pending">Methodology Pending</span>
+              </li>
+              <li>
+                <span><span class="t">Regional groundwater plume, Sector 7 wellfield</span><span class="d">Legacy chemical contamination · modeled liability</span></span>
+                <span class="badge badge--estimated">Estimated</span>
+              </li>
+            </ul>
+          </div>
+          <div class="panel__foot">Entries are neutral records of unresolved obligations — not findings of fault</div>
+        </div>
+        <p class="proto-note" style="margin-top:1.4rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 06 — TRUST ADMINISTRATION LAYER ============ -->
+<section class="section section--line pd-module" id="m06" aria-labelledby="m06-h">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="pd-num" data-reveal>Module 06</span>
+      <h2 class="h2" id="m06-h" data-reveal>Primary Restoration and Transition Trust — Administration Layer</h2>
+      <p class="pd-for" data-reveal><b>For</b> Government trust administrators · Treasury and comptroller functions · Independent auditors</p>
+    </div>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Module 06 — Fund Records &amp; Controls</span>
+      </div>
+      <div class="panel__body">
+        <div class="pd-cols">
+          <div>
+            <h3 class="h3">The controls layer for protected restoration funding.</h3>
+            <p class="pd-desc">Collection alone does not create restoration — protection of the fund does. The Administration Layer provides the record-keeping, controls, and verification infrastructure for a governmental restoration trust: every dollar traceable from source to use, every allocation scored and audited, every environmental outcome verified rather than assumed.</p>
+            <p class="pd-statement">Actual funds remain under governmental control at all times. ReVerity administers records, controls, and verification — never the money itself.</p>
+            <div class="pd-ctas">
+              <a href="contact.html" class="link-arrow">Request an administration briefing</a>
+            </div>
+          </div>
+          <div>
+            <p class="pd-caps-label">Administration Capabilities</p>
+            <ul class="pd-caps">
+              <li>Payment-routing records</li>
+              <li>Source-to-use traceability</li>
+              <li>Project eligibility</li>
+              <li>Allocation scoring</li>
+              <li>Audit trails</li>
+              <li>Anti-fraud controls</li>
+              <li>Fund-performance reporting</li>
+              <li>Environmental outcome verification</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot">Governmental control · Statutory protection · Audited allocation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 07 — RESTORATION PROJECT MARKETPLACE ============ -->
+<section class="section section--line pd-module" id="m07" aria-labelledby="m07-h">
+  <div class="wrap">
+    <div class="pd-cols">
+      <div data-reveal>
+        <span class="pd-num">Module 07</span>
+        <h2 class="h2" id="m07-h">Restoration Project Marketplace</h2>
+        <p class="pd-for"><b>For</b> Government procurement offices · Qualified restoration providers</p>
+        <p class="pd-desc">A controlled government procurement and project-matching environment — not an open exchange. Verified restoration needs are matched to qualified providers through transparent scoring, competitive procurement, and government approval, so restoration funding reaches the projects that retire the most environmental debt per dollar deployed.</p>
+        <div class="pd-ctas">
+          <a href="contact.html" class="btn btn--ghost">Apply as a Restoration Provider</a>
+          <a href="explorer.html" class="link-arrow">View identified restoration needs</a>
+        </div>
+        <p class="proto-note" style="margin-top:1.8rem">Qualified providers may include TerraReFlow and other approved operators. TerraReFlow is never automatically awarded public funds. All matching runs through transparent procurement, conflict-of-interest disclosure, open competition, and government approval.</p>
+      </div>
+      <div data-reveal>
+        <div class="panel">
+          <div class="panel__bar">
+            <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="panel__title">Qualified Project Categories</span>
+          </div>
+          <div class="panel__body">
+            <ul class="chips" aria-label="Qualified project categories">
+              <li class="chip">PFAS Destruction</li>
+              <li class="chip">Water Treatment</li>
+              <li class="chip">Landfill Remediation</li>
+              <li class="chip">Methane Control</li>
+              <li class="chip">Brownfield Restoration</li>
+              <li class="chip">Habitat Restoration</li>
+              <li class="chip">Soil Remediation</li>
+              <li class="chip">Clean Energy</li>
+              <li class="chip">Grid Transition</li>
+              <li class="chip">Waste-System Transformation</li>
+              <li class="chip">Circular Materials</li>
+              <li class="chip">Resilient Infrastructure</li>
+            </ul>
+          </div>
+          <div class="panel__foot">Category eligibility set by the administering government authority</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 08 — API AND DATA INFRASTRUCTURE ============ -->
+<section class="section section--line pd-module" id="m08" aria-labelledby="m08-h">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="pd-num" data-reveal>Module 08</span>
+      <h2 class="h2" id="m08-h" data-reveal>ReVerity API and Data Infrastructure</h2>
+      <p class="pd-for" data-reveal><b>For</b> Federal systems · Public utilities · Accounting platforms · Regulatory systems · Researchers · Approved enterprise users</p>
+    </div>
+    <div class="panel" data-reveal>
+      <div class="panel__bar">
+        <span class="panel__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="panel__title">Module 08 — api.reverityledger.gov-ready Integration Layer</span>
+      </div>
+      <div class="panel__body">
+        <div class="pd-cols">
+          <div>
+            <p class="pd-caps-label">Interface Surface</p>
+            <ul class="pd-endpoints">
+              <li><span class="m">GET</span><code>/v1/facilities</code><span class="d">Facility API — registry records, operators, parent-entity mapping</span></li>
+              <li><span class="m">GET</span><code>/v1/harm-categories</code><span class="d">Harm-Category API — definitions, planetary boundary accounting domains, valuation bases</span></li>
+              <li><span class="m">GET</span><code>/v1/public-burden</code><span class="d">Public Burden API — modeled burden by region, category, and period</span></li>
+              <li><span class="m">POST</span><code>/v1/methodology/run</code><span class="d">Methodology engine — versioned, reproducible calculation runs</span></li>
+              <li><span class="m">GET</span><code>/v1/evidence/{id}/meta</code><span class="d">Evidence metadata — source, confidence grade, chain of custody</span></li>
+              <li><span class="m">GET</span><code>/v1/geo/layers</code><span class="d">Geospatial layer — site, plume, and burden overlays</span></li>
+              <li><span class="m">GET</span><code>/v1/audit/logs</code><span class="d">Audit logs — immutable access and calculation history</span></li>
+              <li><span class="m">SCOPE</span><code>role-based permissions</code><span class="d">Scoped credentials per institutional role and data sensitivity</span></li>
+            </ul>
+            <div class="pd-ctas">
+              <a href="contact.html" class="btn btn--ghost">Request API Documentation</a>
+              <a href="methodology.html" class="link-arrow">Methodology reference</a>
+            </div>
+          </div>
+          <div>
+            <p class="pd-caps-label">Sample Responses — Demonstration</p>
+            <div class="tabs" data-tabs="api" role="tablist" aria-label="Sample API responses">
+              <button class="tab" id="tab-facility" role="tab" data-tab="facility" aria-selected="true">Facility</button>
+              <button class="tab" id="tab-burden" role="tab" data-tab="burden" aria-selected="false">Public Burden</button>
+              <button class="tab" id="tab-harm" role="tab" data-tab="harm" aria-selected="false">Harm Category</button>
+            </div>
+            <div class="tabpanel" data-tabpanel="api" data-panel="facility" role="tabpanel" aria-labelledby="tab-facility">
+              <div class="pd-code">
+                <span class="pd-get">GET /v1/facilities/RVL-FAC-004417 · 200 OK</span>
+                <pre data-json>{
+  "facility_id": "RVL-FAC-004417",
+  "operator": "Meridian Chemical Systems",
+  "parent_entity": "Northstar Industrial Holdings",
+  "state": "OH",
+  "harm_categories": ["water_discharge", "legacy_soil"],
+  "record_status": "data_under_review",
+  "modeled_liability_usd": 41250000,
+  "public_burden_estimate_usd": 18400000,
+  "confidence_grade": "B2",
+  "methodology_version": "proto-0.9.4"
+}</pre>
+              </div>
+            </div>
+            <div class="tabpanel" data-tabpanel="api" data-panel="burden" role="tabpanel" aria-labelledby="tab-burden" hidden>
+              <div class="pd-code">
+                <span class="pd-get">GET /v1/public-burden?region=US-OH&amp;period=FY2025 · 200 OK</span>
+                <pre data-json>{
+  "region": "US-OH",
+  "period": "FY2025",
+  "estimated_public_burden_usd": 1840000000,
+  "burden_categories": {
+    "water_treatment": 612000000,
+    "site_remediation": 744000000,
+    "public_health_exposure": 484000000
+  },
+  "record_status": "estimated",
+  "methodology_version": "proto-0.9.4"
+}</pre>
+              </div>
+            </div>
+            <div class="tabpanel" data-tabpanel="api" data-panel="harm" role="tabpanel" aria-labelledby="tab-harm" hidden>
+              <div class="pd-code">
+                <span class="pd-get">GET /v1/harm-categories/pfas_release · 200 OK</span>
+                <pre data-json>{
+  "category_id": "pfas_release",
+  "boundary_domain": "novel_entities",
+  "unit_basis": "kg_released",
+  "valuation_model": "restoration_cost_v3",
+  "confidence_framework": "A1-D4",
+  "record_status": "methodology_pending_validation"
+}</pre>
+              </div>
+            </div>
+            <p class="proto-note" style="margin-top:1.2rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot">Role-based permissions · Versioned methodology · Immutable audit logs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROLE-BASED ACCESS ============ -->
+<section class="section section--light" aria-labelledby="roles-h">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Access Architecture</p>
+    <h2 class="h2" id="roles-h" data-reveal style="margin-top:1rem">Ten roles. One controlled system.</h2>
+    <ul class="pd-roles" data-reveal-stagger>
+      <li>Federal Administrator</li>
+      <li>Treasury Analyst</li>
+      <li>Environmental Regulator</li>
+      <li>Public-Finance Officer</li>
+      <li>Corporate Filing Officer</li>
+      <li>Environmental Attorney</li>
+      <li>Researcher</li>
+      <li>Restoration Provider</li>
+      <li>Public User</li>
+      <li>Auditor</li>
+    </ul>
+    <p class="pd-roles-note" data-reveal>Access to the platform is provisioned by role: each role sees a scoped dashboard and a permission set matched to its lawful function — environmental financial accountability with nothing exposed beyond mandate, and nothing hidden from audit.</p>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section final" aria-labelledby="final-h">
+  <div class="wrap">
+    <p class="eyebrow final__eyebrow" data-reveal>Deployment</p>
+    <h2 class="h2" id="final-h" data-reveal>One platform. Every seat at the table.</h2>
+    <div class="btns" data-reveal>
+      <a href="contact.html" class="btn btn--gold">Request Institutional Access <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <a href="pricing.html" class="btn btn--ghost">View Pricing</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__col footer__brand">
+        <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+          <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+            <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+        </a>
+        <p>Make environmental damage financially accountable. Identify environmental debt, quantify public burden, support lawful collection, protect restoration funding, and verify measurable outcomes.</p>
+      </div>
+      <div class="footer__col">
+        <p class="t">Platform</p>
+        <a href="explorer.html">Ledger Explorer</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="products.html">Products</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="crisis.html">The Environmental Blind Spot</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Institution</p>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html">Government Inquiries</a>
+        <a href="contact.html">Careers</a>
+        <a href="crisis.html#sources">Data Sources</a>
+        <a href="explorer.html#dispute">Corrections</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Legal</p>
+        <a href="contact.html">Terms</a>
+        <a href="contact.html">Privacy</a>
+        <a href="contact.html">Security</a>
+        <a href="contact.html">Legal</a>
+        <a href="contact.html">Accessibility</a>
+      </div>
+    </div>
+    <p class="fineprint">ReVerity Ledger is a private technology and research platform. It does not independently levy taxes, impose governmental penalties, issue legal determinations, or control public funds. Any mandatory assessment, tax, fee, penalty, collection, or public-fund allocation must be authorized and administered by the appropriate government authority. Prototype demonstration data shown throughout this site is not an official legal, tax, accounting, or regulatory determination.<span class="copy">© ReVerity Ledger. Identify. Quantify. Rectify.</span></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+/* Products page — JSON sample highlighting + module index scroll-spy */
+(function () {
+  "use strict";
+
+  /* ---------- Syntax-highlight the demo JSON samples ---------- */
+  document.querySelectorAll(".pd-code pre[data-json]").forEach(function (pre) {
+    var esc = pre.textContent
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    pre.innerHTML = esc.replace(
+      /("(?:[^"\\]|\\.)*")(\s*:)?|\b\d+(?:\.\d+)?\b/g,
+      function (m, str, colon) {
+        if (str) {
+          return colon
+            ? '<span class="pd-k">' + str + "</span>" + colon
+            : '<span class="pd-s">' + str + "</span>";
+        }
+        return '<span class="pd-n">' + m + "</span>";
+      }
+    );
+  });
+
+  /* ---------- Module index scroll-spy ---------- */
+  var chips = document.querySelectorAll(".pd-index a.chip");
+  if (!chips.length) return;
+  var map = {};
+  chips.forEach(function (ch) {
+    var id = (ch.getAttribute("href") || "").slice(1);
+    if (id) map[id] = ch;
+  });
+  var setActive = function (chip) {
+    chips.forEach(function (c) { c.classList.remove("is-active"); });
+    if (chip) chip.classList.add("is-active");
+  };
+  chips.forEach(function (ch) {
+    ch.addEventListener("click", function () { setActive(ch); });
+  });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && map[en.target.id]) setActive(map[en.target.id]);
+      });
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+    document.querySelectorAll(".pd-module[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>

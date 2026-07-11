@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="ReVerity Ledger — Access and Engagement Models. Prototype pricing for public access, professional intelligence, enterprise environmental debt accounting, and federal infrastructure contracts.">
+<title>Access &amp; Engagement Models — ReVerity Ledger</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23050505'/%3E%3Crect x='1' y='1' width='30' height='30' rx='4.5' fill='none' stroke='%23D4AF37' stroke-width='1.4'/%3E%3Cpath d='M9 8 L16 25 L23 8' fill='none' stroke='%23D4AF37' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ---------- Pricing page (pr-) ---------- */
+.pr-tiers{align-items:stretch;margin-top:1.6rem}
+.pr-tier{
+  position:relative;display:flex;flex-direction:column;
+  background:linear-gradient(178deg,var(--surface),var(--panel));
+  border:1px solid var(--line);border-radius:10px;
+  padding:2.1rem 1.5rem 1.5rem;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.pr-tier:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 22px 48px rgba(0,0,0,.45)}
+.pr-tier--flag{
+  border-color:var(--rich-gold);
+  background:linear-gradient(178deg,rgba(212,175,55,.11),var(--panel));
+  box-shadow:0 26px 60px rgba(0,0,0,.5);
+}
+.pr-tier--flag:hover{border-color:var(--light-gold)}
+.pr-tier__flag{
+  position:absolute;top:0;left:50%;transform:translate(-50%,-50%);
+  white-space:nowrap;font-family:var(--font-mono);font-weight:600;font-size:.56rem;
+  letter-spacing:.24em;text-transform:uppercase;color:#141003;
+  background:linear-gradient(160deg,var(--light-gold),var(--rich-gold) 60%,var(--metal-gold));
+  padding:.38rem .9rem;border-radius:3px;box-shadow:0 6px 18px rgba(212,175,55,.3);
+}
+.pr-tier__kicker{
+  font-family:var(--font-mono);font-size:.62rem;font-weight:600;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--soft-gray);margin-bottom:.8rem;
+}
+.pr-tier--flag .pr-tier__kicker{color:var(--rich-gold)}
+.pr-tier__name{font-size:1.28rem;line-height:1.22;margin-bottom:1.1rem}
+.pr-tier__price{margin:0}
+.pr-tier__pre{
+  display:block;font-family:var(--font-mono);font-size:.6rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--soft-gray);margin-bottom:.4rem;
+}
+.pr-tier__amount{
+  font-family:var(--font-mono);font-weight:600;font-size:1.4rem;
+  color:var(--pure-white);letter-spacing:-.01em;line-height:1.3;
+}
+.pr-tier__per{font-family:var(--font-mono);font-size:.78rem;color:var(--rich-gold);margin-left:.3rem;white-space:nowrap}
+.pr-tier__for{
+  font-size:.8rem;color:var(--ink-dim);line-height:1.6;
+  border-top:1px solid var(--line);margin-top:1.15rem;padding-top:1.05rem;
+}
+.pr-tier__for b{color:var(--warm-white);font-weight:600}
+.pr-tier__list{margin:1.05rem 0 1.35rem;display:grid;gap:.5rem}
+.pr-tier__list li{position:relative;padding-left:1.25rem;font-size:.83rem;color:var(--ink-dim);line-height:1.5}
+.pr-tier__list li::before{
+  content:"✓";position:absolute;left:0;top:.05rem;
+  color:var(--rich-gold);font-size:.78rem;font-family:var(--font-mono);
+}
+.pr-tier__label{
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;line-height:1.7;
+  color:var(--mid-gray);text-transform:uppercase;margin:0 0 1.05rem;
+}
+.pr-tier .btn{margin-top:auto}
+@media (max-width:1180px){
+  .pr-tiers.grid-4{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .pr-tiers.grid-4{grid-template-columns:1fr}
+}
+/* Advisory cards */
+.pr-adv .card{display:flex;flex-direction:column}
+.pr-adv__price{
+  display:block;font-family:var(--font-mono);font-size:.7rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--rich-gold);margin-bottom:.9rem;
+}
+.pr-adv .card .link-arrow{margin-top:auto;padding-top:1.3rem}
+/* Comparison table */
+.pr-compare table{min-width:940px}
+.pr-compare tbody th{
+  background:transparent;border-bottom:1px solid var(--line);
+  color:var(--warm-white);font-family:var(--font-body);font-size:.85rem;font-weight:600;
+  letter-spacing:.02em;text-transform:none;white-space:normal;vertical-align:top;
+}
+.pr-compare tbody tr:last-child th{border-bottom:0}
+.pr-compare thead th:nth-child(3){color:var(--light-gold)}
+.pr-compare td:nth-child(3){background:rgba(212,175,55,.05)}
+.pr-check{color:var(--rich-gold);font-family:var(--font-mono);font-weight:600}
+.pr-dash{color:var(--mid-gray)}
+.pr-compare td.pr-colhl,.pr-compare th.pr-colhl{background:rgba(212,175,55,.09)}
+</style>
+</head>
+<body data-page="pricing">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+        <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="crisis.html">The Crisis</a></li>
+        <li><a href="explorer.html">Ledger Explorer</a></li>
+        <li><a href="methodology.html">Methodology</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="pricing.html" aria-current="page">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__right">
+      <a href="explorer.html" class="btn btn--ghost nav__cta--ghost">Explore the Ledger</a>
+      <a href="contact.html" class="btn btn--gold nav__cta">Request Institutional Access</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="crisis.html">The Crisis</a>
+  <a href="explorer.html">Ledger Explorer</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="products.html">Products</a>
+  <a href="pricing.html" aria-current="page">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn--gold btn--block">Request Institutional Access</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero" aria-labelledby="ph-h">
+  <div class="page-hero__glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Engagement</p>
+    <h1 class="h1" id="ph-h" data-reveal>Access and <span class="gold-text">Engagement Models</span></h1>
+    <p class="lead" data-reveal>Prototype pricing for a national environmental debt accounting platform. Public transparency remains free. Professional and enterprise access is licensed. Federal-scale contracts follow custom procurement — because national infrastructure is engaged, not purchased off a shelf.</p>
+    <p class="hero__label" data-reveal style="margin-top:2rem">Public transparency &nbsp;·&nbsp; Professional intelligence &nbsp;·&nbsp; Enterprise accounting &nbsp;·&nbsp; Federal infrastructure</p>
+  </div>
+</section>
+
+<!-- ============ PRICING TIERS ============ -->
+<section class="section section--line" aria-labelledby="tiers-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Access Levels</p>
+      <h2 class="h2" id="tiers-h" data-reveal>Four levels of access to the <span class="gold-text">national ledger.</span></h2>
+      <p class="lead" data-reveal>Every engagement model funds the same system of record — environmental financial accountability for the harm the economy creates, the public burden it transfers, and the restoration funding it requires.</p>
+    </div>
+
+    <div class="grid-4 pr-tiers" data-reveal-stagger>
+
+      <article class="pr-tier" aria-label="Public Explorer tier">
+        <p class="pr-tier__kicker">Tier 01</p>
+        <h3 class="h3 pr-tier__name">Public Explorer</h3>
+        <p class="pr-tier__price">
+          <span class="pr-tier__pre">Public access</span>
+          <span class="pr-tier__amount">Free</span>
+        </p>
+        <p class="pr-tier__for">For <b>the public, journalists, educators, and communities</b> carrying the burden.</p>
+        <ul class="pr-tier__list">
+          <li>Public environmental data</li>
+          <li>Selected facility profiles</li>
+          <li>High-level planetary-boundary views</li>
+          <li>Public burden education</li>
+          <li>Methodology overview</li>
+          <li>Evidence-source access</li>
+          <li>Limited search</li>
+        </ul>
+        <a href="explorer.html" class="btn btn--ghost btn--block">Explore Public Data</a>
+      </article>
+
+      <article class="pr-tier pr-tier--flag" aria-label="Professional Intelligence tier — preliminary flagship">
+        <span class="pr-tier__flag">Preliminary Flagship</span>
+        <p class="pr-tier__kicker">Tier 02</p>
+        <h3 class="h3 pr-tier__name">Professional Intelligence</h3>
+        <p class="pr-tier__price">
+          <span class="pr-tier__pre">Preliminary pricing</span>
+          <span class="pr-tier__amount">$1,500–$5,000<span class="pr-tier__per">/ month</span></span>
+        </p>
+        <p class="pr-tier__for">For <b>attorneys, researchers, restoration developers, consultants, infrastructure investors, and institutional analysts.</b></p>
+        <ul class="pr-tier__list">
+          <li>Advanced search</li>
+          <li>Company and facility profiles</li>
+          <li>Downloadable evidence records</li>
+          <li>Liability ranges</li>
+          <li>Public burden mapping</li>
+          <li>Historical comparisons</li>
+          <li>Advanced filters</li>
+          <li>Limited API access</li>
+        </ul>
+        <p class="pr-tier__label">Preliminary prototype pricing. Final pricing may change.</p>
+        <a href="contact.html?tier=Professional%20Intelligence" class="btn btn--gold btn--block">Request This Tier</a>
+      </article>
+
+      <article class="pr-tier" aria-label="Enterprise Environmental Debt Platform tier">
+        <p class="pr-tier__kicker">Tier 03</p>
+        <h3 class="h3 pr-tier__name">Enterprise Environmental Debt Platform</h3>
+        <p class="pr-tier__price">
+          <span class="pr-tier__pre">Starting at</span>
+          <span class="pr-tier__amount">$100,000<span class="pr-tier__per">/ year</span></span>
+        </p>
+        <p class="pr-tier__for">For <b>utilities, regulated companies, large infrastructure owners, industrial organizations, and state agencies.</b></p>
+        <ul class="pr-tier__list">
+          <li>Multiple facilities</li>
+          <li>Filing preparation</li>
+          <li>Evidence management</li>
+          <li>Environmental debt statements</li>
+          <li>Internal controls</li>
+          <li>Custom dashboards</li>
+          <li>User permissions</li>
+          <li>API integration</li>
+          <li>Advisory support</li>
+        </ul>
+        <a href="contact.html?tier=Enterprise%20Environmental%20Debt%20Platform" class="btn btn--ghost btn--block">Request This Tier</a>
+      </article>
+
+      <article class="pr-tier" aria-label="Federal and Government Infrastructure tier">
+        <p class="pr-tier__kicker">Tier 04</p>
+        <h3 class="h3 pr-tier__name">Federal and Government Infrastructure</h3>
+        <p class="pr-tier__price">
+          <span class="pr-tier__pre">Procurement-based</span>
+          <span class="pr-tier__amount">Custom Contract</span>
+        </p>
+        <p class="pr-tier__for">For <b>federal agencies, states, municipalities, authorities, public funds, and national implementation programs.</b> May include:</p>
+        <ul class="pr-tier__list">
+          <li>Pilot contracts</li>
+          <li>Platform licenses</li>
+          <li>Implementation services</li>
+          <li>Federal security requirements</li>
+          <li>Custom methodology</li>
+          <li>Procurement integration</li>
+          <li>Trust-administration modules</li>
+          <li>Audit and verification systems</li>
+          <li>National data infrastructure</li>
+        </ul>
+        <a href="contact.html?tier=Federal%20%26%20Government%20Infrastructure" class="btn btn--gold btn--block">Request a Government Proposal</a>
+      </article>
+
+    </div>
+    <p class="proto-note" data-reveal style="margin-top:1.8rem">Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+  </div>
+</section>
+
+<!-- ============ ADVISORY ENGAGEMENTS ============ -->
+<section class="section section--line" aria-labelledby="adv-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Advisory Engagements</p>
+      <h2 class="h2" id="adv-h" data-reveal>Structured advisory for institutions <span class="gold-text">entering the ledger.</span></h2>
+      <p class="lead" data-reveal>Fixed-scope and custom engagements that prepare agencies, operators, and owners for environmental debt accounting — before, during, and after platform adoption.</p>
+    </div>
+    <div class="grid-3 pr-adv" data-reveal-stagger>
+      <article class="card">
+        <span class="pr-adv__price">Starting at $25,000</span>
+        <h3 class="h3" style="font-size:1.15rem">Environmental Debt Readiness Assessment</h3>
+        <p>A structured review of exposure, records, and reporting readiness before environmental debt accounting begins.</p>
+        <a class="link-arrow" href="contact.html">Discuss scope</a>
+      </article>
+      <article class="card">
+        <span class="pr-adv__price">Custom scope</span>
+        <h3 class="h3" style="font-size:1.15rem">Facility Liability Review</h3>
+        <p>Facility-level evidence assembly and modeled liability ranges prepared for internal decision-making.</p>
+        <a class="link-arrow" href="contact.html">Discuss scope</a>
+      </article>
+      <article class="card">
+        <span class="pr-adv__price">Custom scope</span>
+        <h3 class="h3" style="font-size:1.15rem">Government Pilot Design</h3>
+        <p>Program architecture, methodology selection, and procurement pathways for public-sector pilot programs.</p>
+        <a class="link-arrow" href="contact.html">Discuss scope</a>
+      </article>
+      <article class="card">
+        <span class="pr-adv__price">Custom scope</span>
+        <h3 class="h3" style="font-size:1.15rem">Legacy Environmental Liability Mapping</h3>
+        <p>Historical harm mapped, dated, and attributed across ownership changes and inherited obligations.</p>
+        <a class="link-arrow" href="contact.html">Discuss scope</a>
+      </article>
+      <article class="card">
+        <span class="pr-adv__price">Custom scope</span>
+        <h3 class="h3" style="font-size:1.15rem">Methodology and Data Integration</h3>
+        <p>Alignment of internal data systems with ledger methodologies, evidence grading, and audit trails.</p>
+        <a class="link-arrow" href="contact.html">Discuss scope</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON TABLE ============ -->
+<section class="section section--line" aria-labelledby="compare-h">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>Comparison</p>
+      <h2 class="h2" id="compare-h" data-reveal>What each engagement model includes.</h2>
+      <p class="lead" data-reveal>Capabilities scale with institutional responsibility — from public visibility to national data infrastructure.</p>
+    </div>
+    <div class="table-scroll pr-compare" data-reveal>
+      <table class="table" id="prCompare">
+        <caption class="sr-only">Comparison of capabilities across the four access and engagement models</caption>
+        <thead>
+          <tr>
+            <th scope="col">Capability</th>
+            <th scope="col">Public Explorer</th>
+            <th scope="col">Professional Intelligence</th>
+            <th scope="col">Enterprise Platform</th>
+            <th scope="col">Federal &amp; Government</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Number of users</th>
+            <td>Single user</td>
+            <td>Up to 10 seats</td>
+            <td>Up to 250 seats</td>
+            <td>Custom</td>
+          </tr>
+          <tr>
+            <th scope="row">Facilities</th>
+            <td>Selected public profiles</td>
+            <td>Full facility index</td>
+            <td>Owned portfolio + full index</td>
+            <td>National coverage</td>
+          </tr>
+          <tr>
+            <th scope="row">Data exports</th>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td>Limited</td>
+            <td>Full</td>
+            <td>Custom</td>
+          </tr>
+          <tr>
+            <th scope="row">API access</th>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td>Limited</td>
+            <td>Full</td>
+            <td>Custom</td>
+          </tr>
+          <tr>
+            <th scope="row">Evidence room</th>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td>Read access</td>
+            <td>Full workspace</td>
+            <td>Full + federal audit</td>
+          </tr>
+          <tr>
+            <th scope="row">Methodology tools</th>
+            <td>Overview only</td>
+            <td>Full documentation</td>
+            <td>Full + internal controls</td>
+            <td>Custom methodology</td>
+          </tr>
+          <tr>
+            <th scope="row">Custom reports</th>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td>Limited</td>
+            <td><span class="pr-check" aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+            <td><span class="pr-check" aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Government integrations</th>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td>Limited</td>
+            <td>Full</td>
+          </tr>
+          <tr>
+            <th scope="row">Onboarding</th>
+            <td>Self-serve</td>
+            <td>Guided</td>
+            <td>Dedicated team</td>
+            <td>Implementation program</td>
+          </tr>
+          <tr>
+            <th scope="row">Support</th>
+            <td>Public documentation</td>
+            <td>Priority support</td>
+            <td>Advisory support</td>
+            <td>Program office</td>
+          </tr>
+          <tr>
+            <th scope="row">Audit trail</th>
+            <td><span class="pr-dash" aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+            <td><span class="pr-check" aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+            <td><span class="pr-check" aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+            <td><span class="pr-check" aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Security level</th>
+            <td>Standard</td>
+            <td>Standard</td>
+            <td>Enhanced</td>
+            <td>Federal requirements</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING STATUS ============ -->
+<section class="section section--tight" aria-labelledby="status-h">
+  <div class="wrap">
+    <h2 class="sr-only" id="status-h">Pricing status</h2>
+    <p class="proto-note" data-reveal>All prices shown are prototype assumptions and are not public procurement commitments. Preliminary prototype pricing — final pricing may change. Prototype demonstration data — not an official legal, tax, accounting, or regulatory determination.</p>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section final" aria-labelledby="final-h">
+  <div class="wrap">
+    <p class="eyebrow final__eyebrow" data-reveal>Engagement</p>
+    <h2 class="h2" id="final-h" data-reveal>Start with access. <span class="gold-text">Scale to infrastructure.</span></h2>
+    <div class="btns" data-reveal>
+      <a href="contact.html" class="btn btn--gold">Request Institutional Access <span class="btn__arrow" aria-hidden="true">→</span></a>
+      <a href="contact.html" class="btn btn--ghost">Talk to the Team</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__col footer__brand">
+        <a class="brand" href="index.html" aria-label="ReVerity Ledger — home">
+          <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" rx="6" fill="#0B0A06" stroke="#D4AF37" stroke-width="1.5"/>
+            <path d="M12 11 L20 29 L28 11" stroke="#D4AF37" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 11 L20 19" stroke="#F1D77A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__text">Re<span class="v">V</span>erity Ledger<small>Federal Environmental Debt Accounting</small></span>
+        </a>
+        <p>Make environmental damage financially accountable. Identify environmental debt, quantify public burden, support lawful collection, protect restoration funding, and verify measurable outcomes.</p>
+      </div>
+      <div class="footer__col">
+        <p class="t">Platform</p>
+        <a href="explorer.html">Ledger Explorer</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="products.html">Products</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="crisis.html">The Environmental Blind Spot</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Institution</p>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html">Government Inquiries</a>
+        <a href="contact.html">Careers</a>
+        <a href="crisis.html#sources">Data Sources</a>
+        <a href="explorer.html#dispute">Corrections</a>
+      </div>
+      <div class="footer__col">
+        <p class="t">Legal</p>
+        <a href="contact.html">Terms</a>
+        <a href="contact.html">Privacy</a>
+        <a href="contact.html">Security</a>
+        <a href="contact.html">Legal</a>
+        <a href="contact.html">Accessibility</a>
+      </div>
+    </div>
+    <p class="fineprint">ReVerity Ledger is a private technology and research platform. It does not independently levy taxes, impose governmental penalties, issue legal determinations, or control public funds. Any mandatory assessment, tax, fee, penalty, collection, or public-fund allocation must be authorized and administered by the appropriate government authority. Prototype demonstration data shown throughout this site is not an official legal, tax, accounting, or regulatory determination.<span class="copy">© ReVerity Ledger. Identify. Quantify. Rectify.</span></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+/* Pricing page: comparison-table column highlight */
+(function () {
+  "use strict";
+  var table = document.getElementById("prCompare");
+  if (!table) return;
+  var clear = function () {
+    var lit = table.querySelectorAll(".pr-colhl");
+    for (var i = 0; i < lit.length; i++) lit[i].classList.remove("pr-colhl");
+  };
+  table.addEventListener("mouseover", function (e) {
+    var cell = e.target.closest ? e.target.closest("td,th") : null;
+    if (!cell || !table.contains(cell)) return;
+    clear();
+    var idx = cell.cellIndex;
+    if (idx === 0) return;
+    var rows = table.rows;
+    for (var r = 0; r < rows.length; r++) {
+      var c = rows[r].cells[idx];
+      if (c) c.classList.add("pr-colhl");
+    }
+  });
+  table.addEventListener("mouseleave", clear);
+})();
+</script>
+</body>
+</html>

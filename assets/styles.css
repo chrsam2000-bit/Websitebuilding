@@ -573,12 +573,16 @@ input[type=range]{width:100%;accent-color:var(--rich-gold);background:transparen
 }
 @media (max-width:640px){
   .cards,.grid-2,.grid-3,.grid-4,.equation,.field--row,.checks{grid-template-columns:1fr}
+  /* phone-width safety: buttons may wrap, grid items may shrink */
+  .btn{white-space:normal;text-align:center}
+  .cards>*,.grid-2>*,.grid-3>*,.grid-4>*,.equation>*,.monitor>*{min-width:0}
   .monitor{grid-template-columns:1fr}
   .stat-strip{grid-template-columns:1fr}
   .stat{border-left:0;border-top:1px solid var(--line)}
   .stat:first-child{border-top:0}
   .footer__top{grid-template-columns:1fr}
-  .nav__cta{padding:.6rem .9rem;font-size:.78rem}
+  /* At phone widths the gold CTA lives in the mobile menu instead */
+  .nav__cta{display:none}
   .brand__text{font-size:1rem}
-  .brand__text small{font-size:.42rem}
+  .brand__text small{font-size:.42rem;letter-spacing:.18em}
 }
